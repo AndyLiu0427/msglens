@@ -1,0 +1,22 @@
+{
+  // Server code is checked separately from the Next app.
+  //
+  // The two cannot share one config: the app needs the DOM lib, and
+  // @cloudflare/workers-types redeclares a lot of the same globals with
+  // Workers semantics. Loading both in one program produces hundreds of
+  // duplicate-identifier errors. Splitting also documents the boundary —
+  // nothing under server/ may import from src/.
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "types": ["@cloudflare/workers-types"],
+    "strict": true,
+    "noEmit": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true
+  },
+  "include": ["server/**/*.ts", "functions/**/*.ts", "shared/**/*.ts"]
+}

@@ -1,0 +1,25 @@
+# Cloudflare Pages project configuration.
+#
+# Deploy with:  pnpm build && npx wrangler pages deploy out
+name = "msglens"
+compatibility_date = "2026-08-07"
+pages_build_output_dir = "out"
+
+# The API under functions/ needs these two. Static pages do not touch either,
+# so an anonymous visitor reading a guide never reaches the database.
+#
+# `database_id` is filled in by `wrangler d1 create msglens`. It is an account
+# resource identifier, not a credential, so it belongs in version control —
+# unlike GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET and SESSION_SECRET, which are
+# set as encrypted secrets in the Pages project and never appear here.
+#
+# There is no SITE_URL: the API derives its origin from the request it is
+# serving, which is correct by construction and cannot be forgotten.
+[[d1_databases]]
+binding = "DB"
+database_name = "msglens"
+database_id = "7faab507-2a7b-4477-98d5-5e89ac3c99c4"
+
+[[r2_buckets]]
+binding = "FILES"
+bucket_name = "msglens-files"

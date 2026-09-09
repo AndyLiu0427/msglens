@@ -1,0 +1,25 @@
+# The four platform guides merged into /how-to-open-msg-files/. Four titles
+# that all read "how to open a .msg file on X", all ending at the same viewer,
+# is the doorway-page pattern Google's thin-content guidance names — and it is
+# what AdSense refused the site for, twice.
+# Two rules per path, and the pair is the point. `/foo/*` matches `/foo/` and
+# below but not the bare `/foo`, and the bare form is the one Googlebot uses:
+# every URL in the 404 report was the slashless variant. Shipping only the
+# splat looked verified because `/foo/` did redirect, which is not the URL
+# anyone was asking for.
+/open-msg-file-mac          /how-to-open-msg-files/     301
+/open-msg-file-mac/*        /how-to-open-msg-files/     301
+/open-msg-file-phone        /how-to-open-msg-files/     301
+/open-msg-file-phone/*      /how-to-open-msg-files/     301
+/open-msg-file-windows      /how-to-open-msg-files/     301
+/open-msg-file-windows/*    /how-to-open-msg-files/     301
+/open-msg-file-gmail        /how-to-open-msg-files/     301
+/open-msg-file-gmail/*      /how-to-open-msg-files/     301
+/zh/open-msg-file-mac       /zh/how-to-open-msg-files/  301
+/zh/open-msg-file-mac/*     /zh/how-to-open-msg-files/  301
+/zh/open-msg-file-phone     /zh/how-to-open-msg-files/  301
+/zh/open-msg-file-phone/*   /zh/how-to-open-msg-files/  301
+/zh/open-msg-file-windows   /zh/how-to-open-msg-files/  301
+/zh/open-msg-file-windows/* /zh/how-to-open-msg-files/  301
+/zh/open-msg-file-gmail     /zh/how-to-open-msg-files/  301
+/zh/open-msg-file-gmail/*   /zh/how-to-open-msg-files/  301
