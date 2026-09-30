@@ -18,6 +18,7 @@ export const en = {
     whatIs: "What is a .msg file?",
     noHtmlBody: "Why .msg files have no HTML",
     msgVsEml: ".msg vs .eml",
+    compare: "Online .msg viewers compared",
     toPdf: "Convert .msg to PDF",
     faq: "FAQ",
     about: "About",
@@ -185,6 +186,10 @@ export const en = {
         a: "Not by the viewer. The file you drop is read directly in your browser using JavaScript — there is no upload, and you can verify that by watching your browser's Network tab, or by disconnecting from the internet and opening a file anyway. There is one exception, and it only happens if you ask for it: if you sign in and choose Save to workspace, that specific file is uploaded and stored so your team can open it. Nothing is saved unless you click save.",
       },
       {
+        q: "Are online .msg viewers safe to use?",
+        a: "It depends on where the file goes. Some free online viewers upload your email to their server to render it; others, including this one, read it inside your browser and send nothing. For private email, use one that stays local. You can check any viewer yourself: open the browser's Network tab, open a file, and look for an upload request the size of your file. Our comparison page lists which popular viewers upload, checked in September 2026.",
+      },
+      {
         q: "What is a .msg file?",
         a: "A .msg file is Microsoft Outlook's proprietary format for a single item — an email, appointment, contact or task. It is a Compound File Binary (OLE2) container that stores the message properties, body, recipients and attachments as separate internal streams. Unlike .eml, it is not a standard format, which is why most non-Microsoft applications cannot open it.",
       },
@@ -230,6 +235,8 @@ export const en = {
     planYearly: "Yearly",
     renewsOn: "Renews {date}",
     endsOn: "Access until {date}",
+    manageBilling: "Manage billing",
+    manageBillingFailed: "Could not open billing. Email hello@msglens.app to cancel.",
     openWorkspace: "Open workspace",
     back: "Back",
     close: "Close",
@@ -411,6 +418,7 @@ export const en = {
   },
 
   cta: {
+    updated: "Updated {date}",
     title: "Open a .msg file right now",
     body: "No sign-up, no upload, no software to install.",
     button: "Open the viewer",

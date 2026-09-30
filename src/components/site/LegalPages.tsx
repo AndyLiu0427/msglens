@@ -572,6 +572,15 @@ function TermsEn() {
         they link to. See the privacy policy for how advertising data is handled.
       </p>
 
+      <h2>Paid plans and cancellation</h2>
+      <p>
+        Paid plans are sold by Paddle.com, our merchant of record, which handles payment,
+        tax and refunds. You can cancel a monthly or yearly plan at any time from the
+        workspace (<strong>Manage billing</strong>), or by writing to{" "}
+        <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>. Cancelling stops the
+        next renewal; you keep access until the end of the period already paid for.
+      </p>
+
       <h2>Intellectual property</h2>
       <p>
         The site&apos;s design, text and code are owned by their respective authors.
@@ -645,6 +654,14 @@ function TermsZh() {
       <p>
         本站營運費用來自第三方廣告。我們不為廣告中的商品或服務背書,亦不對廣告內容或其
         連往的網站負責。廣告資料的處理方式請參閱隱私權政策。
+      </p>
+
+      <h2>付費方案與取消</h2>
+      <p>
+        付費方案由我們的代理商 Paddle.com 銷售,並由其處理付款、稅務與退款。月繳或年繳方案可隨時在
+        工作區(<strong>管理訂閱</strong>)取消,或寄信至{" "}
+        <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>。取消後將不再續訂,
+        已付費期間結束前仍可繼續使用。
       </p>
 
       <h2>智慧財產權</h2>

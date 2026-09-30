@@ -20,6 +20,7 @@ export const zh: Dictionary = {
     whatIs: ".msg 檔是什麼?",
     noHtmlBody: "為什麼 .msg 裡沒有 HTML",
     msgVsEml: ".msg 與 .eml 的差別",
+    compare: "線上 .msg 檢視器比較",
     toPdf: ".msg 轉 PDF",
     faq: "常見問題",
     about: "關於我們",
@@ -183,6 +184,10 @@ export const zh: Dictionary = {
         a: "檢視器不會。你拖進來的檔案是由瀏覽器內的 JavaScript 直接讀取的,沒有上傳這件事;你可以在開啟檔案時打開瀏覽器的「網路」開發者工具驗證,或是直接斷網、照樣開得起來。只有一個例外,而且只在你主動要求時才會發生:如果你登入並選擇「儲存到工作區」,那一個檔案才會被上傳並儲存,好讓你的團隊也打得開。沒有按下儲存,就不會有任何東西被存下來。",
       },
       {
+        q: "線上 .msg 檢視器安全嗎?",
+        a: "取決於檔案去哪裡。有些免費線上檢視器會先把郵件上傳到伺服器才顯示;另一些(包含本站)在你的瀏覽器裡讀取,不送出任何東西。私人郵件請使用不上傳的那種。你也可以自己檢查任何檢視器:打開瀏覽器的「網路」分頁、開啟檔案,看有沒有大小跟檔案相近的上傳請求。本站的比較頁列出了哪些常見檢視器會上傳,查證於 2026 年 9 月。",
+      },
+      {
         q: ".msg 檔是什麼?",
         a: ".msg 是 Microsoft Outlook 專有的單一項目格式,可以是一封郵件、一個約會、一張聯絡人或一項工作。它其實是一個 Compound File Binary (OLE2) 容器,把郵件屬性、內文、收件者與附件分別存成內部資料流。與 .eml 不同,它並非開放標準,這也是大多數非微軟軟體打不開它的原因。",
       },
@@ -228,6 +233,8 @@ export const zh: Dictionary = {
     planYearly: "年繳",
     renewsOn: "{date} 續訂",
     endsOn: "可使用至 {date}",
+    manageBilling: "管理訂閱",
+    manageBillingFailed: "無法開啟訂閱管理。如需取消請寄信至 hello@msglens.app。",
     openWorkspace: "開啟工作區",
     back: "返回",
     close: "關閉",
@@ -403,6 +410,7 @@ export const zh: Dictionary = {
   },
 
   cta: {
+    updated: "更新於 {date}",
     title: "現在就開啟一個 .msg 檔",
     body: "不需註冊、不需上傳、不需安裝任何軟體。",
     button: "開啟檢視器",

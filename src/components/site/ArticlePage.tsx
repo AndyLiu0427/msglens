@@ -2,8 +2,9 @@ import Link from "next/link";
 import { Breadcrumb, Page, Prose } from "./Page";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { IconChevronRight } from "@/components/ui/icons";
-import { getDictionary } from "@/lib/i18n";
-import { breadcrumbSchema, howToSchema } from "@/lib/metadata";
+import contentDates from "@/lib/content-dates.json";
+import { format, getDictionary } from "@/lib/i18n";
+import { articleSchema, breadcrumbSchema, howToSchema } from "@/lib/metadata";
 import { localizedPath, SITE, type Locale } from "@/lib/site";
 
 interface ArticlePageProps {
@@ -27,12 +28,14 @@ export function ArticlePage({
   children,
 }: ArticlePageProps) {
   const t = getDictionary(locale);
+  const modified = (contentDates as Record<string, string | undefined>)[path];
 
   const schemas: Array<Record<string, unknown>> = [
     breadcrumbSchema(locale, [
       { name: t.nav.viewer, path: "/" },
       { name: title, path },
     ]),
+    articleSchema(locale, { title, description, path, dateModified: modified }),
   ];
   if (steps) {
     schemas.push(howToSchema({ name: title, description, steps }));
@@ -47,6 +50,19 @@ export function ArticlePage({
           {title}
         </h1>
         <p className="mt-4 text-[16px] leading-relaxed text-ink-muted">{description}</p>
+        {modified && (
+          <p className="mt-2 text-[12.5px] text-ink-subtle">
+            <time dateTime={modified}>
+              {format(t.cta.updated, {
+                date: new Date(modified).toLocaleDateString(locale === "zh" ? "zh-TW" : "en-GB", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                }),
+              })}
+            </time>
+          </p>
+        )}
 
         {intro && (
           <p className="mt-6 border-l-2 border-accent pl-4 text-[15.5px] leading-relaxed text-ink-muted">

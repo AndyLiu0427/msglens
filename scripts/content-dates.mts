@@ -31,8 +31,12 @@ const OUT = join(ROOT, "src/lib/content-dates.json");
 /** Layout, not content — a change here is not a change to what a page says. */
 const SHELL = new Set(["components/site/ArticlePage", "components/site/Page"]);
 
-function git(args: string[]): string {
-  return execFileSync("git", args, { cwd: ROOT, encoding: "utf8" }).trim();
+function git(args: string[], quiet = false): string {
+  return execFileSync("git", args, {
+    cwd: ROOT,
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", quiet ? "ignore" : "inherit"],
+  }).trim();
 }
 
 function isShallow(): boolean {
@@ -43,39 +47,71 @@ function isShallow(): boolean {
   }
 }
 
+/**
+ * A content module holds several guides, and a page renders one of them
+ * (`enContent.whatIs`). Dating the whole file re-dates every guide in it when
+ * one changes, which reports pages as updated that were not. Where the page
+ * names its guide, only that block is dated.
+ */
+interface Source {
+  file: string;
+  /** Top-level key inside the module, when the page uses just one guide. */
+  key?: string;
+}
+
 /** Files that decide what a route says, from the route's own import list. */
-function sourcesFor(route: string): string[] {
+function sourcesFor(route: string): Source[] {
   const slug = route === "/" ? "" : route.replace(/^\//, "");
   const pages = [
     join("src/app/(en)", slug, "page.tsx"),
     join("src/app/(zh)/zh", slug, "page.tsx"),
   ].filter((p) => existsSync(join(ROOT, p)));
 
-  const modules = new Set<string>();
+  // module path -> guide key, or "" when the whole module is used.
+  const modules = new Map<string, string>();
   for (const page of pages) {
     const source = readFileSync(join(ROOT, page), "utf8");
-    for (const match of source.matchAll(/from "@\/([^"]+)"/g)) {
-      const mod = match[1];
+    for (const match of source.matchAll(/import \{ (\w+) \} from "@\/([^"]+)"/g)) {
+      const [, name, mod] = match;
       if (SHELL.has(mod) || mod.startsWith("lib/")) continue;
-      modules.add(mod);
-      // A guide's prose lives in a per-locale file; the page only imports its
-      // own locale, so pair them up.
-      if (mod.startsWith("content/en")) modules.add(mod.replace("content/en", "content/zh"));
-      if (mod.startsWith("content/zh")) modules.add(mod.replace("content/zh", "content/en"));
+      const key = new RegExp(`\\b${name}\\.(\\w+)\\b`).exec(source)?.[1] ?? "";
+      modules.set(mod, key);
+      // A guide's prose lives in a per-locale file with the same keys; the page
+      // only imports its own locale, so pair them up.
+      if (mod.startsWith("content/en")) modules.set(mod.replace("content/en", "content/zh"), key);
+      if (mod.startsWith("content/zh")) modules.set(mod.replace("content/zh", "content/en"), key);
     }
   }
 
-  const files = [...pages];
-  for (const mod of modules) {
+  const sources: Source[] = pages.map((file) => ({ file }));
+  for (const [mod, key] of modules) {
     for (const ext of [".tsx", ".ts"]) {
-      const candidate = join("src", mod + ext);
-      if (existsSync(join(ROOT, candidate))) files.push(candidate);
+      const file = join("src", mod + ext);
+      if (existsSync(join(ROOT, file))) sources.push(key ? { file, key } : { file });
     }
   }
-  return files;
+  return sources;
 }
 
-function lastCommit(files: string[]): string | null {
+/**
+ * Last commit touching one guide's block: from its `  key: {` line to the next
+ * top-level key, or to the module's closing `}` for the last guide.
+ */
+function lastCommitForBlock(file: string, key: string): string | null {
+  for (const end of ["^  [A-Za-z0-9_]*: {$", "^}"]) {
+    try {
+      // Quiet: the first end pattern is expected to miss on a module's last guide.
+      const out = git(["log", "-n", "1", "--format=%cI", "-L", `/^  ${key}: {$/,/${end}/:${file}`], true);
+      const iso = out.split("\n")[0];
+      if (/^\d{4}-/.test(iso)) return iso;
+    } catch {
+      // No match for this end pattern; try the next one.
+    }
+  }
+  return null;
+}
+
+function lastCommitForFiles(files: string[]): string | null {
   if (!files.length) return null;
   try {
     const iso = git(["log", "-1", "--format=%cI", "--", ...files]);
@@ -83,6 +119,17 @@ function lastCommit(files: string[]): string | null {
   } catch {
     return null;
   }
+}
+
+/** The newest of the route's sources, each dated as narrowly as it can be. */
+function lastCommit(sources: Source[]): string | null {
+  const whole = sources.filter((s) => !s.key).map((s) => s.file);
+  const dates = [
+    lastCommitForFiles(whole),
+    ...sources.filter((s) => s.key).map((s) => lastCommitForBlock(s.file, s.key!)),
+  ].filter((d): d is string => d !== null);
+  if (!dates.length) return null;
+  return dates.reduce((a, b) => (Date.parse(a) >= Date.parse(b) ? a : b));
 }
 
 /**

@@ -73,6 +73,8 @@ export const enContent = {
           network. You can confirm this yourself: open your browser&apos;s developer tools,
           switch to the Network tab, and open a file — you will see no upload request. Or
           simply disconnect from the internet after the page has loaded and keep working.
+          Not every online viewer works this way; see{" "}
+          {L("/msg-viewer-comparison", "which free .msg viewers upload your file")}.
         </p>
 
         <h2>Method 2 — Open it in Outlook</h2>

@@ -151,6 +151,7 @@ export const api = {
   logout: () => call<void>("/api/auth/logout", { method: "POST" }),
 
   billing: () => call<{ entitlement: Entitlement }>("/api/billing"),
+  billingPortal: () => call<{ url: string }>("/api/billing/portal", { method: "POST" }),
 
   teams: () => call<{ teams: TeamSummary[] }>("/api/teams"),
   createTeam: (name: string) =>

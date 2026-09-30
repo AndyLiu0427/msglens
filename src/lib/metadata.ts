@@ -87,6 +87,10 @@ export function softwareSchema(locale: Locale, description: string) {
     browserRequirements: "Requires JavaScript. Works in Chrome, Edge, Firefox and Safari.",
     description,
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    isAccessibleForFree: true,
+    // The public source of this same app: lets search and AI systems tie the
+    // two together, and makes the "nothing is uploaded" claim checkable.
+    sameAs: [SITE.repo],
     featureList: [
       "Open Outlook .msg files without Outlook",
       "Open .eml files",
@@ -95,6 +99,18 @@ export function softwareSchema(locale: Locale, description: string) {
       "Export to .eml, .txt and PDF",
       "View raw internet headers",
     ],
+  };
+}
+
+/** Names the site itself, which is what Google shows as the site name in results. */
+export function websiteSchema(locale: Locale) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE.name,
+    url: localizedUrl("/", locale),
+    inLanguage: locale === "zh" ? "zh-Hant" : "en",
+    publisher: { "@type": "Organization", name: SITE.operator },
   };
 }
 
@@ -173,6 +189,29 @@ export function contactSchema(locale: Locale, description: string) {
         availableLanguage: ["en", "zh-Hant"],
       },
     },
+  };
+}
+
+/**
+ * A guide or reference page. `dateModified` comes from git and is left out when
+ * unknown, the same rule as the sitemap: a wrong date is worse than none.
+ */
+export function articleSchema(
+  locale: Locale,
+  input: { title: string; description: string; path: string; dateModified?: string },
+) {
+  const url = localizedUrl(input.path, locale);
+  return {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: input.title,
+    description: input.description,
+    url,
+    mainEntityOfPage: url,
+    inLanguage: locale === "zh" ? "zh-Hant" : "en",
+    ...(input.dateModified ? { dateModified: input.dateModified } : {}),
+    author: { "@type": "Person", name: "Andy Liu", url: localizedUrl("/about", locale) },
+    publisher: { "@type": "Organization", name: SITE.operator, url: localizedUrl("/", locale) },
   };
 }
 

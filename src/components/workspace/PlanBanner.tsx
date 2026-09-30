@@ -69,6 +69,8 @@ export function PlanBanner({ t, locale }: { t: Dictionary; locale: Locale }) {
             )}
           </>
         )}
+        {" · "}
+        <ManageBilling t={t} />
       </p>
     );
   }
@@ -90,5 +92,44 @@ export function PlanBanner({ t, locale }: { t: Dictionary; locale: Locale }) {
         {t.workspace.upgrade}
       </a>
     </div>
+  );
+}
+
+/**
+ * Opens Paddle's portal to cancel, change card or get invoices. The link is
+ * minted on click because it expires; same-tab navigation, so no popup blocker.
+ */
+function ManageBilling({ t }: { t: Dictionary }) {
+  const [busy, setBusy] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  const open = async () => {
+    setBusy(true);
+    setFailed(false);
+    try {
+      const { url } = await api.billingPortal();
+      window.location.href = url;
+    } catch {
+      setFailed(true);
+      setBusy(false);
+    }
+  };
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={open}
+        disabled={busy}
+        className="cursor-pointer font-medium text-accent underline underline-offset-2 hover:text-accent-hover disabled:cursor-default disabled:opacity-60"
+      >
+        {t.workspace.manageBilling}
+      </button>
+      {failed && (
+        <span role="alert" className="ml-2 text-ink">
+          {t.workspace.manageBillingFailed}
+        </span>
+      )}
+    </>
   );
 }

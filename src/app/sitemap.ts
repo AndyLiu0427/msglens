@@ -13,8 +13,8 @@ import contentDates from "@/lib/content-dates.json";
  * and discounts it site-wide, so a date that is always wrong is worse than no
  * date at all: it spends the signal before there is anything to say with it.
  *
- * Dates are per source file, so editing one guide re-dates the others that
- * share its module. That errs towards stale, which is the safe direction.
+ * Dates are per guide, not per file: several guides share a content module,
+ * and dating the file claimed all of them changed whenever one did.
  */
 // Required by `output: export` — both files are generated once at build time.
 export const dynamic = "force-static";

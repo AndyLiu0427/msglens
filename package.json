@@ -16,6 +16,7 @@
     "db:migrate": "wrangler d1 execute msglens --remote --file db/migrations/0001_init.sql",
     "db:migrate:local": "wrangler d1 execute msglens --local --file db/migrations/0001_init.sql",
     "metrics": "tsx scripts/metrics.mts",
+    "indexnow": "tsx scripts/indexnow.mts",
     "content-dates": "tsx scripts/content-dates.mts",
     "prebuild": "tsx scripts/content-dates.mts"
   },

@@ -111,6 +111,7 @@ export const ROUTES = [
   "/outlook-msg-no-html-body",
   "/msg-vs-eml",
   "/convert-msg-to-pdf",
+  "/msg-viewer-comparison",
   "/pricing",
   "/faq",
   "/about",

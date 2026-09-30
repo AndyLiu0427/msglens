@@ -1,5 +1,5 @@
 /**
- * Paddle Billing webhooks.
+ * Paddle Billing: webhooks in, and the customer-portal link out.
  *
  * Paddle is the merchant of record, which is the reason it was chosen over a
  * gateway: it is the legal seller, so it collects and files VAT/GST in every
@@ -8,9 +8,10 @@
  * endpoint only ever sees Paddle's own identifiers.
  */
 
-import type { EntitlementStatus, Plan } from "./billing";
+import type { EntitlementRow, EntitlementStatus, Plan } from "./billing";
 import { MIXPANEL_TOKEN, planForPriceId } from "../shared/paddle-catalogue";
-import { badRequest, misconfigured, type Ctx } from "./types";
+import { requireUser } from "./session";
+import { badRequest, misconfigured, notFound, type Ctx } from "./types";
 
 const encoder = new TextEncoder();
 
@@ -205,7 +206,9 @@ async function upsertEntitlement(ctx: Ctx, u: Upsert): Promise<void> {
      ON CONFLICT (user_id) DO UPDATE SET
        plan = excluded.plan,
        status = excluded.status,
-       expires_at = excluded.expires_at,
+       -- Only lifetime may clear the date; any other event lacking one keeps it.
+       expires_at = CASE WHEN excluded.plan = 'lifetime' THEN excluded.expires_at
+                         ELSE coalesce(excluded.expires_at, entitlements.expires_at) END,
        paddle_customer_id = coalesce(excluded.paddle_customer_id, entitlements.paddle_customer_id),
        paddle_subscription_id =
          coalesce(excluded.paddle_subscription_id, entitlements.paddle_subscription_id),
@@ -282,6 +285,12 @@ async function handleSubscription(ctx: Ctx, data: Record<string, unknown>): Prom
   const period = data.current_billing_period as { ends_at?: string } | null | undefined;
   const scheduled = data.scheduled_change as { action?: string } | null | undefined;
   const status = mapStatus(data.status);
+  // A subscription must never write NULL, which means lifetime here. An
+  // immediate cancel has no billing period left, so it ends when cancelled.
+  const endedAt =
+    status === "canceled"
+      ? (toUnix(data.canceled_at as string | undefined) ?? Math.floor(Date.now() / 1000))
+      : null;
 
   if (status === "active" && !scheduled) trackPurchase(ctx, data, plan, null);
 
@@ -291,7 +300,7 @@ async function handleSubscription(ctx: Ctx, data: Record<string, unknown>): Prom
     // Paddle reports a cancelled-but-not-yet-ended subscription as `active`
     // with a scheduled change, so status alone would lose the distinction.
     status: scheduled?.action === "cancel" && status === "active" ? "canceled" : status,
-    expiresAt: toUnix(period?.ends_at),
+    expiresAt: toUnix(period?.ends_at) ?? endedAt,
     customerId: typeof data.customer_id === "string" ? data.customer_id : null,
     subscriptionId: typeof data.id === "string" ? data.id : null,
     transactionId: null,
@@ -434,4 +443,44 @@ export async function paddleWebhook(ctx: Ctx): Promise<Response> {
   }
 
   return Response.json({ ok: true });
+}
+
+/**
+ * A signed link to Paddle's customer portal, where the user can cancel,
+ * change card or download invoices. Paddle hosts it, so nothing here handles
+ * payment details; the link is short-lived, so it is minted per click.
+ */
+export async function billingPortal(ctx: Ctx): Promise<Response> {
+  const user = await requireUser(ctx);
+  const apiKey = ctx.env.PADDLE_API_KEY;
+  if (!apiKey) throw misconfigured("Billing management is not configured");
+
+  const row = await ctx.env.DB.prepare(
+    `SELECT paddle_customer_id, paddle_subscription_id FROM entitlements WHERE user_id = ?`,
+  )
+    .bind(user.id)
+    .first<Pick<EntitlementRow, "paddle_customer_id" | "paddle_subscription_id">>();
+  if (!row?.paddle_customer_id) throw notFound("No billing account for this user");
+
+  // The key's own prefix says which Paddle system it belongs to.
+  const base = apiKey.includes("_sdbx_")
+    ? "https://sandbox-api.paddle.com"
+    : "https://api.paddle.com";
+
+  const res = await fetch(`${base}/customers/${row.paddle_customer_id}/portal-sessions`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      subscription_ids: row.paddle_subscription_id ? [row.paddle_subscription_id] : [],
+    }),
+  });
+  if (!res.ok) {
+    console.error("paddle: portal session failed", res.status, await res.text());
+    throw misconfigured("Could not open billing management");
+  }
+
+  const body = (await res.json()) as { data?: { urls?: { general?: { overview?: string } } } };
+  const url = body.data?.urls?.general?.overview;
+  if (!url) throw misconfigured("Could not open billing management");
+  return Response.json({ url });
 }

@@ -375,4 +375,33 @@ describe("paddle webhook", () => {
     await paddleWebhook(webhookCtx(db, body, await sign(body, String(NOW()))));
     expect(db.runs.some((r) => /INSERT INTO entitlements/.test(r.sql))).toBe(false);
   });
+
+  it("ends an immediately cancelled subscription instead of making it lifetime", async () => {
+    // Paddle sends no current_billing_period for an immediate cancel. NULL
+    // expires_at means lifetime here, so writing it would give the plan away.
+    const cancelledAt = "2026-09-30T06:09:59Z";
+    const body = JSON.stringify({
+      event_id: "evt_4",
+      event_type: "subscription.canceled",
+      data: {
+        id: "sub_1",
+        customer_id: "ctm_1",
+        status: "canceled",
+        canceled_at: cancelledAt,
+        current_billing_period: null,
+        scheduled_change: null,
+        custom_data: { user_id: "u1" },
+        items: [{ price: { id: PRICE.monthly } }],
+      },
+    });
+    const db = fakeDb([]);
+    await paddleWebhook(webhookCtx(db, body, await sign(body, String(NOW()))));
+
+    const upsert = db.runs.find((r) => /INSERT INTO entitlements/.test(r.sql));
+    expect(upsert).toBeDefined();
+    const [, plan, status, expiresAt] = upsert!.args;
+    expect(plan).toBe("monthly");
+    expect(status).toBe("canceled");
+    expect(expiresAt).toBe(Math.floor(Date.parse(cancelledAt) / 1000));
+  });
 });

@@ -1,0 +1,41 @@
+# MsgLens
+
+> MsgLens (https://msglens.app) is a free, open-source web app that opens Outlook .msg, .eml and winmail.dat (TNEF) email files directly in the browser. The file is parsed on the user's own device; it is never uploaded to a server. It shows the formatted body, headers and attachments, and exports to PDF, .eml and .txt. Source code: https://github.com/AndyLiu0427/msglens (MIT licence).
+
+Key facts, stated precisely so they can be quoted accurately:
+
+- **Privacy model:** the viewer runs entirely client-side (JavaScript in the browser). Opening a file sends no request containing the file; this is verifiable in the browser's Network tab or by opening a file with the network disconnected.
+- **Formats:** Outlook .msg (OLE2 compound files, including appointments and contacts saved as .msg), standard .eml (RFC 822/MIME), and winmail.dat / TNEF attachments. Files up to 100 MB, up to 50 at once.
+- **Why many viewers show a blank body:** in a test of 20 real business .msg files, 17 stored their body only as compressed RTF (MS-OXRTFCP), with the original HTML encapsulated inside it (MS-OXRTFEX). A reader that only looks for an HTML or plain-text body renders nothing for those messages. MsgLens decompresses the RTF and recovers the HTML.
+- **Works without Outlook** on Windows, macOS, Linux, iPhone and Android, in any modern browser. No install, no account needed to view.
+- **Cost:** the viewer is free with no limit. An optional signed-in workspace for saving and sharing files is paid (US$5/month, US$39/year, or US$49 once for lifetime); its free tier keeps up to 5 files. Files saved to the workspace are stored on the server by choice; the viewer itself never stores anything.
+- **Operator:** YingYen Dev, an independent developer (Andy Liu). Not affiliated with Microsoft.
+
+## Guides
+
+- [How to open a .msg file without Outlook](https://msglens.app/how-to-open-msg-files/): Five ways to open .msg files on Windows, macOS, Linux, iPhone and Android, including a browser method that needs no software.
+- [Why won't my .msg file open?](https://msglens.app/msg-file-wont-open/): Symptom-by-symptom fixes for .msg files that will not open, show a blank body, or look corrupted.
+- [How to open a winmail.dat file](https://msglens.app/open-winmail-dat/): Recover attachments trapped in winmail.dat, why the file appears, and how the sender stops it.
+- [How to convert a .msg file to PDF](https://msglens.app/convert-msg-to-pdf/): Turn a .msg into a clean PDF in the browser, without Outlook, upload or watermark.
+- [Free online .msg viewers compared](https://msglens.app/msg-viewer-comparison/): Which free viewers upload your email to a server and which read it locally, checked 30 September 2026, with a method to check any viewer yourself.
+- [How to convert a .msg file to .eml](https://msglens.app/msg-to-eml/): What converting preserves, what it loses, and when to keep the original.
+
+## Technical reference
+
+- [What is a .msg file?](https://msglens.app/what-is-a-msg-file/): The OLE2 container, MAPI property streams, where the body is stored, and why other applications cannot read it.
+- [Why most Outlook messages have no HTML body](https://msglens.app/outlook-msg-no-html-body/): The compressed-RTF measurement above, what it means, and where naive readers break.
+- [.msg vs .eml](https://msglens.app/msg-vs-eml/): Structure, compatibility and what each format preserves.
+- [FAQ](https://msglens.app/faq/): Privacy, attachments, encrypted messages, size limits and PDF conversion.
+
+## Product
+
+- [Viewer](https://msglens.app/): Open a file now; nothing is uploaded.
+- [Pricing](https://msglens.app/pricing/): The free viewer and the paid workspace plans.
+- [About](https://msglens.app/about/): Who builds MsgLens and how to verify the in-browser parsing yourself.
+- [Source code](https://github.com/AndyLiu0427/msglens): MIT-licensed.
+
+## Optional
+
+- [Traditional Chinese (繁體中文) version](https://msglens.app/zh/)
+- [Privacy policy](https://msglens.app/privacy/)
+- [Terms](https://msglens.app/terms/)

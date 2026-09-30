@@ -11,7 +11,7 @@ import {
   IconWifiOff,
 } from "@/components/ui/icons";
 import { getDictionary } from "@/lib/i18n";
-import { faqSchema, softwareSchema } from "@/lib/metadata";
+import { faqSchema, softwareSchema, websiteSchema } from "@/lib/metadata";
 import { localizedPath, SITE, type Locale } from "@/lib/site";
 
 export function HomePage({ locale }: { locale: Locale }) {
@@ -43,6 +43,7 @@ export function HomePage({ locale }: { locale: Locale }) {
       path="/"
       wide
       schemas={[
+        websiteSchema(locale),
         softwareSchema(locale, t.hero.subtitle),
         faqSchema(t.faq.items),
       ]}

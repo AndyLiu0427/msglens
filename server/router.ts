@@ -8,7 +8,7 @@
 
 import { completeGoogleLogin, logout, startGoogleLogin } from "./auth";
 import { readEntitlement, requirePlan } from "./billing";
-import { paddleWebhook } from "./paddle";
+import { billingPortal, paddleWebhook } from "./paddle";
 import { deleteFile, downloadFile, listFiles, moveFile, uploadFile } from "./files";
 import { createFolder, deleteFolder, listFolders, renameFolder } from "./folders";
 import { currentUser, requireUser } from "./session";
@@ -101,6 +101,7 @@ const ROUTES: Route[] = [
   // authenticates by signing the body. Excluded from the same-origin check
   // below for the same reason.
   route("POST", "/api/billing/webhook", paddleWebhook),
+  route("POST", "/api/billing/portal", billingPortal),
 
   route("GET", "/api/files", listFiles),
   route("POST", "/api/files", uploadFile),

@@ -8,21 +8,22 @@ makes "your file is never uploaded" a structural fact rather than a promise.
 
 ## Why this exists
 
-Checked against the three tools that rank for this query, August 2026:
+Checked against the three tools that rank for this query, 30 September 2026,
+by reading their pages and upload code (no file was uploaded):
 
 | | Uploads your file | Scope |
 | --- | --- | --- |
-| coolutils.com | Yes — `multipart/form-data`; its own copy says the file is "deleted from our server" | viewer |
-| encryptomatic.com | Yes — `multipart/form-data`, 75 MB cap | viewer, attachments, PDF, winmail.dat |
-| msg-viewer.pages.dev | **No** — in-browser, open source | body only |
+| coolutils.com | Yes — to `service5.coolutils.org`; says uploads are deleted within 24 hours; 50 MB | converter (PDF, DOC, HTML, JPG, TXT) |
+| encryptomatic.com | Yes — `multipart/form-data`, 75 MB cap | viewer: .msg, .eml, winmail.dat, attachments |
+| msg-viewer.pages.dev | **No** — in-browser, open source | .msg, with attachment handling |
 
 So the "they all upload it" line is not true, and this README used to say it
-was. One of the three is genuinely local; what it is not is complete — no
-attachments, `.eml`, headers or export.
+was. One of the three is genuinely local. The same comparison, kept current,
+is on the site at `/msg-viewer-comparison/`.
 
 What is left is a real split. Against the two hosted converters, the argument
 is that business email should not be posted to an unknown server to be read.
-Against the local one, it is everything around the body.
+Against the local one, it is the other formats: .eml and winmail.dat.
 
 The technical claim underneath all of it: Outlook usually stores the body only
 as *compressed RTF* with the original HTML encapsulated inside it

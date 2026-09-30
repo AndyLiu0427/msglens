@@ -8,6 +8,7 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: [{ userAgent: "*", allow: "/" }],
     sitemap: `${SITE.url}/sitemap.xml`,
-    host: SITE.url,
+    // No `host`: it is a Yandex directive that wants a bare hostname, and Next
+    // writes the full URL into it, which makes the line invalid everywhere.
   };
 }

@@ -38,6 +38,9 @@ export interface Env {
    */
   PADDLE_WEBHOOK_SECRET?: string;
 
+  /** Server API key, used only to mint customer-portal links. A secret. */
+  PADDLE_API_KEY?: string;
+
   /**
    * Mixpanel project token, so the webhook can close the funnel the pricing
    * page opens. Same token as the browser uses — /track takes the untrusted

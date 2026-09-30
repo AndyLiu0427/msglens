@@ -25,6 +25,7 @@ export function Footer({ locale }: { locale: Locale }) {
         { href: p("/what-is-a-msg-file"), label: t.nav.whatIs },
         { href: p("/outlook-msg-no-html-body"), label: t.nav.noHtmlBody },
         { href: p("/msg-vs-eml"), label: t.nav.msgVsEml },
+        { href: p("/msg-viewer-comparison"), label: t.nav.compare },
         { href: p("/faq"), label: t.nav.faq },
         { href: p("/workspace"), label: t.nav.workspace },
         { href: p("/pricing"), label: t.nav.pricing },
