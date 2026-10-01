@@ -589,10 +589,13 @@ export const enContent = {
 
         <h2>Converting several messages</h2>
         <p>
-          Drop all the files at once, then step through them with <code>J</code> and{" "}
-          <code>K</code>, printing each. Printing them into a single PDF is not possible
-          from the browser; if you need one combined document, save each and merge them
-          afterwards.
+          Drop up to 50 files at once, then choose <strong>Save all as PDF</strong> above the
+          message list. Every open message goes into one PDF, each starting on a new page,
+          with its own formatting kept. For hundreds of files, work in batches of 50.
+        </p>
+        <p>
+          If you need a separate PDF per message instead, step through them with{" "}
+          <code>J</code> and <code>K</code> and use <strong>Print / PDF</strong> on each.
         </p>
 
         <h2>Why printing the page does not work</h2>

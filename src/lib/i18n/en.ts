@@ -103,6 +103,9 @@ export const en = {
     searchResults: "{index} of {total}",
     noResults: "No matches",
     print: "Print / PDF",
+    printAll: "Save all as PDF",
+    printAllTitle: "Save every open message into one PDF, each on its own page",
+    messagesNoun: "messages",
     printBlocked:
       "Your browser blocked the print window. Allow pop-ups for this site, then try again.",
     exportEml: "Save as .eml",

@@ -1,6 +1,6 @@
 # MsgLens
 
-> MsgLens (https://msglens.app) is a free, open-source web app that opens Outlook .msg, .eml and winmail.dat (TNEF) email files directly in the browser. The file is parsed on the user's own device; it is never uploaded to a server. It shows the formatted body, headers and attachments, and exports to PDF, .eml and .txt. Source code: https://github.com/AndyLiu0427/msglens (MIT licence).
+> MsgLens (https://msglens.app) is a free, open-source web app that opens Outlook .msg, .eml and winmail.dat (TNEF) email files directly in the browser. The file is parsed on the user's own device; it is never uploaded to a server. It shows the formatted body, headers and attachments, and exports to PDF, .eml and .txt, including up to 50 messages at once into a single PDF. Source code: https://github.com/AndyLiu0427/msglens (MIT licence).
 
 Key facts, stated precisely so they can be quoted accurately:
 

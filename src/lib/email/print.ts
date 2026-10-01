@@ -17,6 +17,7 @@
 import type { ParsedEmail } from "./types";
 import { displayAddress } from "./headers";
 import { formatBytes } from "./mime";
+import { createCidUrls, releaseCidUrls, sanitizeBody, textToHtml } from "./sanitize";
 import type { Dictionary } from "@/lib/i18n";
 
 const PRINT_BASE = `
@@ -60,6 +61,8 @@ const PRINT_BASE = `
   .attachments h2 { margin: 0 0 6px; font-size: 10pt; font-weight: 600; }
   .attachments ul { margin: 0; padding-left: 18px; }
   .body { overflow-wrap: break-word; word-break: break-word; }
+  /* In a combined export each message starts on its own page. */
+  .msg + .msg { break-before: page; }
   .body img { max-width: 100%; height: auto; }
   .body table { max-width: 100%; }
   .body pre.msg-plaintext {
@@ -123,27 +126,14 @@ function escapeHtml(value: string): string {
     .replace(/"/g, "&quot;");
 }
 
-/**
- * @param bodyHtml already sanitised by `sanitizeBody` — this function never
- *        sees raw message markup.
- * @param bodyStyles the message's own CSS, lifted out by `sanitizeBody`.
- *        Without it the PDF loses table borders, fonts and colours.
- */
-export function printMessage(
+/** Header block, body and attachment list for one message. Every value is escaped. */
+function messageSection(
   email: ParsedEmail,
   bodyHtml: string,
-  bodyStyles: string,
   t: Dictionary,
   locale: string,
-): void {
-  const win = window.open("", "_blank", "width=900,height=1000");
-  if (!win) {
-    // Popup blocked. Falling back to printing the current page is worse than
-    // saying so: it silently produces a one-page, truncated PDF.
-    window.alert(t.viewer.printBlocked);
-    return;
-  }
-
+  bodyId?: string,
+): string {
   const row = (label: string, value: string) =>
     value ? `<dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd>` : "";
 
@@ -162,38 +152,64 @@ export function printMessage(
     ? `<section class="attachments">
          <h2>${escapeHtml(t.viewer.attachments)} (${visibleAttachments.length})</h2>
          <ul>${visibleAttachments
-           .map((a) => `<li>${escapeHtml(a.fileName)} — ${formatBytes(a.size)}</li>`)
+           .map((a) => `<li>${escapeHtml(a.fileName)} (${formatBytes(a.size)})</li>`)
            .join("")}</ul>
        </section>`
     : "";
 
-  const doc = `<!doctype html><html><head><meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src blob: data: https: http:; font-src data:">
-<title>${escapeHtml(email.subject || t.viewer.noSubject)}</title>
-<style>${PRINT_BASE}</style>
-<style>${bodyStyles}</style>
-<style>${PRINT_OVERRIDE}</style>
-</head><body>
-<header class="meta">
+  return `<header class="meta">
   <h1>${escapeHtml(email.subject || t.viewer.noSubject)}</h1>
   <dl>${rows}</dl>
 </header>
-<main class="body">${bodyHtml}</main>
+<main class="body"${bodyId ? ` id="${bodyId}"` : ""}>${bodyHtml}</main>
 ${attachments}
-<footer class="footer">${escapeHtml(email.sourceFileName)}</footer>
+<footer class="footer">${escapeHtml(email.sourceFileName)}</footer>`;
+}
+
+/**
+ * A complete print document. `styles` sits between the base and override
+ * sheets, so message CSS can style the body but never the header we add.
+ */
+export function printDocument(title: string, styles: string, sections: string[]): string {
+  return `<!doctype html><html><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src blob: data: https: http:; font-src data:">
+<title>${escapeHtml(title)}</title>
+<style>${PRINT_BASE}</style>
+<style>${styles}</style>
+<style>${PRINT_OVERRIDE}</style>
+</head><body>
+${sections.map((s) => `<article class="msg">${s}</article>`).join("\n")}
 </body></html>`;
+}
+
+/**
+ * Open a print window for a finished document. Returns false when the popup
+ * was blocked, after telling the user; printing the app page instead would
+ * silently produce a truncated PDF.
+ */
+function openPrintWindow(doc: string, t: Dictionary, onDone?: () => void): boolean {
+  const win = window.open("", "_blank", "width=900,height=1000");
+  if (!win) {
+    window.alert(t.viewer.printBlocked);
+    return false;
+  }
 
   // document.write rather than DOM construction: the CSP meta tag has to be
   // present when the document is parsed to take effect, and it is what makes
-  // this safe — `default-src 'none'` with no script-src means nothing in the
-  // document can execute. The body arrives already DOMPurify-sanitised and
-  // every value this function interpolates is escaped above.
+  // this safe. `default-src 'none'` with no script-src means nothing in the
+  // document can execute. Bodies arrive already DOMPurify-sanitised and every
+  // interpolated value is escaped.
   win.document.open();
   win.document.write(doc);
   win.document.close();
 
-  // Wait for images to settle, otherwise the print dialog can capture the
-  // layout before inline images have reserved their space.
+  if (onDone) {
+    win.addEventListener("afterprint", onDone, { once: true });
+    win.addEventListener("pagehide", onDone, { once: true });
+  }
+
+  // Let images settle, or the dialog can capture the layout before inline
+  // images have reserved their space.
   const start = () => {
     win.focus();
     win.print();
@@ -202,5 +218,71 @@ ${attachments}
     setTimeout(start, 250);
   } else {
     win.addEventListener("load", () => setTimeout(start, 250), { once: true });
+  }
+  return true;
+}
+
+/**
+ * @param bodyHtml already sanitised by `sanitizeBody`; this function never
+ *        sees raw message markup.
+ * @param bodyStyles the message's own CSS, lifted out by `sanitizeBody`.
+ *        Without it the PDF loses table borders, fonts and colours.
+ */
+export function printMessage(
+  email: ParsedEmail,
+  bodyHtml: string,
+  bodyStyles: string,
+  t: Dictionary,
+  locale: string,
+): void {
+  openPrintWindow(
+    printDocument(email.subject || t.viewer.noSubject, bodyStyles, [
+      messageSection(email, bodyHtml, t, locale),
+    ]),
+    t,
+  );
+}
+
+/**
+ * Confine one message's CSS to its own body. Every message in a combined
+ * document brings its own `p {}` and `.MsoNormal {}`, and without this the
+ * last one loaded would restyle all the others. Where `@scope` is missing the
+ * message CSS is dropped instead: plainer output, but never cross-contaminated.
+ */
+export function scopeStyles(styles: string, bodyId: string, supported: boolean): string {
+  if (!styles.trim() || !supported) return "";
+  // Outlook puts the message's base font on `body`, which sits outside the
+  // scope and would match nothing. Point it at the scope root instead. Only
+  // selector positions are rewritten: the lookahead must reach a `{` before
+  // any `}`, which a declaration value never does.
+  const rooted = styles.replace(/(^\s*|[{},]\s*)(?:html|body)\b(?=[^{}]*\{)/g, "$1:scope");
+  return `@scope (#${bodyId}) {\n${rooted}\n}`;
+}
+
+/**
+ * Every open message in one print document, each starting on a new page, so
+ * "Save as PDF" produces a single file for the whole batch. Remote images stay
+ * blocked, matching the viewer's default.
+ */
+export function printMessages(emails: ParsedEmail[], t: Dictionary, locale: string): void {
+  const scopeSupported = typeof window !== "undefined" && "CSSScopeRule" in window;
+  const cidMaps: Map<string, string>[] = [];
+  const sections: string[] = [];
+  const styles: string[] = [];
+
+  emails.forEach((email, i) => {
+    const cids = createCidUrls(email.attachments);
+    cidMaps.push(cids);
+    const raw = email.bodyKind === "html" ? email.body : textToHtml(email.body);
+    const sanitized = sanitizeBody(raw, cids, false);
+    const bodyId = `m${i}-body`;
+    sections.push(messageSection(email, sanitized.html, t, locale, bodyId));
+    styles.push(scopeStyles(sanitized.styles, bodyId, scopeSupported));
+  });
+
+  const title = `${emails.length} ${t.viewer.messagesNoun}`;
+  const release = () => cidMaps.forEach(releaseCidUrls);
+  if (!openPrintWindow(printDocument(title, styles.join("\n"), sections), t, release)) {
+    release();
   }
 }

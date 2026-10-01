@@ -7,8 +7,9 @@ import { MessageView } from "./MessageView";
 import { ShortcutsDialog } from "./ShortcutsDialog";
 import { Button, IconButton } from "@/components/ui/Button";
 import { AdSlot } from "@/components/ads/AdSlot";
-import { IconAlert, IconClose, IconKeyboard, IconPlus, IconTrash, IconUpload } from "@/components/ui/icons";
+import { IconAlert, IconClose, IconKeyboard, IconPlus, IconPrinter, IconTrash, IconUpload } from "@/components/ui/icons";
 import { useMessages } from "@/lib/email/useMessages";
+import { printMessages } from "@/lib/email/print";
 import { ReportFailure } from "./ReportFailure";
 import type { Dictionary } from "@/lib/i18n";
 import { SITE, type Locale } from "@/lib/site";
@@ -180,6 +181,17 @@ export function Viewer({ t, locale, intro, children }: ViewerProps) {
           <IconButton title={t.viewer.keyboard} onClick={() => setShowShortcuts(true)}>
             <IconKeyboard className="size-4.5" />
           </IconButton>
+          {messages.length > 1 && (
+            <Button
+              size="sm"
+              variant="ghost"
+              title={t.viewer.printAllTitle}
+              onClick={() => printMessages(messages, t, INTL_LOCALE[locale])}
+            >
+              <IconPrinter className="size-4" />
+              <span className="hidden sm:inline">{t.viewer.printAll}</span>
+            </Button>
+          )}
           <Button size="sm" variant="secondary" onClick={onPickFiles}>
             <IconPlus className="size-4" />
             {t.viewer.addMore}
