@@ -1,8 +1,8 @@
 /**
  * Release prep for the MCP listings, after `pnpm cli:build`:
  * - syncs cli/server.json (official MCP Registry) to package.json's version
- * - packs cli/msglens-<version>.mcpb, the bundle Smithery and Claude Desktop
- *   install for a local server
+ * - packs cli/msglens-<version>.mcpb, the MCPB bundle Claude Desktop installs
+ * - and cli/msglens-<version>-smithery.mcpb, the same files for Smithery
  *
  * Run: pnpm cli:bundle
  */
@@ -63,3 +63,15 @@ execFileSync("npm", ["install", "--omit=dev", "--ignore-scripts", "--no-audit", 
 execFileSync("npx", ["-y", "@anthropic-ai/mcpb@2", "pack", stage, `${dir}msglens-${pkg.version}.mcpb`], {
   stdio: "inherit",
 });
+
+// Smithery builds its server card from the manifest's tools and rejects a tool
+// without inputSchema ("No values to set" when there is no list at all), while
+// MCPB's validator rejects any key beyond name and description. So Smithery
+// gets its own zip with the full tool definitions, packed without that check.
+const manifest = JSON.parse(readFileSync(`${stage}manifest.json`, "utf8"));
+manifest.tools = TOOLS.map(({ name, title, description, inputSchema }) => ({ name, title, description, inputSchema }));
+writeFileSync(`${stage}manifest.json`, JSON.stringify(manifest, null, 2));
+const smithery = `${dir}msglens-${pkg.version}-smithery.mcpb`;
+rmSync(smithery, { force: true });
+execFileSync("zip", ["-qr", smithery, "."], { cwd: stage });
+
