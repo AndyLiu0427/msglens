@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { LOCALES, localizedUrl, ROUTES } from "@/lib/site";
+import { LOCALES, localizedPath, localizedUrl, ROUTES } from "@/lib/site";
 import contentDates from "@/lib/content-dates.json";
 
 /**
@@ -13,8 +13,8 @@ import contentDates from "@/lib/content-dates.json";
  * and discounts it site-wide, so a date that is always wrong is worse than no
  * date at all: it spends the signal before there is anything to say with it.
  *
- * Dates are per guide, not per file: several guides share a content module,
- * and dating the file claimed all of them changed whenever one did.
+ * Dates are per guide and per locale, not per file: several guides share a
+ * content module, and the translations are edited separately.
  */
 // Required by `output: export` — both files are generated once at build time.
 export const dynamic = "force-static";
@@ -25,7 +25,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return LOCALES.flatMap((locale) =>
     ROUTES.map((route) => ({
       url: localizedUrl(route, locale),
-      ...(dates[route] ? { lastModified: new Date(dates[route]) } : {}),
+      ...(dates[localizedPath(route, locale)]
+        ? { lastModified: new Date(dates[localizedPath(route, locale)]!) }
+        : {}),
       changeFrequency: route === "/" ? ("weekly" as const) : ("monthly" as const),
       priority: route === "/" ? 1 : 0.7,
       alternates: {

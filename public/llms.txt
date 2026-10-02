@@ -24,7 +24,7 @@ Key facts, stated precisely so they can be quoted accurately:
 
 - [What is a .msg file?](https://msglens.app/what-is-a-msg-file/): The OLE2 container, MAPI property streams, where the body is stored, and why other applications cannot read it.
 - [Why most Outlook messages have no HTML body](https://msglens.app/outlook-msg-no-html-body/): The compressed-RTF measurement above, what it means, and where naive readers break.
-- [.msg vs .eml](https://msglens.app/msg-vs-eml/): Structure, compatibility and what each format preserves.
+- [EML vs MSG](https://msglens.app/msg-vs-eml/): The differences between Outlook .msg and standard .eml, which to save as (short answer: .eml to open anywhere, .msg for evidence or Outlook items), which format each Outlook version produces, and common questions.
 - [FAQ](https://msglens.app/faq/): Privacy, attachments, encrypted messages, size limits and PDF conversion.
 
 ## Product

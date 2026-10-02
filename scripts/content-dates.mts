@@ -59,13 +59,18 @@ interface Source {
   key?: string;
 }
 
-/** Files that decide what a route says, from the route's own import list. */
-function sourcesFor(route: string): Source[] {
+/**
+ * Files that decide what one locale's page says, from that page's own imports.
+ *
+ * Per locale, not per route: the two translations are edited separately, and
+ * dating them together reported an English page as updated when only its
+ * Chinese twin had changed.
+ */
+function sourcesFor(route: string, locale: "en" | "zh"): Source[] {
   const slug = route === "/" ? "" : route.replace(/^\//, "");
-  const pages = [
-    join("src/app/(en)", slug, "page.tsx"),
-    join("src/app/(zh)/zh", slug, "page.tsx"),
-  ].filter((p) => existsSync(join(ROOT, p)));
+  const pages = [join(locale === "en" ? "src/app/(en)" : "src/app/(zh)/zh", slug, "page.tsx")].filter((p) =>
+    existsSync(join(ROOT, p)),
+  );
 
   // module path -> guide key, or "" when the whole module is used.
   const modules = new Map<string, string>();
@@ -76,10 +81,6 @@ function sourcesFor(route: string): Source[] {
       if (SHELL.has(mod) || mod.startsWith("lib/")) continue;
       const key = new RegExp(`\\b${name}\\.(\\w+)\\b`).exec(source)?.[1] ?? "";
       modules.set(mod, key);
-      // A guide's prose lives in a per-locale file with the same keys; the page
-      // only imports its own locale, so pair them up.
-      if (mod.startsWith("content/en")) modules.set(mod.replace("content/en", "content/zh"), key);
-      if (mod.startsWith("content/zh")) modules.set(mod.replace("content/zh", "content/en"), key);
     }
   }
 
@@ -168,11 +169,15 @@ if (isShallow()) {
       "               (Deploy builds cannot see history; this is expected.)",
   );
 } else {
+  // Keyed by the page's own path, as localizedPath() builds it: "/msg-vs-eml", "/zh/msg-vs-eml".
   for (const route of routes) {
-    const when = lastCommit(sourcesFor(route));
-    if (when) dates[route] = when;
+    for (const locale of ["en", "zh"] as const) {
+      const when = lastCommit(sourcesFor(route, locale));
+      const path = locale === "en" ? route : route === "/" ? "/zh" : `/zh${route}`;
+      if (when) dates[path] = when;
+    }
   }
-  console.log(`content-dates: dated ${Object.keys(dates).length}/${routes.length} routes`);
+  console.log(`content-dates: dated ${Object.keys(dates).length}/${routes.length * 2} pages`);
   writeFileSync(OUT, JSON.stringify(dates, null, 2) + "\n");
 }
 }

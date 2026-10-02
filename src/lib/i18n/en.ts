@@ -426,6 +426,7 @@ export const en = {
     title: "Open a .msg file right now",
     body: "No sign-up, no upload, no software to install.",
     button: "Open the viewer",
+    faqHeading: "Common questions",
   },
 } as const;
 

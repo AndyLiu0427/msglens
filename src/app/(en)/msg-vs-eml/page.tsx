@@ -19,6 +19,7 @@ export default function Page() {
       path={PATH}
       title={doc.title}
       description={doc.description}
+      faq={doc.faq}
     >
       {doc.body}
     </ArticlePage>

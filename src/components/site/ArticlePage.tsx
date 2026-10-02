@@ -1,10 +1,11 @@
 import Link from "next/link";
+import { Fragment } from "react";
 import { Breadcrumb, Page, Prose } from "./Page";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { IconChevronRight } from "@/components/ui/icons";
 import contentDates from "@/lib/content-dates.json";
 import { format, getDictionary } from "@/lib/i18n";
-import { articleSchema, breadcrumbSchema, howToSchema } from "@/lib/metadata";
+import { articleSchema, breadcrumbSchema, faqSchema, howToSchema } from "@/lib/metadata";
 import { localizedPath, SITE, type Locale } from "@/lib/site";
 
 interface ArticlePageProps {
@@ -15,6 +16,8 @@ interface ArticlePageProps {
   intro?: string;
   /** Rendered as HowTo structured data when present. */
   steps?: ReadonlyArray<{ name: string; text: string }>;
+  /** Shown after the body and emitted as FAQPage data: the question variants people search. */
+  faq?: ReadonlyArray<{ q: string; a: string }>;
   children: React.ReactNode;
 }
 
@@ -25,10 +28,11 @@ export function ArticlePage({
   description,
   intro,
   steps,
+  faq,
   children,
 }: ArticlePageProps) {
   const t = getDictionary(locale);
-  const modified = (contentDates as Record<string, string | undefined>)[path];
+  const modified = (contentDates as Record<string, string | undefined>)[localizedPath(path, locale)];
 
   const schemas: Array<Record<string, unknown>> = [
     breadcrumbSchema(locale, [
@@ -40,6 +44,7 @@ export function ArticlePage({
   if (steps) {
     schemas.push(howToSchema({ name: title, description, steps }));
   }
+  if (faq) schemas.push(faqSchema(faq));
 
   return (
     <Page locale={locale} path={path} schemas={schemas}>
@@ -73,7 +78,20 @@ export function ArticlePage({
         <AdSlot slot={SITE.adSlots.articleTop} format="leaderboard" label={t.ads.label} className="mt-8" />
 
         <div className="mt-8">
-          <Prose>{children}</Prose>
+          <Prose>
+            {children}
+            {faq && (
+              <>
+                <h2>{t.cta.faqHeading}</h2>
+                {faq.map((item) => (
+                  <Fragment key={item.q}>
+                    <h3>{item.q}</h3>
+                    <p>{item.a}</p>
+                  </Fragment>
+                ))}
+              </>
+            )}
+          </Prose>
         </div>
       </article>
 

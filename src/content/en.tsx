@@ -331,15 +331,67 @@ export const enContent = {
   },
 
   msgVsEml: {
-    title: ".msg vs .eml — what is the difference?",
+    title: "EML vs MSG: the differences, and which to save as",
     description:
-      "A side-by-side comparison of Outlook .msg and standard .eml email files: structure, compatibility, what each preserves, and when to convert between them.",
+      "EML vs MSG in one table. .msg keeps Outlook-only data such as Exchange senders, flags and appointments; .eml opens in any mail app. Which to choose when saving from Outlook.",
+    faq: [
+      {
+        q: "Should I save Outlook emails as .eml or .msg?",
+        a: "Save as .eml if the message has to open outside Outlook: on a Mac, a phone, Gmail, Thunderbird or an archive system. Keep .msg if it is evidence or an appointment, contact or task, because .msg keeps Outlook-only data that .eml drops. If unsure, keep the .msg: you can convert it to .eml later, but not the other way round without loss.",
+      },
+      {
+        q: "Is .eml or .msg better for archiving?",
+        a: "For long-term archiving, .eml. It is a documented plain-text standard that any mail client, archive or search tool can read. Keep the .msg as well when the message may be needed as evidence, since it holds Exchange sender details, flags and categories that .eml has no place for.",
+      },
+      {
+        q: "Can Outlook open .eml files?",
+        a: "Yes. Outlook on Windows and Mac opens .eml files: double-click the file or drag it into Outlook. Most other mail apps open .eml too, which is the main reason to prefer it for sharing.",
+      },
+      {
+        q: "Does converting .msg to .eml lose attachments or images?",
+        a: "No. Attachments are carried over as MIME parts, and inline images keep their Content-ID so they still appear in the body. What is lost is Outlook-only data: internal Exchange addresses, flags, categories and voting state.",
+      },
+      {
+        q: "Why is the .eml smaller than the .msg?",
+        a: "A .msg often stores the body two or three times, as HTML, compressed RTF and plain text, plus Outlook bookkeeping. The .eml keeps one copy of each part. The message content is not lost; the duplication is.",
+      },
+      {
+        q: "How do I convert .msg to .eml without Outlook?",
+        a: "Open the .msg in the MsgLens viewer at msglens.app and choose Export, then Save as .eml. The conversion runs in your browser; the file is not uploaded.",
+      },
+    ],
     body: (
       <>
         <p>
           Both formats store a single email message in a single file. The difference is that{" "}
           <code>.eml</code> is a published internet standard and <code>.msg</code> is a
           Microsoft implementation detail that escaped into the wild.
+        </p>
+
+        <h2>Short answer: which should you save as?</h2>
+        <ul>
+          <li>
+            <strong>Save as .eml</strong> if the message has to open somewhere other than
+            Outlook: a Mac, a phone, Gmail, Thunderbird, or an archive system.
+          </li>
+          <li>
+            <strong>Keep .msg</strong> if the file is evidence or a record of an Outlook item. It
+            keeps Exchange sender details, flags and categories, and it is the only one of the
+            two that can hold an appointment, contact or task.
+          </li>
+          <li>
+            <strong>Not sure?</strong> Keep the .msg. You can convert it to .eml at any time;
+            converting back cannot restore what .eml dropped.
+          </li>
+        </ul>
+
+        <h2>Which format Outlook gives you</h2>
+        <p>
+          Often you do not get to choose. Classic Outlook for Windows saves <code>.msg</code>,
+          whether you use File, Save As or drag a message to the desktop, and has no{" "}
+          <code>.eml</code> option. Outlook for Mac produces <code>.eml</code> when you drag a
+          message out, and the new Outlook for Windows and Outlook on the web download messages
+          as <code>.eml</code>.
         </p>
 
         <h2>At a glance</h2>

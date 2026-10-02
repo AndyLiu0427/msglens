@@ -7,9 +7,9 @@ const L = (path: string, children: React.ReactNode) => (
 
 export const zhContent = {
   howTo: {
-    title: "沒有 Outlook 也能開啟 .msg 檔的 5 種方法",
+    title: ".msg 檔案如何開啟?不用 Outlook 的 5 種方法",
     description:
-      "在 Windows、macOS、Linux、iPhone 與 Android 上開啟 Outlook .msg 檔的五種做法 —— 其中一種完全不需安裝任何軟體。",
+      "Windows、Mac、iPhone、Android 開啟 Outlook .msg 檔的五種做法,包含不用安裝軟體、在瀏覽器線上開啟 msg 檔(檔案不上傳)的方法。",
     intro:
       "有人寄給你一個副檔名是 .msg 的檔案,你點兩下,電腦不是毫無反應,就是用文字編輯器打開後跑出一整片亂碼。這不是檔案壞了,而是因為它是 Microsoft Outlook 的專有格式 —— 微軟生態系以外的軟體幾乎都讀不懂。",
     steps: [
@@ -127,15 +127,20 @@ export const zhContent = {
   },
 
   whatIs: {
-    title: ".msg 檔是什麼?格式解析",
+    title: "msg 是什麼檔案?Outlook .msg 格式與開啟方式",
     description:
-      "從技術角度解析 Outlook 的 .msg 格式:OLE2 容器、MAPI 屬性資料流、內文的儲存方式,以及為什麼其他軟體讀不了它。",
+      ".msg 是 Outlook 把單封郵件、約會或聯絡人存成檔案的格式。說明它的結構、為什麼其他程式打不開,以及不裝 Outlook 怎麼開啟。",
     body: (
       <>
         <p>
           <code>.msg</code> 是 Microsoft Outlook 用來把單一項目存成獨立檔案的格式。雖然名字
           叫 msg,它裝的不只是郵件 —— 從 Outlook 存出的約會、聯絡人、工作、記事與會議邀請,
           產生的都是 <code>.msg</code> 檔。
+        </p>
+        <p>
+          <strong>想直接打開檔案?</strong>把 <code>.msg</code> 拖進{L("/", "線上檢視器")}
+          就能看到內文和附件,檔案在你的瀏覽器裡解析,不會上傳。其他做法見
+          {L("/how-to-open-msg-files", "開啟 .msg 檔的 5 種方法")}。
         </p>
 
         <h2>外層容器:Compound File Binary Format</h2>
@@ -294,14 +299,64 @@ export const zhContent = {
   },
 
   msgVsEml: {
-    title: ".msg 與 .eml 有什麼差別?",
+    title: "eml 和 msg 差異比較:Outlook 郵件該存哪一種?",
     description:
-      "並列比較 Outlook 的 .msg 與標準 .eml 郵件檔:結構、相容性、各自保留的資訊,以及什麼時候該互相轉換。",
+      ".eml 與 .msg 差在哪?一張表看懂:.msg 保留 Exchange 寄件人、旗標、約會等 Outlook 專屬資料,.eml 任何郵件軟體都能開。附存檔建議。",
+    faq: [
+      {
+        q: "Outlook 郵件該存成 .eml 還是 .msg?",
+        a: "郵件要在 Outlook 以外開啟(Mac、手機、Gmail、Thunderbird 或歸檔系統)就存 .eml。要當作證據,或是約會、聯絡人、工作項目,就保留 .msg,因為它保留了 .eml 會丟掉的 Outlook 專屬資料。不確定時先留 .msg:之後隨時能轉成 .eml,反過來則會有資料補不回來。",
+      },
+      {
+        q: "長期保存郵件,用 .eml 還是 .msg 比較好?",
+        a: "長期保存建議用 .eml。它是公開的純文字標準,任何郵件軟體、歸檔系統或搜尋工具都讀得懂。若郵件可能要當作證據,也一併保留 .msg,因為它有 Exchange 寄件人資訊、旗標與類別,這些 .eml 沒有地方存。",
+      },
+      {
+        q: "Outlook 可以開 .eml 檔嗎?",
+        a: "可以。Windows 與 Mac 版 Outlook 都能開啟 .eml:直接點兩下,或拖進 Outlook。大多數其他郵件軟體也能開 .eml,這也是分享時偏好它的主要原因。",
+      },
+      {
+        q: ".msg 轉 .eml 會遺失附件或圖片嗎?",
+        a: "不會。附件會以 MIME 區段完整保留,內嵌圖片保有 Content-ID,所以在內文中仍會正常顯示。會遺失的是 Outlook 專屬資料:Exchange 內部位址、旗標、類別與投票狀態。",
+      },
+      {
+        q: "為什麼 .eml 檔比 .msg 小?",
+        a: ".msg 常把內文存兩三份(HTML、壓縮 RTF、純文字),再加上 Outlook 的內部紀錄。.eml 每個部分只存一份。郵件內容沒有遺失,少掉的是重複的部分。",
+      },
+      {
+        q: "沒有 Outlook 怎麼把 .msg 轉成 .eml?",
+        a: "在 msglens.app 的檢視器開啟 .msg,選「匯出」再選「另存為 .eml」。轉檔在你的瀏覽器裡進行,檔案不會上傳。",
+      },
+    ],
     body: (
       <>
         <p>
           兩種格式都是把一封郵件存成一個檔案。差別在於 <code>.eml</code> 是公開的網際網路
           標準,而 <code>.msg</code> 是流出到外界的微軟內部實作細節。
+        </p>
+
+        <h2>簡短結論:該存哪一種?</h2>
+        <ul>
+          <li>
+            <strong>存成 .eml</strong>:郵件要在 Outlook 以外開啟時,例如 Mac、手機、Gmail、
+            Thunderbird 或歸檔系統。
+          </li>
+          <li>
+            <strong>保留 .msg</strong>:檔案要當作證據,或要完整保留 Outlook 項目時。它保留
+            Exchange 寄件人資訊、旗標與類別,也是兩者中唯一能存約會、聯絡人和工作的格式。
+          </li>
+          <li>
+            <strong>不確定時</strong>:先留 .msg。之後隨時可以轉成 .eml,反過來則補不回 .eml
+            已經丟掉的資訊。
+          </li>
+        </ul>
+
+        <h2>Outlook 會給你哪一種格式</h2>
+        <p>
+          很多時候你沒得選。Windows 傳統版 Outlook 不論用「檔案 → 另存新檔」或直接把郵件拖到
+          桌面,存出的都是 <code>.msg</code>,沒有 <code>.eml</code> 選項。Mac 版 Outlook
+          把郵件拖出來會得到 <code>.eml</code>,新版 Outlook for Windows 與 Outlook 網頁版
+          下載郵件時也是存成 <code>.eml</code>。
         </p>
 
         <h2>一覽表</h2>
