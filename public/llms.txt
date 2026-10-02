@@ -19,6 +19,7 @@ Key facts, stated precisely so they can be quoted accurately:
 - [How to convert a .msg file to PDF](https://msglens.app/convert-msg-to-pdf/): Turn a .msg into a clean PDF in the browser, without Outlook, upload or watermark.
 - [Free online .msg viewers compared](https://msglens.app/msg-viewer-comparison/): Which free viewers upload your email to a server and which read it locally, checked 30 September 2026, with a method to check any viewer yourself.
 - [How to convert a .msg file to .eml](https://msglens.app/msg-to-eml/): What converting preserves, what it loses, and when to keep the original.
+- [How to open an .eml file](https://msglens.app/open-eml-file/): Opening .eml on Windows, Mac, iPhone and Android with or without Outlook, and fixes for an .eml that opens the wrong app, shows raw code or garbled text, or holds only winmail.dat.
 
 ## Technical reference
 

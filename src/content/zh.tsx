@@ -432,7 +432,7 @@ export const zhContent = {
         <h2>.eml 的優勢</h2>
         <ul>
           <li>
-            <strong>到處都能開</strong>,所有平台的郵件軟體都原生支援。
+            <strong>到處都能開</strong>,所有平台的郵件軟體都原生支援,見{L("/open-eml-file", ".eml 檔怎麼開")}。
           </li>
           <li>
             <strong>可以直接 grep</strong>。純文字表示能用一般命令列工具搜尋、比對與處理。

@@ -35,6 +35,7 @@ export function HomePage({ locale }: { locale: Locale }) {
     { path: "/convert-msg-to-pdf", label: t.nav.toPdf },
     { path: "/msg-to-eml", label: t.nav.toEml },
     { path: "/open-winmail-dat", label: t.nav.winmail },
+    { path: "/open-eml-file", label: t.nav.openEml },
   ];
 
   return (

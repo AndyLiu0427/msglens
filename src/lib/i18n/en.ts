@@ -15,6 +15,7 @@ export const en = {
     toEml: "Convert .msg to .eml",
     wontOpen: "Why won't my .msg file open?",
     winmail: "Open a winmail.dat file",
+    openEml: "Open an .eml file",
     whatIs: "What is a .msg file?",
     noHtmlBody: "Why .msg files have no HTML",
     msgVsEml: ".msg vs .eml",

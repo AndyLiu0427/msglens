@@ -371,4 +371,127 @@ export const enGuides2 = {
       </>
     ),
   },
+  openEml: {
+    title: "How to open an .eml file on any device",
+    description:
+      "Open .eml email files on Windows, Mac, iPhone or Android, with or without Outlook. What to do when an .eml opens the wrong app, shows raw code or garbled text.",
+    faq: [
+      {
+        q: "What program opens .eml files?",
+        a: "Any standard mail app: Outlook, Apple Mail and Thunderbird all open .eml. Without one installed, a browser-based viewer such as MsgLens opens it with nothing to install.",
+      },
+      {
+        q: "Can I open an .eml file without Outlook?",
+        a: "Yes. .eml is an open standard, so Apple Mail, Thunderbird and browser-based viewers read it. Outlook is only needed for Outlook's own .msg format.",
+      },
+      {
+        q: "How do I open an .eml file on iPhone or Android?",
+        a: "Open msglens.app in Safari or Chrome, tap to choose a file and pick the .eml. The file is read on the phone itself and not uploaded.",
+      },
+      {
+        q: "Why does my .eml file show code instead of the email?",
+        a: "It opened in a text editor or a browser tab that shows the raw file. A mail app or viewer decodes the MIME parts back into the formatted message with its attachments.",
+      },
+      {
+        q: "Is it safe to open an .eml file?",
+        a: "Treat it like any email from that sender: the body can contain tracking images and links, and attachments can carry malware. MsgLens blocks remote images by default and never runs scripts from the message, but only open attachments you trust.",
+      },
+    ],
+    body: (
+      <>
+        <p>
+          An <code>.eml</code> file is one email saved in the standard internet format: plain
+          text, with the body and attachments encoded as MIME parts. Unlike Outlook&apos;s{" "}
+          {L("/what-is-a-msg-file", ".msg")}, almost every mail app can read it, so opening
+          one is usually a double-click. When that double-click does nothing, opens the wrong
+          program or shows a wall of code, the fixes are below.
+        </p>
+
+        <h2>Quickest: open it in your browser</h2>
+        <p>
+          Drag the file onto the {L("/", "MsgLens viewer")}, or tap to choose it on a phone.
+          You get the formatted message, the sender and recipients, every attachment for
+          download and the raw headers. The file is parsed in your browser and never uploaded,
+          which you can confirm in the browser&apos;s Network tab. Nothing to install, and it
+          works the same on Windows, Mac, Linux, iPhone and Android.
+        </p>
+
+        <h2>On Windows</h2>
+        <ul>
+          <li>
+            <strong>Outlook</strong>, classic or new, opens <code>.eml</code>: double-click
+            the file, or right-click it and choose Open with, then Outlook.
+          </li>
+          <li>
+            <strong>Thunderbird</strong> is free and opens it too: File, Open, Saved Message.
+          </li>
+          <li>
+            A new PC may have no program for <code>.eml</code> at all. Microsoft retired the
+            built-in Mail app at the end of 2024, and Windows does not open the format on its
+            own.
+          </li>
+        </ul>
+
+        <h2>On a Mac</h2>
+        <p>
+          Apple Mail opens <code>.eml</code> with a double-click, as does Outlook for Mac. If
+          another app grabs the file, see the default-app fix below.
+        </p>
+
+        <h2>On iPhone and Android</h2>
+        <p>
+          Phones open an <code>.eml</code> that arrives attached to an email, but a saved or
+          downloaded <code>.eml</code> often will not open, or shows up as raw text. The
+          browser viewer above is the reliable route: open msglens.app, tap to choose a file
+          and pick it from Files or Downloads.
+        </p>
+
+        <h2>In a text editor</h2>
+        <p>
+          Because <code>.eml</code> is text, Notepad or TextEdit will open it. The headers at
+          the top are readable, which is useful for checking who really sent a message and
+          which servers it passed through. The body is usually encoded (base64 or
+          quoted-printable), and attachments always are, so this is for inspection rather
+          than reading.
+        </p>
+
+        <h2>When it will not open properly</h2>
+        <ul>
+          <li>
+            <strong>It opens in the wrong app.</strong> On Windows, right-click the file,
+            choose Open with, then Choose another app, pick your mail app and tick Always. On a
+            Mac, select the file, choose Get Info, set Open with and click Change All.
+          </li>
+          <li>
+            <strong>It shows code instead of an email.</strong> It opened in a text editor or
+            a browser tab that displays the raw file. Use a mail app or the viewer, which
+            decode it.
+          </li>
+          <li>
+            <strong>The text is garbled.</strong> The message uses a character set your app
+            did not apply, common with Chinese, Japanese and Cyrillic mail. The viewer decodes
+            the charset the message declares, including encoded subject lines.
+          </li>
+          <li>
+            <strong>The only attachment is winmail.dat.</strong> The sender used Outlook Rich
+            Text, and the real attachments are packed inside it.{" "}
+            {L("/open-winmail-dat", "Open the winmail.dat")} to get them out.
+          </li>
+          <li>
+            <strong>It is not really an .eml.</strong> Files get renamed. The viewer
+            identifies the format from its contents, so a <code>.msg</code> saved with the
+            wrong extension still opens.
+          </li>
+        </ul>
+
+        <h2>Saving or converting it</h2>
+        <p>
+          From the viewer you can save the message as a PDF, which is what most people need
+          for a record or for printing; see {L("/convert-msg-to-pdf", "converting to PDF")}.
+          If you are choosing between formats for messages you save from Outlook,{" "}
+          {L("/msg-vs-eml", "EML vs MSG")} explains what each keeps.
+        </p>
+      </>
+    ),
+  },
 } as const;

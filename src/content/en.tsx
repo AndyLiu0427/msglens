@@ -471,7 +471,7 @@ export const enContent = {
         <ul>
           <li>
             <strong>It opens everywhere.</strong> Mail clients on every platform read it
-            natively.
+            natively; see {L("/open-eml-file", "how to open an .eml file")}.
           </li>
           <li>
             <strong>It is greppable.</strong> Being plain text, it can be searched,

@@ -344,4 +344,116 @@ export const zhGuides2 = {
       </>
     ),
   },
+  openEml: {
+    title: ".eml 檔怎麼開?各種裝置的開啟方法",
+    description:
+      "在 Windows、Mac、iPhone 與 Android 開啟 .eml 郵件檔,有沒有 Outlook 都可以。以及 .eml 用錯程式開啟、顯示一堆程式碼或亂碼時怎麼處理。",
+    faq: [
+      {
+        q: "什麼程式可以開 .eml 檔?",
+        a: "一般的郵件軟體都可以:Outlook、Apple Mail、Thunderbird 都能開 .eml。電腦上沒有郵件軟體的話,用瀏覽器裡的檢視器(例如 MsgLens)就能直接開,不必安裝任何東西。",
+      },
+      {
+        q: "沒有 Outlook 可以開 .eml 嗎?",
+        a: "可以。.eml 是公開標準,Apple Mail、Thunderbird 與瀏覽器檢視器都讀得懂。只有 Outlook 自己的 .msg 格式才需要 Outlook。",
+      },
+      {
+        q: "iPhone 或 Android 手機怎麼開 .eml?",
+        a: "用 Safari 或 Chrome 打開 msglens.app,點選擇檔案,選取那個 .eml。檔案在手機上直接讀取,不會上傳。",
+      },
+      {
+        q: "為什麼 .eml 打開後是一堆程式碼?",
+        a: "它被文字編輯器或瀏覽器分頁當成原始檔案顯示了。用郵件軟體或檢視器開啟,它們會把 MIME 區段解碼回排版好的郵件與附件。",
+      },
+      {
+        q: "開啟 .eml 檔安全嗎?",
+        a: "就像對待那位寄件人寄來的任何郵件:內文可能有追蹤圖片和連結,附件可能夾帶惡意程式。MsgLens 預設封鎖遠端圖片,也不會執行郵件裡的任何程式碼,但附件仍只開你信任的。",
+      },
+    ],
+    body: (
+      <>
+        <p>
+          <code>.eml</code> 檔是用網際網路標準格式存下的一封郵件:純文字,內文與附件以 MIME
+          區段編碼。跟 Outlook 的 {L("/what-is-a-msg-file", ".msg")} 不同,幾乎所有郵件軟體
+          都讀得懂,所以通常點兩下就能開。如果點兩下沒反應、開錯程式,或跑出一整片程式碼,
+          下面有對應的解法。
+        </p>
+
+        <h2>最快的方法:用瀏覽器開</h2>
+        <p>
+          把檔案拖進 {L("/", "MsgLens 檢視器")},手機上則點選擇檔案。你會看到排版好的郵件、
+          寄件人與收件人、可逐一下載的附件,以及原始標頭。檔案在你的瀏覽器裡解析,不會上傳,
+          可以打開瀏覽器的 Network 分頁自行確認。不用安裝任何東西,Windows、Mac、Linux、
+          iPhone、Android 用法都一樣。
+        </p>
+
+        <h2>Windows</h2>
+        <ul>
+          <li>
+            <strong>Outlook</strong>(傳統版或新版)都能開 <code>.eml</code>:點兩下檔案,
+            或按右鍵選「開啟檔案」再選 Outlook。
+          </li>
+          <li>
+            免費的 <strong>Thunderbird</strong> 也可以:檔案 → 開啟 → 已儲存的郵件。
+          </li>
+          <li>
+            新電腦可能根本沒有能開 <code>.eml</code> 的程式。微軟已在 2024 年底停止內建的
+            「郵件」App,Windows 本身也不會開這種格式。
+          </li>
+        </ul>
+
+        <h2>Mac</h2>
+        <p>
+          Apple Mail 點兩下就能開 <code>.eml</code>,Mac 版 Outlook 也可以。如果被其他 App
+          搶去開啟,請看下面「改預設程式」的做法。
+        </p>
+
+        <h2>iPhone 與 Android</h2>
+        <p>
+          手機可以開郵件裡附帶的 <code>.eml</code>,但存到手機或下載下來的 <code>.eml</code>
+          常常打不開,或只顯示原始文字。最穩的做法是用上面的瀏覽器檢視器:打開 msglens.app,
+          點選擇檔案,從「檔案」或「下載」中選取。
+        </p>
+
+        <h2>用文字編輯器開</h2>
+        <p>
+          <code>.eml</code> 是文字檔,記事本或 TextEdit 都打得開。最上面的標頭看得懂,可以用來
+          確認真正的寄件人,以及郵件經過哪些伺服器。內文通常經過編碼(base64 或
+          quoted-printable),附件一定有編碼,所以這個方法適合檢查,不適合閱讀。
+        </p>
+
+        <h2>打開了但不正常</h2>
+        <ul>
+          <li>
+            <strong>開錯程式。</strong>Windows:對檔案按右鍵,選「開啟檔案」→「選擇其他應用程式」,
+            選郵件軟體並勾選「一律使用此應用程式」。Mac:選取檔案後按「取得資訊」,設定「打開檔案的
+            應用程式」再按「全部更改」。
+          </li>
+          <li>
+            <strong>顯示一堆程式碼。</strong>它被文字編輯器或瀏覽器分頁當成原始檔案顯示了。改用郵件
+            軟體或檢視器開啟,它們會幫你解碼。
+          </li>
+          <li>
+            <strong>出現亂碼。</strong>郵件用的字元編碼沒被正確套用,中文、日文郵件很常見。檢視器
+            會依郵件宣告的編碼解碼,包含經過編碼的主旨。
+          </li>
+          <li>
+            <strong>附件只有一個 winmail.dat。</strong>寄件人用了 Outlook 的 RTF 格式,真正的附件
+            都包在裡面。{L("/open-winmail-dat", "打開 winmail.dat")} 就能取出。
+          </li>
+          <li>
+            <strong>其實不是 .eml。</strong>檔名可能被改過。檢視器會依檔案內容判斷格式,就算是存成
+            錯誤副檔名的 <code>.msg</code> 也能開。
+          </li>
+        </ul>
+
+        <h2>儲存或轉檔</h2>
+        <p>
+          在檢視器裡可以把郵件存成 PDF,存檔或列印通常都需要這個,詳見
+          {L("/convert-msg-to-pdf", "轉成 PDF")}。如果你在考慮從 Outlook 存信該用哪種格式,
+          {L("/msg-vs-eml", "eml 和 msg 差異比較")}說明了兩者各保留什麼。
+        </p>
+      </>
+    ),
+  },
 } as const;
