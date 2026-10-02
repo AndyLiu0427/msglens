@@ -90,7 +90,7 @@ export function softwareSchema(locale: Locale, description: string) {
     isAccessibleForFree: true,
     // The public source of this same app: lets search and AI systems tie the
     // two together, and makes the "nothing is uploaded" claim checkable.
-    sameAs: [SITE.repo],
+    sameAs: [SITE.repo, SITE.npm],
     featureList: [
       "Open Outlook .msg files without Outlook",
       "Open .eml files",

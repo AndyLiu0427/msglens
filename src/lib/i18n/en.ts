@@ -349,6 +349,7 @@ export const en = {
     rights: "All rights reserved.",
     madeWith: "No tracking of message contents. Ever.",
     sourceCode: "Source code on GitHub",
+    cli: "Command-line tool on npm",
   },
   ads: {
     label: "Advertisement",

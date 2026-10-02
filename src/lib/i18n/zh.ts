@@ -341,6 +341,7 @@ export const zh: Dictionary = {
     rights: "版權所有。",
     madeWith: "永不追蹤郵件內容。",
     sourceCode: "GitHub 原始碼",
+    cli: "npm 命令列工具",
   },
   ads: {
     label: "廣告",

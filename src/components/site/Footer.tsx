@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { IconCode, IconMail, IconShield } from "@/components/ui/icons";
+import { IconCode, IconKeyboard, IconMail, IconShield } from "@/components/ui/icons";
 import { getDictionary } from "@/lib/i18n";
 import { localizedPath, SITE, type Locale } from "@/lib/site";
 
@@ -70,6 +70,15 @@ export function Footer({ locale }: { locale: Locale }) {
             >
               <IconCode className="size-3.5" />
               {t.footer.sourceCode}
+            </a>
+            <a
+              href={SITE.npm}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-1.5 flex w-fit items-center gap-1.5 text-[13px] text-ink-muted transition-colors hover:text-ink"
+            >
+              <IconKeyboard className="size-3.5" />
+              {t.footer.cli}
             </a>
           </div>
 

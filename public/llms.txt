@@ -33,6 +33,7 @@ Key facts, stated precisely so they can be quoted accurately:
 - [Pricing](https://msglens.app/pricing/): The free viewer and the paid workspace plans.
 - [About](https://msglens.app/about/): Who builds MsgLens and how to verify the in-browser parsing yourself.
 - [Source code](https://github.com/AndyLiu0427/msglens): MIT-licensed.
+- [msglens-cli on npm](https://www.npmjs.com/package/msglens-cli): the same parsers as a command-line tool and Node library, for scripts, batch jobs and AI agents. `npx msglens-cli read message.msg` prints headers and the plain-text body (`--json` for structured output); `attachments` saves attachments; `convert --to eml|txt` converts. Runs locally; nothing is uploaded.
 
 ## Optional
 

@@ -51,6 +51,8 @@ export const SITE = {
    * "nothing is uploaded" is checkable rather than something to be trusted.
    */
   repo: "https://github.com/AndyLiu0427/msglens",
+  /** The same parsers as a CLI and Node library (built from cli/). */
+  npm: "https://www.npmjs.com/package/msglens-cli",
   contactEmail: "hello@msglens.app",
   /** Files larger than this are rejected before parsing to protect the tab. */
   maxFileBytes: 100 * 1024 * 1024,
