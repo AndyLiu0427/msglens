@@ -164,7 +164,11 @@ export async function parseMsg(
   buffer: ArrayBuffer,
   sourceFileName: string,
 ): Promise<ParsedEmail> {
-  const { default: MsgReader } = await import("@kenjiuno/msgreader");
+  const mod = await import("@kenjiuno/msgreader");
+  // Bundlers unwrap this CommonJS module's default; Node's ESM loader (the npm
+  // package) leaves it one level deeper.
+  const MsgReader =
+    (mod.default as unknown as { default?: typeof MsgReaderType }).default ?? mod.default;
   const reader: MsgReaderType = new MsgReader(buffer);
   const fields = reader.getFileData();
 

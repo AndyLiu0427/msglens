@@ -1,0 +1,47 @@
+{
+  "name": "msglens",
+  "version": "0.1.0",
+  "description": "Read Outlook .msg, .eml and winmail.dat files in Node: headers, body (including bodies stored only as compressed RTF) and attachments. Library and CLI.",
+  "license": "MIT",
+  "author": "YingYen Dev",
+  "homepage": "https://msglens.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndyLiu0427/msglens.git",
+    "directory": "cli"
+  },
+  "bugs": "https://github.com/AndyLiu0427/msglens/issues",
+  "keywords": [
+    "msg",
+    "outlook",
+    "eml",
+    "winmail.dat",
+    "tnef",
+    "email",
+    "parser",
+    "rtf",
+    "cli",
+    "msg-to-eml"
+  ],
+  "type": "module",
+  "bin": {
+    "msglens": "dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/cli/src/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@kenjiuno/decompressrtf": "^0.1.4",
+    "@kenjiuno/msgreader": "^1.28.0",
+    "postal-mime": "^2.7.5"
+  }
+}

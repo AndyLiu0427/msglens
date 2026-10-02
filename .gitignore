@@ -48,3 +48,7 @@ next-env.d.ts
 
 # Local wrangler/miniflare state (includes locally uploaded test files)
 .wrangler/
+
+# npm package build output
+/cli/dist/
+/cli/LICENSE

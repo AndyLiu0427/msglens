@@ -84,6 +84,22 @@ The parsing libraries are all behind dynamic `import()`, so none of them land
 in the initial bundle — the landing page stays light for the search traffic
 that never opens a file.
 
+### npm package and CLI
+
+`cli/` builds the `msglens` npm package from the same `src/lib/email` parsers,
+so the site and the package cannot drift apart:
+
+```bash
+pnpm cli:build
+node cli/dist/cli.js read public/sample-message.msg
+```
+
+Node is not a browser, and the package fills the gaps: Node decodes
+windows-1252 bytes 0x80-0x9F as control characters (RTF quotes and dashes
+vanish), so the bundle injects a WHATWG-correct `TextDecoder`; and there is no
+`DOMParser`, so `cli/src/text.ts` derives the plain-text body. See
+[cli/README.md](cli/README.md) for usage.
+
 ### Security model for message bodies
 
 Message HTML is fully untrusted and gets three independent layers:

@@ -18,7 +18,8 @@
     "metrics": "tsx scripts/metrics.mts",
     "indexnow": "tsx scripts/indexnow.mts",
     "content-dates": "tsx scripts/content-dates.mts",
-    "prebuild": "tsx scripts/content-dates.mts"
+    "prebuild": "tsx scripts/content-dates.mts",
+    "cli:build": "tsx cli/build.mts"
   },
   "dependencies": {
     "@kenjiuno/decompressrtf": "^0.1.4",
@@ -38,6 +39,7 @@
     "@types/react-dom": "^19",
     "@vitest/coverage-v8": "^4.1.10",
     "cfb": "^1.2.2",
+    "esbuild": "^0.28.1",
     "eslint": "^9",
     "eslint-config-next": "16.3.0",
     "happy-dom": "^20.11.2",
