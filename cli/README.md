@@ -1,8 +1,8 @@
 # msglens-cli
 
-Read Outlook `.msg`, `.eml` and `winmail.dat` files from the command line or
-from Node. Headers, the message body and attachments, with no Outlook and
-nothing uploaded.
+Read Outlook `.msg`, `.eml` and `winmail.dat` files from the command line,
+from Node, or from an AI assistant over MCP. Headers, the message body and
+attachments, with no Outlook and nothing uploaded.
 
 These are the same parsers that run in the browser at
 [msglens.app](https://msglens.app).
@@ -37,6 +37,7 @@ or run it without installing as `npx msglens-cli`.
 msglens read <file...> [--json]            print headers and the plain-text body
 msglens attachments <file...> [-o <dir>]   save every attachment
 msglens convert <file...> --to eml|txt [-o <dir>]
+msglens mcp                                MCP server on stdio (see below)
 ```
 
 - `read --json` prints the full parsed message (one object for one file, an
@@ -53,6 +54,49 @@ Convert a folder of `.msg` files to `.eml`:
 ```bash
 npx msglens-cli convert ./mail/*.msg --to eml -o ./eml
 ```
+
+## MCP server for AI assistants
+
+`msglens mcp` runs a [Model Context Protocol](https://modelcontextprotocol.io)
+server on stdio, so Claude, Codex, Cursor and other assistants can open email
+files on your machine themselves. It has three tools:
+
+- `read_email`: subject, sender, recipients, date, plain-text body and the
+  attachment list (optionally the raw headers)
+- `save_attachments`: writes every attachment into a folder
+- `convert_email`: .msg or winmail.dat to .eml or .txt
+
+The files stay on your machine; the server makes no network requests.
+
+**Claude Code**
+
+```bash
+claude mcp add msglens -- npx -y msglens-cli mcp
+```
+
+**Codex** (`~/.codex/config.toml`)
+
+```toml
+[mcp_servers.msglens]
+command = "npx"
+args = ["-y", "msglens-cli", "mcp"]
+```
+
+**Claude Desktop, Cursor and other JSON-configured clients**
+
+```json
+{
+  "mcpServers": {
+    "msglens": { "command": "npx", "args": ["-y", "msglens-cli", "mcp"] }
+  }
+}
+```
+
+Then ask, for example, "summarise ~/Downloads/invoice-query.msg and save its
+attachments to ~/Desktop/invoice".
+
+Message text is written by whoever sent the email, so the tools tell the
+assistant to treat it as data and not to follow instructions inside it.
 
 ## Library
 

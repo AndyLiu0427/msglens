@@ -1,5 +1,6 @@
-import { writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { basename, extname, join } from "node:path";
+import { toEml, toText, type ParsedEmail } from "./index";
 
 /**
  * Attachment names come from the message, so they are untrusted: strip any
@@ -26,4 +27,26 @@ export async function writeUnique(dir: string, name: string, data: string | Uint
       if ((err as NodeJS.ErrnoException).code !== "EEXIST") throw err;
     }
   }
+}
+
+/** Every attachment into `dir`; returns the paths written. Shared by the CLI and MCP server. */
+export async function saveAttachments(email: ParsedEmail, dir: string): Promise<string[]> {
+  await mkdir(dir, { recursive: true });
+  const paths: string[] = [];
+  for (const [i, att] of email.attachments.entries()) {
+    paths.push(await writeUnique(dir, safeName(att.fileName, `attachment-${i + 1}`), att.content));
+  }
+  return paths;
+}
+
+/** `file` converted to .eml or .txt in `dir`, named after the source file. */
+export async function convertFile(
+  email: ParsedEmail,
+  file: string,
+  format: "eml" | "txt",
+  dir: string,
+): Promise<string> {
+  await mkdir(dir, { recursive: true });
+  const stem = safeName(basename(file, extname(file)), "message");
+  return writeUnique(dir, `${stem}.${format}`, format === "eml" ? await toEml(email) : await toText(email));
 }

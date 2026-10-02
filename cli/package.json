@@ -1,7 +1,7 @@
 {
   "name": "msglens-cli",
-  "version": "0.1.0",
-  "description": "Read Outlook .msg, .eml and winmail.dat files in Node: headers, body (including bodies stored only as compressed RTF) and attachments. Library and CLI.",
+  "version": "0.2.0",
+  "description": "Read Outlook .msg, .eml and winmail.dat files in Node: headers, body (including bodies stored only as compressed RTF) and attachments. CLI, Node library and MCP server for AI assistants.",
   "license": "MIT",
   "author": "YingYen Dev",
   "homepage": "https://msglens.app",
@@ -21,7 +21,10 @@
     "parser",
     "rtf",
     "cli",
-    "msg-to-eml"
+    "msg-to-eml",
+    "mcp",
+    "mcp-server",
+    "model-context-protocol"
   ],
   "type": "module",
   "bin": {

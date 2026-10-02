@@ -97,7 +97,8 @@ node cli/dist/cli.js read public/sample-message.msg
 Node is not a browser, and the package fills the gaps: Node decodes
 windows-1252 bytes 0x80-0x9F as control characters (RTF quotes and dashes
 vanish), so the bundle injects a WHATWG-correct `TextDecoder`; and there is no
-`DOMParser`, so `cli/src/text.ts` derives the plain-text body. See
+`DOMParser`, so `cli/src/text.ts` derives the plain-text body. `msglens mcp`
+(`cli/src/mcp.ts`) is a dependency-free MCP server over the same functions. See
 [cli/README.md](cli/README.md) for usage.
 
 ### Security model for message bodies

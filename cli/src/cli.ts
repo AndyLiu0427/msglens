@@ -1,9 +1,7 @@
 #!/usr/bin/env node
-import { mkdir } from "node:fs/promises";
-import { basename, extname } from "node:path";
 import { parseArgs } from "node:util";
-import { parseFile, toEml, toText, type ParsedEmail } from "./index";
-import { safeName, writeUnique } from "./files";
+import { parseFile, toText, type ParsedEmail } from "./index";
+import { convertFile, saveAttachments } from "./files";
 import { terminalSafe } from "./text";
 
 const USAGE = `msglens: read Outlook .msg, .eml and winmail.dat files
@@ -12,6 +10,7 @@ Usage:
   msglens read <file...> [--json]            print headers and the plain-text body
   msglens attachments <file...> [-o <dir>]   save every attachment
   msglens convert <file...> --to eml|txt [-o <dir>]
+  msglens mcp                                MCP server on stdio, for AI assistants
 
 Files are parsed on this machine; nothing is uploaded.
 Viewer in the browser: https://msglens.app`;
@@ -37,6 +36,10 @@ async function main(): Promise<number> {
   });
   const [command, ...files] = positionals;
 
+  if (command === "mcp") {
+    await (await import("./mcp")).serve();
+    return 0;
+  }
   if (values.help || !command || files.length === 0) {
     console.log(USAGE);
     return values.help ? 0 : 1;
@@ -49,8 +52,6 @@ async function main(): Promise<number> {
     console.error("msglens: convert needs --to eml or --to txt");
     return 1;
   }
-  if (command !== "read") await mkdir(values.out, { recursive: true });
-
   // One bad file in a batch of hundreds should not stop the rest.
   let failed = 0;
   const parsed: ParsedEmail[] = [];
@@ -64,13 +65,9 @@ async function main(): Promise<number> {
           console.log(terminalSafe(await toText(email)));
         }
       } else if (command === "attachments") {
-        for (const [i, att] of email.attachments.entries()) {
-          console.log(await writeUnique(values.out, safeName(att.fileName, `attachment-${i + 1}`), att.content));
-        }
+        for (const path of await saveAttachments(email, values.out)) console.log(path);
       } else {
-        const stem = safeName(basename(file, extname(file)), "message");
-        const data = values.to === "eml" ? await toEml(email) : await toText(email);
-        console.log(await writeUnique(values.out, `${stem}.${values.to}`, data));
+        console.log(await convertFile(email, file, values.to as "eml" | "txt", values.out));
       }
     } catch (err) {
       failed++;

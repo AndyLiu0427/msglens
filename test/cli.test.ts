@@ -7,6 +7,7 @@ import { TextDecoder as PackageDecoder } from "../cli/src/textdecoder";
 import { safeName, writeUnique } from "../cli/src/files";
 import { htmlToText, terminalSafe } from "../cli/src/text";
 import { parseFile } from "../cli/src/index";
+import { handle } from "../cli/src/mcp";
 
 /**
  * The npm package runs the site's parsers in Node, where the browser fills
@@ -69,5 +70,52 @@ describe("parseFile", () => {
     // The site derives this with DOMParser; the package has to do it itself.
     expect(email.bodyText).toMatch(/^Hi Sam,/);
     expect(email.attachments.map((a) => a.fileName)).toEqual(["msglens-logo.png", "q3-supplier-rates.csv"]);
+  });
+});
+
+describe("MCP server", () => {
+  type Res = {
+    result: { protocolVersion: string; tools: { name: string }[]; content: { text: string }[]; isError?: boolean };
+    error: { code: number };
+  };
+  const call = (method: string, params?: Record<string, unknown>) =>
+    handle({ jsonrpc: "2.0", id: 1, method, params }) as Promise<Res>;
+
+  it("agrees on the client's protocol version when it knows it, else offers its latest", async () => {
+    expect((await call("initialize", { protocolVersion: "2025-06-18" })).result.protocolVersion).toBe("2025-06-18");
+    expect((await call("initialize", { protocolVersion: "2099-01-01" })).result.protocolVersion).toBe("2025-11-25");
+  });
+
+  it("does not answer notifications or stray responses", async () => {
+    expect(await handle({ jsonrpc: "2.0", method: "notifications/initialized" })).toBeUndefined();
+    expect(await handle({ jsonrpc: "2.0", id: 7 })).toBeUndefined();
+  });
+
+  it("lists the three tools", async () => {
+    const { result } = await call("tools/list");
+    expect(result.tools.map((t) => t.name)).toEqual(["read_email", "save_attachments", "convert_email"]);
+  });
+
+  it("reads a message into a summary without attachment bytes", async () => {
+    const { result } = await call("tools/call", {
+      name: "read_email",
+      arguments: { path: "public/sample-message.msg" },
+    });
+    const out = JSON.parse(result.content[0].text);
+    expect(out.subject).toBe("Q3 supplier review - notes before Thursday");
+    expect(out.body).toMatch(/^Hi Sam,/);
+    expect(out.attachments[0]).not.toHaveProperty("content");
+    expect(out.headers).toBeUndefined();
+  });
+
+  it("reports a bad path as a tool error the model can read", async () => {
+    const { result } = await call("tools/call", { name: "read_email", arguments: { path: "/nope/x.msg" } });
+    expect(result.isError).toBe(true);
+    expect(result.content[0].text).toMatch(/ENOENT/);
+  });
+
+  it("rejects an unknown tool and an unknown method as protocol errors", async () => {
+    expect((await call("tools/call", { name: "rm_rf" })).error.code).toBe(-32602);
+    expect((await call("resources/list")).error.code).toBe(-32601);
   });
 });
