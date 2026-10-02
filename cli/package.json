@@ -1,5 +1,5 @@
 {
-  "name": "msglens",
+  "name": "msglens-cli",
   "version": "0.1.0",
   "description": "Read Outlook .msg, .eml and winmail.dat files in Node: headers, body (including bodies stored only as compressed RTF) and attachments. Library and CLI.",
   "license": "MIT",

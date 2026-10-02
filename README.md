@@ -86,7 +86,7 @@ that never opens a file.
 
 ### npm package and CLI
 
-`cli/` builds the `msglens` npm package from the same `src/lib/email` parsers,
+`cli/` builds the `msglens-cli` npm package from the same `src/lib/email` parsers,
 so the site and the package cannot drift apart:
 
 ```bash

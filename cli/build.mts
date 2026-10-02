@@ -1,5 +1,5 @@
 /**
- * Bundles the site's parsers (src/lib/email) into the `msglens` npm package,
+ * Bundles the site's parsers (src/lib/email) into the `msglens-cli` npm package,
  * so the website and the package never carry two copies of the parsing code.
  *
  * Run: pnpm cli:build

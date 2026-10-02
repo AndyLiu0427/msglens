@@ -1,4 +1,4 @@
-# msglens
+# msglens-cli
 
 Read Outlook `.msg`, `.eml` and `winmail.dat` files from the command line or
 from Node. Headers, the message body and attachments, with no Outlook and
@@ -8,7 +8,7 @@ These are the same parsers that run in the browser at
 [msglens.app](https://msglens.app).
 
 ```bash
-npx msglens read message.msg
+npx msglens-cli read message.msg
 ```
 
 ## Why another .msg parser
@@ -30,6 +30,9 @@ It also:
 
 ## CLI
 
+Install it with `npm install -g msglens-cli` and the command is `msglens`;
+or run it without installing as `npx msglens-cli`.
+
 ```text
 msglens read <file...> [--json]            print headers and the plain-text body
 msglens attachments <file...> [-o <dir>]   save every attachment
@@ -48,13 +51,13 @@ msglens convert <file...> --to eml|txt [-o <dir>]
 Convert a folder of `.msg` files to `.eml`:
 
 ```bash
-npx msglens convert ./mail/*.msg --to eml -o ./eml
+npx msglens-cli convert ./mail/*.msg --to eml -o ./eml
 ```
 
 ## Library
 
 ```ts
-import { parseFile, parse, toEml, toText } from "msglens";
+import { parseFile, parse, toEml, toText } from "msglens-cli";
 
 const email = await parseFile("message.msg");
 email.subject;          // string
