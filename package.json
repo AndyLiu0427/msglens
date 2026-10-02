@@ -19,7 +19,8 @@
     "indexnow": "tsx scripts/indexnow.mts",
     "content-dates": "tsx scripts/content-dates.mts",
     "prebuild": "tsx scripts/content-dates.mts",
-    "cli:build": "tsx cli/build.mts"
+    "cli:build": "tsx cli/build.mts",
+    "cli:bundle": "tsx cli/bundle.mts"
   },
   "dependencies": {
     "@kenjiuno/decompressrtf": "^0.1.4",

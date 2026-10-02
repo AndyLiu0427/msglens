@@ -52,3 +52,5 @@ next-env.d.ts
 # npm package build output
 /cli/dist/
 /cli/LICENSE
+/cli/.mcpb/
+/cli/*.mcpb

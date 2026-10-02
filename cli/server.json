@@ -1,0 +1,45 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.AndyLiu0427/msglens",
+  "title": "MsgLens",
+  "description": "Read Outlook .msg, .eml and winmail.dat files locally: headers, body and attachments.",
+  "repository": {
+    "url": "https://github.com/AndyLiu0427/msglens",
+    "source": "github",
+    "subfolder": "cli"
+  },
+  "websiteUrl": "https://msglens.app",
+  "icons": [
+    {
+      "src": "https://msglens.app/apple-icon.png",
+      "mimeType": "image/png",
+      "sizes": [
+        "180x180"
+      ]
+    },
+    {
+      "src": "https://msglens.app/icon.svg",
+      "mimeType": "image/svg+xml",
+      "sizes": [
+        "any"
+      ]
+    }
+  ],
+  "version": "0.2.1",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "msglens-cli",
+      "version": "0.2.1",
+      "transport": {
+        "type": "stdio"
+      },
+      "packageArguments": [
+        {
+          "type": "positional",
+          "value": "mcp"
+        }
+      ]
+    }
+  ]
+}

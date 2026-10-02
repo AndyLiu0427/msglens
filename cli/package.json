@@ -1,6 +1,7 @@
 {
   "name": "msglens-cli",
-  "version": "0.2.0",
+  "version": "0.2.1",
+  "mcpName": "io.github.AndyLiu0427/msglens",
   "description": "Read Outlook .msg, .eml and winmail.dat files in Node: headers, body (including bodies stored only as compressed RTF) and attachments. CLI, Node library and MCP server for AI assistants.",
   "license": "MIT",
   "author": "YingYen Dev",
