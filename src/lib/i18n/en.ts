@@ -105,6 +105,8 @@ export const en = {
     noResults: "No matches",
     print: "Print / PDF",
     printAll: "Save all as PDF",
+    feedback: "Missing something, or something not right? Tell us",
+    feedbackSubject: "MsgLens feedback",
     printAllTitle: "Save every open message into one PDF, each on its own page",
     messagesNoun: "messages",
     printBlocked:

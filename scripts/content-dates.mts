@@ -57,6 +57,18 @@ interface Source {
   file: string;
   /** Top-level key inside the module, when the page uses just one guide. */
   key?: string;
+  /** Function-name prefix, when the module holds several pages (Privacy, Terms...). */
+  fn?: string;
+}
+
+/** Top-level function declarations: name and 1-based start line. */
+function functionsIn(file: string): Array<{ name: string; line: number }> {
+  return readFileSync(join(ROOT, file), "utf8")
+    .split("\n")
+    .flatMap((text, i) => {
+      const m = /^(?:export )?(?:async )?function (\w+)/.exec(text);
+      return m ? [{ name: m[1], line: i + 1 }] : [];
+    });
 }
 
 /**
@@ -80,6 +92,16 @@ function sourcesFor(route: string, locale: "en" | "zh"): Source[] {
       const [, name, mod] = match;
       if (SHELL.has(mod) || mod.startsWith("lib/")) continue;
       const key = new RegExp(`\\b${name}\\.(\\w+)\\b`).exec(source)?.[1] ?? "";
+      // LegalPages holds the FAQ, Privacy and Terms pages. Dating the file
+      // re-dated all three when one changed, so date only this page's functions.
+      const file = join("src", `${mod}.tsx`);
+      if (!key && /Page$/.test(name) && existsSync(join(ROOT, file))) {
+        const pages = functionsIn(file).filter((f) => /Page$/.test(f.name));
+        if (pages.length > 1) {
+          modules.set(mod, `fn:${name.replace(/Page$/, "")}`);
+          continue;
+        }
+      }
       modules.set(mod, key);
     }
   }
@@ -88,7 +110,13 @@ function sourcesFor(route: string, locale: "en" | "zh"): Source[] {
   for (const [mod, key] of modules) {
     for (const ext of [".tsx", ".ts"]) {
       const file = join("src", mod + ext);
-      if (existsSync(join(ROOT, file))) sources.push(key ? { file, key } : { file });
+      if (!existsSync(join(ROOT, file))) continue;
+      if (key.startsWith("fn:")) {
+        sources.push({ file, fn: key.slice(3) });
+        // The FAQ's questions and answers live in the dictionary, not the page.
+        if (key === "fn:Faq") sources.push({ file: `src/lib/i18n/${locale}.ts`, key: "faq" });
+      }
+      else sources.push(key ? { file, key } : { file });
     }
   }
   return sources;
@@ -122,12 +150,30 @@ function lastCommitForFiles(files: string[]): string | null {
   }
 }
 
+/** Last commit touching any top-level function whose name starts with `prefix`. */
+function lastCommitForFunctions(file: string, prefix: string): string | null {
+  const fns = functionsIn(file);
+  const total = readFileSync(join(ROOT, file), "utf8").split("\n").length;
+  const dates = fns.flatMap((f, i) => {
+    if (!f.name.startsWith(prefix)) return [];
+    const end = (fns[i + 1]?.line ?? total + 1) - 1;
+    try {
+      const iso = git(["log", "-n", "1", "--format=%cI", "-L", `${f.line},${end}:${file}`], true).split("\n")[0];
+      return /^\d{4}-/.test(iso) ? [iso] : [];
+    } catch {
+      return [];
+    }
+  });
+  return dates.length ? dates.reduce((a, b) => (Date.parse(a) >= Date.parse(b) ? a : b)) : null;
+}
+
 /** The newest of the route's sources, each dated as narrowly as it can be. */
 function lastCommit(sources: Source[]): string | null {
-  const whole = sources.filter((s) => !s.key).map((s) => s.file);
+  const whole = sources.filter((s) => !s.key && !s.fn).map((s) => s.file);
   const dates = [
     lastCommitForFiles(whole),
     ...sources.filter((s) => s.key).map((s) => lastCommitForBlock(s.file, s.key!)),
+    ...sources.filter((s) => s.fn).map((s) => lastCommitForFunctions(s.file, s.fn!)),
   ].filter((d): d is string => d !== null);
   if (!dates.length) return null;
   return dates.reduce((a, b) => (Date.parse(a) >= Date.parse(b) ? a : b));

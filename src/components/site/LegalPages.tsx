@@ -4,8 +4,11 @@ import { getDictionary } from "@/lib/i18n";
 import { faqSchema } from "@/lib/metadata";
 import { SITE, type Locale } from "@/lib/site";
 
-const UPDATED = "9 August 2026";
-const UPDATED_ZH = "2026 年 8 月 9 日";
+// One date per document: a change to one must not re-date the other.
+const PRIVACY_UPDATED = "6 October 2026";
+const PRIVACY_UPDATED_ZH = "2026 年 10 月 6 日";
+const TERMS_UPDATED = "30 September 2026";
+const TERMS_UPDATED_ZH = "2026 年 9 月 30 日";
 
 export function FaqPage({ locale }: { locale: Locale }) {
   const t = getDictionary(locale);
@@ -42,7 +45,7 @@ export function PrivacyPage({ locale }: { locale: Locale }) {
         {isZh ? "隱私權政策" : "Privacy Policy"}
       </h1>
       <p className="mt-3 text-[13px] text-ink-subtle">
-        {isZh ? `最後更新:${UPDATED_ZH}` : `Last updated: ${UPDATED}`}
+        {isZh ? `最後更新:${PRIVACY_UPDATED_ZH}` : `Last updated: ${PRIVACY_UPDATED}`}
       </p>
 
       <div className="mt-8">
@@ -63,7 +66,7 @@ export function TermsPage({ locale }: { locale: Locale }) {
         {isZh ? "使用條款" : "Terms of Use"}
       </h1>
       <p className="mt-3 text-[13px] text-ink-subtle">
-        {isZh ? `最後更新:${UPDATED_ZH}` : `Last updated: ${UPDATED}`}
+        {isZh ? `最後更新:${TERMS_UPDATED_ZH}` : `Last updated: ${TERMS_UPDATED}`}
       </p>
 
       <div className="mt-8">
@@ -172,6 +175,11 @@ function PrivacyEn() {
         display name and profile picture, and we store them so we can show you the right
         workspace and let colleagues see who saved what. We never receive your Google
         password, and we ask for no access to your Gmail, Drive or contacts.
+      </p>
+      <p>
+        We may occasionally email you to ask how MsgLens is working for you. These are
+        personal messages, not a newsletter, and they contain no tracking. Reply &quot;no&quot;
+        and we will not write again.
       </p>
       <p>When you save a message, we store:</p>
       <ul>
@@ -391,6 +399,10 @@ function PrivacyZh() {
         登入使用 Google。我們會取得你的 Google 帳號識別碼、電子郵件地址、顯示名稱與個人
         頭像,並儲存它們,以便顯示正確的工作區,以及讓同事知道是誰儲存了哪個檔案。我們
         不會取得你的 Google 密碼,也不會要求存取你的 Gmail、雲端硬碟或聯絡人。
+      </p>
+      <p>
+        我們可能偶爾寫信問你使用 MsgLens 的情況。這些是個人寄出的信,不是電子報,也不含任何
+        追蹤。回覆「不要」,我們就不會再寫信給你。
       </p>
       <p>當你儲存一封郵件時,我們會存下:</p>
       <ul>

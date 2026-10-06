@@ -105,6 +105,8 @@ export const zh: Dictionary = {
     noResults: "找不到相符內容",
     print: "列印 / PDF",
     printAll: "全部存成 PDF",
+    feedback: "缺了什麼功能,或哪裡不對?寫信告訴我們",
+    feedbackSubject: "MsgLens 意見回饋",
     printAllTitle: "把所有已開啟的郵件存成同一個 PDF,每封從新的一頁開始",
     messagesNoun: "封郵件",
     printBlocked: "瀏覽器封鎖了列印視窗。請允許本站顯示彈出式視窗後再試一次。",

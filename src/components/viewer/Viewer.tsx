@@ -263,6 +263,16 @@ export function Viewer({ t, locale, intro, children }: ViewerProps) {
         </main>
       </div>
 
+      {/* A mailto, like ReportFailure: feedback without a single request from this page. */}
+      <p className="no-print mt-4 text-center text-[13px] text-ink-muted">
+        <a
+          href={`mailto:${SITE.contactEmail}?subject=${encodeURIComponent(t.viewer.feedbackSubject)}`}
+          className="underline underline-offset-2 hover:text-ink"
+        >
+          {t.viewer.feedback}
+        </a>
+      </p>
+
       <AdSlot
         slot={SITE.adSlots.viewerFooter}
         format="leaderboard"
