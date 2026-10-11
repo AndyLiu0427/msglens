@@ -345,6 +345,7 @@ export const zh: Dictionary = {
     madeWith: "永不追蹤郵件內容。",
     sourceCode: "GitHub 原始碼",
     cli: "npm 命令列工具",
+    llms: "給 AI 讀的 llms.txt",
   },
   ads: {
     label: "廣告",

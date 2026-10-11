@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { IconCode, IconKeyboard, IconMail, IconShield } from "@/components/ui/icons";
+import { IconCode, IconKeyboard, IconMail, IconShield, IconSparkle } from "@/components/ui/icons";
 import { getDictionary } from "@/lib/i18n";
 import { localizedPath, SITE, type Locale } from "@/lib/site";
 
@@ -80,6 +80,14 @@ export function Footer({ locale }: { locale: Locale }) {
             >
               <IconKeyboard className="size-3.5" />
               {t.footer.cli}
+            </a>
+            {/* The hand-written summary in public/llms.txt, for crawlers that follow links. */}
+            <a
+              href="/llms.txt"
+              className="mt-1.5 flex w-fit items-center gap-1.5 text-[13px] text-ink-muted transition-colors hover:text-ink"
+            >
+              <IconSparkle className="size-3.5" />
+              {t.footer.llms}
             </a>
           </div>
 

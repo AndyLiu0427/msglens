@@ -353,6 +353,7 @@ export const en = {
     madeWith: "No tracking of message contents. Ever.",
     sourceCode: "Source code on GitHub",
     cli: "Command-line tool on npm",
+    llms: "llms.txt for AI agents",
   },
   ads: {
     label: "Advertisement",
