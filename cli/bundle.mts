@@ -24,7 +24,7 @@ const stage = `${dir}.mcpb/`;
 rmSync(stage, { recursive: true, force: true });
 mkdirSync(stage);
 for (const file of ["dist", "package.json", "LICENSE", "README.md"]) cpSync(`${dir}${file}`, `${stage}${file}`, { recursive: true });
-cpSync(`${dir}../src/app/apple-icon.png`, `${stage}icon.png`);
+cpSync(`${dir}../public/brand/msglens-logo-512.png`, `${stage}icon.png`);
 writeFileSync(
   `${stage}manifest.json`,
   JSON.stringify(
