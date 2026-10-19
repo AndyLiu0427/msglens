@@ -81,8 +81,7 @@ export async function startGoogleLogin(ctx: Ctx): Promise<Response> {
 
   // Where to land after signing in. Only same-origin paths are honoured, so a
   // crafted link cannot turn the callback into an open redirect.
-  const raw = ctx.url.searchParams.get("next") ?? "/workspace/";
-  const next = raw.startsWith("/") && !raw.startsWith("//") ? raw : "/workspace/";
+  const next = safeNext(ctx.url.searchParams.get("next"));
 
   const payload = b64url(new TextEncoder().encode(JSON.stringify({ verifier, state, next })));
   const signed = await sign(payload, ctx.env.SESSION_SECRET);
@@ -188,10 +187,10 @@ export async function completeGoogleLogin(ctx: Ctx): Promise<Response> {
   // An unverified address would let someone claim a colleague's pending invite.
   if (!claims.email || claims.email_verified === false) return fail("email_unverified");
 
-  const user = await upsertUser(ctx, claims);
+  const { user, created } = await upsertUser(ctx, claims);
   const token = await createSession(ctx, user.id);
 
-  const headers = new Headers({ Location: next, "Cache-Control": "no-store" });
+  const headers = new Headers({ Location: created ? welcomeLanding(next) : next, "Cache-Control": "no-store" });
   // Two Set-Cookie headers: install the session and expire the one-shot OAuth
   // cookie. Headers.append keeps them separate — assigning twice would replace.
   headers.append("Set-Cookie", sessionCookie(token));
@@ -200,7 +199,41 @@ export async function completeGoogleLogin(ctx: Ctx): Promise<Response> {
   return new Response(null, { status: 302, headers });
 }
 
-async function upsertUser(ctx: Ctx, claims: GoogleClaims): Promise<User> {
+/**
+ * A new account lands with `?welcome=1`. Every outside sign-up so far signed in
+ * once and left, likely thinking an account was needed to open a file; the
+ * page uses this to say it is not.
+ */
+export function welcomeLanding(next: string): string {
+  const url = new URL(safeNext(next), BASE);
+  url.searchParams.set("welcome", "1");
+  return safeNext(url.pathname + url.search + url.hash);
+}
+
+const BASE = "https://msglens.invalid";
+
+/**
+ * A same-origin path, normalised, or the workspace.
+ *
+ * A prefix check is not enough. Browsers read "/\evil.com" in a Location header
+ * as "//evil.com", and URL parsing turns "/.//evil.com" into "//evil.com". So
+ * reject backslashes, parse, require our origin, and check the result again.
+ */
+export function safeNext(raw: string | null | undefined): string {
+  const fallback = "/workspace/";
+  if (!raw || !raw.startsWith("/") || raw.startsWith("//") || raw.includes("\\")) return fallback;
+  let url: URL;
+  try {
+    url = new URL(raw, BASE);
+  } catch {
+    return fallback;
+  }
+  if (url.origin !== BASE) return fallback;
+  const path = url.pathname + url.search + url.hash;
+  return path.startsWith("//") ? fallback : path;
+}
+
+async function upsertUser(ctx: Ctx, claims: GoogleClaims): Promise<{ user: User; created: boolean }> {
   const now = Math.floor(Date.now() / 1000);
   const existing = await ctx.env.DB.prepare(`SELECT * FROM users WHERE google_sub = ?`)
     .bind(claims.sub)
@@ -215,7 +248,7 @@ async function upsertUser(ctx: Ctx, claims: GoogleClaims): Promise<User> {
       .bind(claims.email!, claims.name ?? null, claims.picture ?? null, now, existing.id)
       .run();
     await claimPendingInvites(ctx, existing.id, claims.email!);
-    return { ...existing, email: claims.email!, last_seen_at: now };
+    return { user: { ...existing, email: claims.email!, last_seen_at: now }, created: false };
   }
 
   const id = uuid();
@@ -246,7 +279,7 @@ async function upsertUser(ctx: Ctx, claims: GoogleClaims): Promise<User> {
   ]);
 
   await claimPendingInvites(ctx, id, user.email);
-  return user;
+  return { user, created: true };
 }
 
 /**

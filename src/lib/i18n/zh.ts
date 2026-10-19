@@ -267,6 +267,13 @@ export const zh: Dictionary = {
     folderMetaOne: "{count} 個檔案",
     signIn: "使用 Google 登入",
     signInShort: "登入",
+    headerSignIn: "登入工作區",
+    welcomeTitle: "已登入。",
+    welcomeBody:
+      "開檔永遠不需要登入:把檔案拖進首頁就能看,檔案留在你的裝置上。登入只是多了一個工作區,用來儲存檔案、和同事分享。",
+    welcomeOpenFile: "開啟檔案",
+    welcomeWorkspace: "前往工作區",
+    welcomeDismiss: "關閉",
     signOut: "登出",
     title: "工作區",
     uploadNotice:
@@ -419,6 +426,7 @@ export const zh: Dictionary = {
 
   cta: {
     updated: "更新於 {date}",
+    byline: "作者:Andy Liu(MsgLens 開發者)",
     title: "現在就開啟一個 .msg 檔",
     body: "不需註冊、不需上傳、不需安裝任何軟體。",
     button: "開啟檢視器",

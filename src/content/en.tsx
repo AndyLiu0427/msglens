@@ -18,7 +18,7 @@ export const enContent = {
     description:
       "Five ways to open Outlook .msg files on Windows, macOS, Linux, iPhone and Android — including a browser method that needs no software at all.",
     intro:
-      "You have been sent a file ending in .msg, you double-click it, and your computer either does nothing or offers to open it in a text editor that shows a wall of binary garbage. This is not a broken file. It is Microsoft Outlook's private format, and almost nothing outside the Microsoft ecosystem knows how to read it.",
+      "The quickest way to open a .msg file without Outlook is to drop it into a browser-based viewer such as MsgLens: the message, its formatting and its attachments appear in seconds, and the file stays on your computer. The other options are Outlook itself, converting to .eml, saving as PDF, or renaming to .txt. A .msg that will not open is usually not broken; it is Outlook's private format.",
     steps: [
       {
         name: "Open it in your browser",
@@ -27,6 +27,10 @@ export const enContent = {
       {
         name: "Open it in Outlook",
         text: "If you have Outlook installed, double-clicking the file is enough. On Windows you may first need to right-click, choose Open with, and select Outlook.",
+      },
+      {
+        name: "Save it as a PDF",
+        text: "Open the file in the viewer, choose Print / PDF, then Save as PDF. With several files open, Save all as PDF puts them in one document.",
       },
       {
         name: "Rename it to .txt as a last resort",

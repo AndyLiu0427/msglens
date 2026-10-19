@@ -11,7 +11,7 @@ export const zhContent = {
     description:
       "Windows、Mac、iPhone、Android 開啟 Outlook .msg 檔的五種做法,包含不用安裝軟體、在瀏覽器線上開啟 msg 檔(檔案不上傳)的方法。",
     intro:
-      "有人寄給你一個副檔名是 .msg 的檔案,你點兩下,電腦不是毫無反應,就是用文字編輯器打開後跑出一整片亂碼。這不是檔案壞了,而是因為它是 Microsoft Outlook 的專有格式 —— 微軟生態系以外的軟體幾乎都讀不懂。",
+      "不用 Outlook 開 .msg 檔,最快的方法是把檔案拖進瀏覽器裡的檢視器(例如 MsgLens):幾秒內就能看到郵件、排版和附件,檔案留在你的電腦上、不會上傳。其他方法還有用 Outlook 開、轉成 .eml、存成 PDF,或改成 .txt 看原始文字。點兩下打不開通常不是檔案壞了,而是 .msg 是 Outlook 的專有格式。",
     steps: [
       {
         name: "用瀏覽器開啟",
@@ -20,6 +20,10 @@ export const zhContent = {
       {
         name: "用 Outlook 開啟",
         text: "如果已安裝 Outlook,點兩下即可。Windows 上可能需要先按右鍵,選擇「開啟檔案」再指定 Outlook。",
+      },
+      {
+        name: "存成 PDF",
+        text: "在檢視器中開啟後按「列印 / PDF」,再選「另存為 PDF」。開了多個檔案時,可以用「全部存成 PDF」合併成一份。",
       },
       {
         name: "改成 .txt 副檔名(僅供確認)",

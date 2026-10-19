@@ -5,6 +5,7 @@ import { Footer } from "./Footer";
 import { IconChevronRight } from "@/components/ui/icons";
 import { getDictionary } from "@/lib/i18n";
 import { localizedPath, SITE, type Locale } from "@/lib/site";
+import { WelcomeNotice } from "@/components/workspace/WelcomeNotice";
 
 interface PageProps {
   locale: Locale;
@@ -21,6 +22,7 @@ export function Page({ locale, path, children, schemas, wide }: PageProps) {
     <div className="flex min-h-dvh flex-col">
       <Header locale={locale} path={path} />
       <main className={`mx-auto w-full flex-1 px-4 py-8 sm:px-6 ${wide ? "max-w-6xl" : "max-w-3xl"}`}>
+        <WelcomeNotice locale={locale} />
         {children}
       </main>
       <Footer locale={locale} />

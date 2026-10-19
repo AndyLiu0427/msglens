@@ -271,6 +271,13 @@ export const en = {
     folderMetaOne: "{count} file",
     signIn: "Sign in with Google",
     signInShort: "Sign in",
+    headerSignIn: "Sign in to workspace",
+    welcomeTitle: "You're signed in.",
+    welcomeBody:
+      "Opening a file never needs an account: drop it on the home page and it stays on your device. Signing in only adds a workspace, for saving files and sharing them with colleagues.",
+    welcomeOpenFile: "Open a file",
+    welcomeWorkspace: "Go to your workspace",
+    welcomeDismiss: "Dismiss",
     signOut: "Sign out",
     title: "Workspace",
     // The whole point of the two-mode split, said once, where the decision is
@@ -427,6 +434,7 @@ export const en = {
 
   cta: {
     updated: "Updated {date}",
+    byline: "By Andy Liu, who builds MsgLens",
     title: "Open a .msg file right now",
     body: "No sign-up, no upload, no software to install.",
     button: "Open the viewer",

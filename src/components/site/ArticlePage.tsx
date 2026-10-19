@@ -57,6 +57,11 @@ export function ArticlePage({
         <p className="mt-4 text-[16px] leading-relaxed text-ink-muted">{description}</p>
         {modified && (
           <p className="mt-2 text-[12.5px] text-ink-subtle">
+            {/* Visible to match the Person author in articleSchema. */}
+            <Link href={localizedPath("/about", locale)} className="hover:text-ink hover:underline">
+              {t.cta.byline}
+            </Link>
+            {" · "}
             <time dateTime={modified}>
               {format(t.cta.updated, {
                 date: new Date(modified).toLocaleDateString(locale === "zh" ? "zh-TW" : "en-GB", {
