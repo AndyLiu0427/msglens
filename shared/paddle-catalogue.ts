@@ -17,6 +17,15 @@
  * off the live site without failing the build or reporting anything.
  */
 
+/**
+ * Off since 29 October 2026: two months, no paying customer, and no outside
+ * user saved even the 5 free files. With it off, the workspace is free up to
+ * WORKSPACE_CAP, the pricing page redirects home, and checkout code stays in
+ * place. Set to true to bring plans back; then restore "/pricing" in ROUTES
+ * (src/lib/site.ts) and drop its lines from public/_redirects.
+ */
+export const BILLING_ENABLED = false;
+
 export type PaddleEnvironment = "sandbox" | "production";
 export type PaddlePlanId = "monthly" | "yearly" | "lifetime";
 

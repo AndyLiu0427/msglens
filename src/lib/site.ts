@@ -115,7 +115,7 @@ export const ROUTES = [
   "/msg-vs-eml",
   "/convert-msg-to-pdf",
   "/msg-viewer-comparison",
-  "/pricing",
+  // /pricing is out while BILLING_ENABLED is false (shared/paddle-catalogue.ts).
   "/faq",
   "/about",
   "/contact",

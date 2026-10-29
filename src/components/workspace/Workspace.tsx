@@ -21,6 +21,7 @@ import { useWorkspace, type FolderSelection } from "@/lib/workspace/useWorkspace
 import { format, type Dictionary } from "@/lib/i18n";
 import { localizedPath, type Locale } from "@/lib/site";
 import { PlanBanner } from "./PlanBanner";
+import { BILLING_ENABLED } from "@/lib/billing";
 import { TeamPanel } from "./TeamPanel";
 import { StoredMessage } from "./StoredMessage";
 
@@ -78,7 +79,7 @@ export function Workspace({ t, locale }: { t: Dictionary; locale: Locale }) {
         <h1 className="text-[22px] font-semibold tracking-tight text-ink">
           {t.workspace.title}
         </h1>
-        <PlanBanner t={t} locale={locale} />
+        {BILLING_ENABLED && <PlanBanner t={t} locale={locale} />}
 
         {w.teams.length > 0 && (
           <select

@@ -3,6 +3,7 @@ import { getDictionary } from "@/lib/i18n";
 import { aboutSchema, breadcrumbSchema, contactSchema } from "@/lib/metadata";
 import { localizedPath, SITE, type Locale } from "@/lib/site";
 import Link from "next/link";
+import { BILLING_ENABLED } from "@/lib/billing";
 
 /**
  * About and Contact.
@@ -277,6 +278,8 @@ function ContactEn() {
         downloads.
       </p>
 
+      {BILLING_ENABLED && (
+        <>
       <h2>Billing, refunds and cancelling</h2>
       <p>
         Payments are handled by <strong>Paddle</strong>, who are the merchant of record — the
@@ -300,6 +303,9 @@ function ContactEn() {
         to put more in, not the ability to get back what is already there. See the{" "}
         {L("/pricing", "en", "pricing page")} for what each plan covers.
       </p>
+
+        </>
+      )}
 
       <h2>Privacy and your data</h2>
       <p>
@@ -347,6 +353,8 @@ function ContactZh() {
         包含「檔案其實是雲端佔位檔、還沒真的下載下來」這種情況。
       </p>
 
+      {BILLING_ENABLED && (
+        <>
       <h2>付款、退款與取消</h2>
       <p>
         付款由 <strong>Paddle</strong> 處理,他們是 merchant of record —— 收據上的法律賣方,
@@ -366,6 +374,9 @@ function ContactZh() {
         永遠不需要付費 —— 方案買的是「能再放進去」,不是「能把已經放進去的拿回來」。
         各方案的內容見{L("/pricing", "zh", "定價頁")}。
       </p>
+
+        </>
+      )}
 
       <h2>隱私與你的資料</h2>
       <p>

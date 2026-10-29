@@ -5,6 +5,7 @@ import { LanguageSwitch } from "./LanguageSwitch";
 import { IconMail } from "@/components/ui/icons";
 import { getDictionary } from "@/lib/i18n";
 import { localizedPath, SITE, type Locale } from "@/lib/site";
+import { BILLING_ENABLED } from "@/lib/billing";
 
 interface HeaderProps {
   locale: Locale;
@@ -21,7 +22,7 @@ export function Header({ locale, path }: HeaderProps) {
     { href: localizedPath("/what-is-a-msg-file", locale), label: t.nav.whatIs },
     { href: localizedPath("/msg-vs-eml", locale), label: t.nav.msgVsEml },
     { href: localizedPath("/faq", locale), label: t.nav.faq },
-    { href: localizedPath("/pricing", locale), label: t.nav.pricing },
+    ...(BILLING_ENABLED ? [{ href: localizedPath("/pricing", locale), label: t.nav.pricing }] : []),
   ];
 
   return (

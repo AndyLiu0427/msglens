@@ -9,6 +9,8 @@
 
 import { PADDLE_CATALOGUE, type PaddlePlanId } from "@/../shared/paddle-catalogue";
 
+export { BILLING_ENABLED } from "@/../shared/paddle-catalogue";
+
 export type PlanId = PaddlePlanId;
 
 export interface Plan {

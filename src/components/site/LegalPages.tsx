@@ -3,12 +3,13 @@ import { AdSlot } from "@/components/ads/AdSlot";
 import { getDictionary } from "@/lib/i18n";
 import { faqSchema } from "@/lib/metadata";
 import { SITE, type Locale } from "@/lib/site";
+import { BILLING_ENABLED } from "@/lib/billing";
 
 // One date per document: a change to one must not re-date the other.
 const PRIVACY_UPDATED = "6 October 2026";
 const PRIVACY_UPDATED_ZH = "2026 年 10 月 6 日";
-const TERMS_UPDATED = "30 September 2026";
-const TERMS_UPDATED_ZH = "2026 年 9 月 30 日";
+const TERMS_UPDATED = "29 October 2026";
+const TERMS_UPDATED_ZH = "2026 年 10 月 29 日";
 
 export function FaqPage({ locale }: { locale: Locale }) {
   const t = getDictionary(locale);
@@ -584,6 +585,8 @@ function TermsEn() {
         they link to. See the privacy policy for how advertising data is handled.
       </p>
 
+      {BILLING_ENABLED && (
+        <>
       <h2>Paid plans and cancellation</h2>
       <p>
         Paid plans are sold by Paddle.com, our merchant of record, which handles payment,
@@ -592,6 +595,9 @@ function TermsEn() {
         <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>. Cancelling stops the
         next renewal; you keep access until the end of the period already paid for.
       </p>
+
+        </>
+      )}
 
       <h2>Intellectual property</h2>
       <p>
@@ -668,6 +674,8 @@ function TermsZh() {
         連往的網站負責。廣告資料的處理方式請參閱隱私權政策。
       </p>
 
+      {BILLING_ENABLED && (
+        <>
       <h2>付費方案與取消</h2>
       <p>
         付費方案由我們的代理商 Paddle.com 銷售,並由其處理付款、稅務與退款。月繳或年繳方案可隨時在
@@ -675,6 +683,9 @@ function TermsZh() {
         <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>。取消後將不再續訂,
         已付費期間結束前仍可繼續使用。
       </p>
+
+        </>
+      )}
 
       <h2>智慧財產權</h2>
       <p>

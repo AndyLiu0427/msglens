@@ -2,6 +2,7 @@ import Link from "next/link";
 import { IconCode, IconKeyboard, IconMail, IconShield, IconSparkle } from "@/components/ui/icons";
 import { getDictionary } from "@/lib/i18n";
 import { localizedPath, SITE, type Locale } from "@/lib/site";
+import { BILLING_ENABLED } from "@/lib/billing";
 
 export function Footer({ locale }: { locale: Locale }) {
   const t = getDictionary(locale);
@@ -29,7 +30,7 @@ export function Footer({ locale }: { locale: Locale }) {
         { href: p("/msg-viewer-comparison"), label: t.nav.compare },
         { href: p("/faq"), label: t.nav.faq },
         { href: p("/workspace"), label: t.nav.workspace },
-        { href: p("/pricing"), label: t.nav.pricing },
+        ...(BILLING_ENABLED ? [{ href: p("/pricing"), label: t.nav.pricing }] : []),
       ],
     },
     {

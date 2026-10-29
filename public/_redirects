@@ -23,3 +23,10 @@
 /zh/open-msg-file-windows/* /zh/how-to-open-msg-files/  301
 /zh/open-msg-file-gmail     /zh/how-to-open-msg-files/  301
 /zh/open-msg-file-gmail/*   /zh/how-to-open-msg-files/  301
+
+# Paid plans are off (BILLING_ENABLED in shared/paddle-catalogue.ts). 302, not
+# 301: the page comes back if plans do. Remove these lines when they do.
+/pricing        /           302
+/pricing/*      /           302
+/zh/pricing     /zh/        302
+/zh/pricing/*   /zh/        302

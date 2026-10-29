@@ -6,6 +6,7 @@ import { IconArchive, IconGoogle } from "@/components/ui/icons";
 import { ApiError, api, signIn, type TeamSummary } from "@/lib/workspace/api";
 import type { ParsedEmail } from "@/lib/email/types";
 import type { Dictionary } from "@/lib/i18n";
+import { BILLING_ENABLED } from "@/lib/billing";
 
 type State = "idle" | "saving" | "saved" | "duplicate";
 
@@ -132,7 +133,7 @@ export function SaveToWorkspace({
             single best moment to show the plans — the user is holding a file
             they wanted to keep.
           */}
-          {blocked && (
+          {blocked && BILLING_ENABLED && (
             <a
               href={locale === "en" ? "/pricing/" : `/${locale}/pricing/`}
               className="text-accent underline underline-offset-2 hover:text-accent-hover"

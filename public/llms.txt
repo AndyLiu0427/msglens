@@ -8,7 +8,7 @@ Key facts, stated precisely so they can be quoted accurately:
 - **Formats:** Outlook .msg (OLE2 compound files, including appointments and contacts saved as .msg), standard .eml (RFC 822/MIME), and winmail.dat / TNEF attachments. Files up to 100 MB, up to 50 at once.
 - **Why many viewers show a blank body:** in a test of 20 real business .msg files, 17 stored their body only as compressed RTF (MS-OXRTFCP), with the original HTML encapsulated inside it (MS-OXRTFEX). A reader that only looks for an HTML or plain-text body renders nothing for those messages. MsgLens decompresses the RTF and recovers the HTML.
 - **Works without Outlook** on Windows, macOS, Linux, iPhone and Android, in any modern browser. No install, no account needed to view.
-- **Cost:** the viewer is free with no limit. An optional signed-in workspace for saving and sharing files is paid (US$5/month, US$39/year, or US$49 once for lifetime); its free tier keeps up to 5 files. Files saved to the workspace are stored on the server by choice; the viewer itself never stores anything.
+- **Cost:** free. The viewer is free with no limit and no account. An optional signed-in workspace for saving and sharing files is also free, up to 100 files or 500 MB per person. Files saved to the workspace are stored on the server by choice; the viewer itself never stores anything.
 - **Operator:** YingYen Dev, an independent developer (Andy Liu). Not affiliated with Microsoft.
 
 ## Guides
@@ -31,7 +31,6 @@ Key facts, stated precisely so they can be quoted accurately:
 ## Product
 
 - [Viewer](https://msglens.app/): Open a file now; nothing is uploaded.
-- [Pricing](https://msglens.app/pricing/): The free viewer and the paid workspace plans.
 - [About](https://msglens.app/about/): Who builds MsgLens and how to verify the in-browser parsing yourself.
 - [Source code](https://github.com/AndyLiu0427/msglens): MIT-licensed.
 - [msglens-cli on npm](https://www.npmjs.com/package/msglens-cli): the same parsers as a command-line tool and Node library, for scripts, batch jobs and AI agents. `npx msglens-cli read message.msg` prints headers and the plain-text body (`--json` for structured output); `attachments` saves attachments; `convert --to eml|txt` converts. `msglens mcp` is an MCP server (tools: read_email, save_attachments, convert_email) for Claude, Codex, Cursor and other assistants; add it with `claude mcp add msglens -- npx -y msglens-cli mcp`. Runs locally; nothing is uploaded.

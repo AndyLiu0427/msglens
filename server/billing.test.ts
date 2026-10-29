@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { readEntitlement, FREE_FILE_LIMIT } from "./billing";
+import { readEntitlement, FREE_FILE_LIMIT, requirePlan, requireUploadAllowance, WORKSPACE_CAP } from "./billing";
 import { paddleWebhook } from "./paddle";
-import { PADDLE_CATALOGUE } from "../shared/paddle-catalogue";
+import { BILLING_ENABLED, PADDLE_CATALOGUE } from "../shared/paddle-catalogue";
 import type { Ctx, Env } from "./types";
 
 /**
@@ -405,3 +405,29 @@ describe("paddle webhook", () => {
     expect(expiresAt).toBe(Math.floor(Date.parse(cancelledAt) / 1000));
   });
 });
+
+// While billing is off, the workspace is free but capped, so one account
+// cannot fill the storage. These run only in that mode.
+describe.skipIf(BILLING_ENABLED)("free workspace (billing off)", () => {
+  const user = { id: "u1" } as Parameters<typeof requirePlan>[1];
+  const usage = (n: number, bytes: number) =>
+    fakeDb([[/count\(\*\) AS n, coalesce\(sum\(size_bytes\)/, () => ({ n, bytes })]]);
+
+  it("lets anyone use folders and teams", async () => {
+    await expect(requirePlan(ctxWith(fakeDb([])), user, "Folders")).resolves.toBeUndefined();
+  });
+
+  it("allows a save under both caps", async () => {
+    await expect(requireUploadAllowance(ctxWith(usage(10, 1_000)), user, 5_000)).resolves.toBeUndefined();
+  });
+
+  it("refuses at the file cap and when the bytes would go over", async () => {
+    await expect(requireUploadAllowance(ctxWith(usage(WORKSPACE_CAP.files, 0)), user, 1)).rejects.toMatchObject({
+      status: 403,
+    });
+    await expect(
+      requireUploadAllowance(ctxWith(usage(1, WORKSPACE_CAP.bytes - 10)), user, 11),
+    ).rejects.toMatchObject({ status: 403 });
+  });
+});
+

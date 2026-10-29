@@ -95,7 +95,7 @@ export async function uploadFile(ctx: Ctx): Promise<Response> {
 
   // Checked after the role, so someone with no business in this team is told
   // that rather than being asked to pay for a team that is not theirs.
-  await requireUploadAllowance(ctx, user);
+  await requireUploadAllowance(ctx, user, blob.size);
 
   if (meta.folderId) await assertFolderInTeam(ctx, meta.folderId, meta.teamId);
 

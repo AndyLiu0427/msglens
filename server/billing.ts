@@ -15,6 +15,7 @@
  */
 
 import { HttpError, type Ctx, type User } from "./types";
+import { BILLING_ENABLED } from "../shared/paddle-catalogue";
 
 export type Plan = "monthly" | "yearly" | "lifetime";
 export type EntitlementStatus = "active" | "past_due" | "canceled" | "expired";
@@ -41,6 +42,12 @@ export interface EntitlementRow {
  * any of the code around it.
  */
 export const FREE_FILE_LIMIT = 5;
+
+/**
+ * While billing is off the workspace is free for everyone, with a cap so one
+ * account cannot fill the storage. Files and bytes, per person, across teams.
+ */
+export const WORKSPACE_CAP = { files: 100, bytes: 500 * 1024 * 1024 };
 
 export interface Entitlement {
   /** True when paid features are available right now. */
@@ -131,13 +138,29 @@ export const paymentRequired = (message: string, code = "payment_required") =>
 
 /** Guard for features that are paid outright: folders, teams, invites. */
 export async function requirePlan(ctx: Ctx, user: User, feature: string): Promise<void> {
+  if (!BILLING_ENABLED) return;
   const entitlement = await readEntitlement(ctx, user.id);
   if (entitlement.active) return;
   throw paymentRequired(`${feature} needs a MsgLens plan.`);
 }
 
 /** Guard for saving a file, which the free tier allows a few of. */
-export async function requireUploadAllowance(ctx: Ctx, user: User): Promise<void> {
+export async function requireUploadAllowance(ctx: Ctx, user: User, incomingBytes = 0): Promise<void> {
+  if (!BILLING_ENABLED) {
+    const row = await ctx.env.DB.prepare(
+      `SELECT count(*) AS n, coalesce(sum(size_bytes), 0) AS bytes FROM files WHERE uploaded_by = ?`,
+    )
+      .bind(user.id)
+      .first<{ n: number; bytes: number }>();
+    if ((row?.n ?? 0) >= WORKSPACE_CAP.files || (row?.bytes ?? 0) + incomingBytes > WORKSPACE_CAP.bytes) {
+      throw new HttpError(
+        403,
+        `The workspace holds ${WORKSPACE_CAP.files} files or 500 MB per person. Delete some files to save more.`,
+        "workspace_full",
+      );
+    }
+    return;
+  }
   const entitlement = await readEntitlement(ctx, user.id);
   if (entitlement.active) return;
   if ((entitlement.remainingFiles ?? 0) > 0) return;
