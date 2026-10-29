@@ -7,9 +7,11 @@ import { MessageView } from "./MessageView";
 import { ShortcutsDialog } from "./ShortcutsDialog";
 import { Button, IconButton } from "@/components/ui/Button";
 import { AdSlot } from "@/components/ads/AdSlot";
-import { IconAlert, IconClose, IconKeyboard, IconPlus, IconPrinter, IconTrash, IconUpload } from "@/components/ui/icons";
+import { IconAlert, IconArchive, IconClose, IconKeyboard, IconPlus, IconPrinter, IconTrash, IconUpload } from "@/components/ui/icons";
 import { useMessages } from "@/lib/email/useMessages";
 import { printMessages } from "@/lib/email/print";
+import { downloadAllAsEml } from "@/lib/email/export";
+import { collectFiles } from "@/lib/email/collectFiles";
 import { ReportFailure } from "./ReportFailure";
 import type { Dictionary } from "@/lib/i18n";
 import { SITE, type Locale } from "@/lib/site";
@@ -68,7 +70,7 @@ export function Viewer({ t, locale, intro, children }: ViewerProps) {
       e.preventDefault();
       dragDepth.current = 0;
       setDragging(false);
-      if (e.dataTransfer?.files?.length) void addFiles(e.dataTransfer.files);
+      if (e.dataTransfer?.items?.length) void collectFiles(e.dataTransfer).then(addFiles);
     };
 
     window.addEventListener("dragenter", onEnter);
@@ -177,8 +179,13 @@ export function Viewer({ t, locale, intro, children }: ViewerProps) {
           {t.viewer.messages}
           <span className="ml-1.5 font-normal">({messages.length})</span>
         </h2>
-        <div className="ml-auto flex items-center gap-1">
-          <IconButton title={t.viewer.keyboard} onClick={() => setShowShortcuts(true)}>
+        <div className="ml-auto flex flex-wrap items-center justify-end gap-1">
+          {/* Phones have no keyboard, and the row is too wide for this one too. */}
+          <IconButton
+            title={t.viewer.keyboard}
+            onClick={() => setShowShortcuts(true)}
+            className="hidden sm:inline-flex"
+          >
             <IconKeyboard className="size-4.5" />
           </IconButton>
           {messages.length > 1 && (
@@ -190,6 +197,18 @@ export function Viewer({ t, locale, intro, children }: ViewerProps) {
             >
               <IconPrinter className="size-4" />
               <span className="hidden sm:inline">{t.viewer.printAll}</span>
+            </Button>
+          )}
+          {messages.length > 1 && (
+            <Button
+              size="sm"
+              variant="ghost"
+              title={t.viewer.emlAllTitle}
+              aria-label={t.viewer.emlAllTitle}
+              onClick={() => void downloadAllAsEml(messages, `${messages.length} ${t.viewer.messagesNoun}`)}
+            >
+              <IconArchive className="size-4" />
+              <span className="hidden sm:inline">{t.viewer.emlAll}</span>
             </Button>
           )}
           <Button size="sm" variant="secondary" onClick={onPickFiles}>
@@ -264,10 +283,10 @@ export function Viewer({ t, locale, intro, children }: ViewerProps) {
       </div>
 
       {/* A mailto, like ReportFailure: feedback without a single request from this page. */}
-      <p className="no-print mt-4 text-center text-[13px] text-ink-muted">
+      <p className="no-print mt-2 text-center text-[13px] text-ink-muted">
         <a
           href={`mailto:${SITE.contactEmail}?subject=${encodeURIComponent(t.viewer.feedbackSubject)}`}
-          className="underline underline-offset-2 hover:text-ink"
+          className="inline-block py-2 underline underline-offset-2 hover:text-ink"
         >
           {t.viewer.feedback}
         </a>

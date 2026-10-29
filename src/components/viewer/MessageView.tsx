@@ -240,7 +240,7 @@ export function MessageView({
           <button
             type="button"
             onClick={() => setShowDetails((s) => !s)}
-            className="no-print mt-2.5 inline-flex items-center gap-1 text-[12.5px] font-medium text-ink-subtle transition-colors hover:text-ink"
+            className="no-print mt-1 -ml-1 inline-flex min-h-8 items-center gap-1 rounded px-1 text-[12.5px] font-medium text-ink-subtle transition-colors hover:text-ink"
           >
             <IconChevronDown
               className={cn("size-3.5 transition-transform duration-200", showDetails && "rotate-180")}

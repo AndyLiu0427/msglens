@@ -92,7 +92,11 @@ export function useMessages(t: Dictionary) {
   const addFiles = useCallback(
     async (fileList: FileList | File[]) => {
       const all = Array.from(fileList);
-      if (all.length === 0) return;
+      if (all.length === 0) {
+        // Only a folder with no mail in it gets here; say so rather than nothing.
+        pushError(t.errors.noMailFiles);
+        return;
+      }
 
       const files = all.slice(0, SITE.maxFiles);
       if (all.length > SITE.maxFiles) {

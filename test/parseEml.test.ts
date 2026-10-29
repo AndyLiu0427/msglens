@@ -115,3 +115,62 @@ describe("parseEml", () => {
     expect(low.importance).toBe("low");
   });
 });
+
+describe("winmail.dat inside an .eml", () => {
+  it("is marked to open in place, and opens as the message inside it", async () => {
+    const { buildTnef } = await import("./helpers/buildTnef");
+    const { parseEmbedded } = await import("@/lib/email/parse");
+    const dat = new Uint8Array(buildTnef({ subject: "Inside winmail" }));
+    let binary = "";
+    dat.forEach((b) => (binary += String.fromCharCode(b)));
+    const email = await eml(
+      [
+        "From: a@example.com",
+        "Subject: Outer",
+        "MIME-Version: 1.0",
+        'Content-Type: multipart/mixed; boundary="B"',
+        "",
+        "--B",
+        "Content-Type: text/plain",
+        "",
+        "See attached.",
+        "--B",
+        'Content-Type: application/ms-tnef; name="winmail.dat"',
+        "Content-Transfer-Encoding: base64",
+        'Content-Disposition: attachment; filename="winmail.dat"',
+        "",
+        btoa(binary),
+        "--B--",
+        "",
+      ].join("\r\n"),
+    );
+    const att = email.attachments.find((a) => a.fileName === "winmail.dat");
+    expect(att?.isEmbeddedMessage).toBe(true);
+    const inner = await parseEmbedded(att!.content, att!.fileName);
+    expect(inner.sourceFormat).toBe("tnef");
+    expect(inner.subject).toBe("Inside winmail");
+  });
+
+  it("leaves an ordinary attachment alone", async () => {
+    const email = await eml(
+      [
+        "Subject: x",
+        "MIME-Version: 1.0",
+        'Content-Type: multipart/mixed; boundary="B"',
+        "",
+        "--B",
+        "Content-Type: text/plain",
+        "",
+        "hi",
+        "--B",
+        'Content-Type: application/pdf; name="a.pdf"',
+        "Content-Transfer-Encoding: base64",
+        "",
+        btoa("%PDF-1.4 not tnef"),
+        "--B--",
+        "",
+      ].join("\r\n"),
+    );
+    expect(email.attachments[0].isEmbeddedMessage).toBe(false);
+  });
+});

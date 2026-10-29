@@ -21,6 +21,7 @@ import {
 } from "./headers";
 import { rtfBodyFromCompressed } from "./rtf";
 import { classifyItem, extractAppointment, extractContact } from "./items";
+import { isTnef } from "./tnef";
 
 const CODEPAGE_LABELS: Record<number, string> = {
   874: "windows-874",
@@ -205,7 +206,7 @@ export async function parseMsg(
         contentId,
         // Outlook marks body images either with a content id or the hidden flag.
         inline: Boolean(contentId) || meta.attachmentHidden === true,
-        isEmbeddedMessage: isEmbedded,
+        isEmbeddedMessage: isEmbedded || isTnef(content),
       });
     } catch {
       warnings.push(`Attachment "${fileName}" could not be extracted and was skipped.`);

@@ -59,7 +59,9 @@ export const enGuides2 = {
           <li>Double-click the downloaded file.</li>
         </ol>
         <p>
-          You can drop up to 50 files at once and export them one at a time from the list.
+          To convert many at once, drop up to 200 files or a whole folder, then choose{" "}
+          <strong>All as .eml</strong> above the message list. Every message is saved as .eml,
+          named after its original file, in one ZIP.
         </p>
 
         <h2>What the converted file contains</h2>
@@ -474,8 +476,9 @@ export const enGuides2 = {
           </li>
           <li>
             <strong>The only attachment is winmail.dat.</strong> The sender used Outlook Rich
-            Text, and the real attachments are packed inside it.{" "}
-            {L("/open-winmail-dat", "Open the winmail.dat")} to get them out.
+            Text, and the real attachments are packed inside it. In the viewer, press{" "}
+            <strong>Open</strong> next to winmail.dat: it opens in place with the attachments
+            listed. More in {L("/open-winmail-dat", "how to open winmail.dat")}.
           </li>
           <li>
             <strong>It is not really an .eml.</strong> Files get renamed. The viewer

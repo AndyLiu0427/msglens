@@ -3,7 +3,7 @@
  */
 
 import { trackServer } from "./analytics";
-import { requireUploadAllowance } from "./billing";
+import { overWorkspaceCap, requireUploadAllowance, workspaceFull } from "./billing";
 import { sha256Hex, uuid } from "./crypto";
 import { requireTeamRole, requireUser } from "./session";
 import {
@@ -167,6 +167,12 @@ export async function uploadFile(ctx: Ctx): Promise<Response> {
     // rather than leaving bytes nobody can reach or delete.
     await ctx.env.FILES.delete(key).catch(() => {});
     throw error;
+  }
+
+  if (await overWorkspaceCap(ctx, user.id)) {
+    await ctx.env.DB.prepare(`DELETE FROM files WHERE id = ?`).bind(id).run();
+    await ctx.env.FILES.delete(key).catch(() => {});
+    throw workspaceFull();
   }
 
   trackServer(ctx, "file_saved", user.id, {

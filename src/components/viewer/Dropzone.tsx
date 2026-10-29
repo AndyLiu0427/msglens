@@ -4,6 +4,7 @@ import { useCallback, useId, useRef, useState, type DragEvent } from "react";
 import { IconLock, IconUpload } from "@/components/ui/icons";
 import { cn } from "@/lib/cn";
 import type { Dictionary } from "@/lib/i18n";
+import { collectFiles, mailFilesOnly } from "@/lib/email/collectFiles";
 
 interface DropzoneProps {
   onFiles: (files: FileList | File[]) => void;
@@ -21,6 +22,7 @@ interface DropzoneProps {
 export function Dropzone({ onFiles, onLoadSample, t, busy, progress }: DropzoneProps) {
   const inputId = useId();
   const inputRef = useRef<HTMLInputElement>(null);
+  const folderRef = useRef<HTMLInputElement>(null);
   const [over, setOver] = useState(false);
   // Drag events fire for every child element; a counter is the reliable way to
   // know when the pointer has genuinely left the zone.
@@ -43,7 +45,7 @@ export function Dropzone({ onFiles, onLoadSample, t, busy, progress }: DropzoneP
       e.preventDefault();
       depth.current = 0;
       setOver(false);
-      if (e.dataTransfer?.files?.length) onFiles(e.dataTransfer.files);
+      if (e.dataTransfer?.items?.length) void collectFiles(e.dataTransfer).then(onFiles);
     },
     [onFiles],
   );
@@ -109,7 +111,32 @@ export function Dropzone({ onFiles, onLoadSample, t, busy, progress }: DropzoneP
         >
           {busy ? t.hero.sampleLoading : t.hero.sample}
         </button>
+        {/* Desktop only: phones have no folders to pick in a browser. */}
+        <span className="hidden text-[13px] text-ink-subtle sm:inline">
+          {" · "}
+          <button
+            type="button"
+            onClick={() => folderRef.current?.click()}
+            disabled={busy}
+            className="rounded-lg px-1 py-1.5 font-medium text-accent underline underline-offset-2 transition-colors hover:text-accent-hover disabled:opacity-50"
+          >
+            {t.hero.chooseFolder}
+          </button>
+        </span>
       </div>
+
+      <input
+        ref={folderRef}
+        type="file"
+        multiple
+        className="sr-only"
+        // Not in React's types; every current desktop browser supports it.
+        {...{ webkitdirectory: "" }}
+        onChange={(e) => {
+          if (e.target.files?.length) onFiles(mailFilesOnly(e.target.files));
+          e.target.value = "";
+        }}
+      />
 
       <input
         id={inputId}

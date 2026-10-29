@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { readEntitlement, FREE_FILE_LIMIT, requirePlan, requireUploadAllowance, WORKSPACE_CAP } from "./billing";
+import { readEntitlement, FREE_FILE_LIMIT, overWorkspaceCap, requirePlan, requireUploadAllowance, WORKSPACE_CAP } from "./billing";
 import { paddleWebhook } from "./paddle";
 import { BILLING_ENABLED, PADDLE_CATALOGUE } from "../shared/paddle-catalogue";
 import type { Ctx, Env } from "./types";
@@ -428,6 +428,12 @@ describe.skipIf(BILLING_ENABLED)("free workspace (billing off)", () => {
     await expect(
       requireUploadAllowance(ctxWith(usage(1, WORKSPACE_CAP.bytes - 10)), user, 11),
     ).rejects.toMatchObject({ status: 403 });
+  });
+  it("re-checks after the insert, so parallel saves cannot pass the cap", async () => {
+    // The row is already in: exactly at the cap is fine, one over is not.
+    expect(await overWorkspaceCap(ctxWith(usage(WORKSPACE_CAP.files, 0)), "u1")).toBe(false);
+    expect(await overWorkspaceCap(ctxWith(usage(WORKSPACE_CAP.files + 1, 0)), "u1")).toBe(true);
+    expect(await overWorkspaceCap(ctxWith(usage(2, WORKSPACE_CAP.bytes + 1)), "u1")).toBe(true);
   });
 });
 

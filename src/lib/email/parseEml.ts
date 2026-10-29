@@ -9,6 +9,7 @@ import type { Address, Attachment as PmAttachment, Mailbox } from "postal-mime";
 import type { Attachment, EmailAddress, ParsedEmail } from "./types";
 import { guessMimeType } from "./mime";
 import { makeAddress, parseHeaderBlock } from "./headers";
+import { isTnef } from "./tnef";
 
 function flattenAddresses(input: Address[] | Address | undefined): EmailAddress[] {
   if (!input) return [];
@@ -58,7 +59,9 @@ export async function parseEml(
       content,
       contentId,
       inline: att.disposition === "inline" || Boolean(att.related) || Boolean(contentId),
-      isEmbeddedMessage: att.mimeType === "message/rfc822",
+      // A winmail.dat holds the real body and attachments; let it open in place
+      // like an attached message rather than only downloading.
+      isEmbeddedMessage: att.mimeType === "message/rfc822" || isTnef(content),
     };
   });
 

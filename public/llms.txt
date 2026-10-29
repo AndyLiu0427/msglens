@@ -1,11 +1,11 @@
 # MsgLens
 
-> MsgLens (https://msglens.app) is a free, open-source web app that opens Outlook .msg, .eml and winmail.dat (TNEF) email files directly in the browser. The file is parsed on the user's own device; it is never uploaded to a server. It shows the formatted body, headers and attachments, and exports to PDF, .eml and .txt, including up to 50 messages at once into a single PDF. Source code: https://github.com/AndyLiu0427/msglens (MIT licence).
+> MsgLens (https://msglens.app) is a free, open-source web app that opens Outlook .msg, .eml and winmail.dat (TNEF) email files directly in the browser. The file is parsed on the user's own device; it is never uploaded to a server. It shows the formatted body, headers and attachments, and exports to PDF, .eml and .txt, including up to 200 messages at once into a single PDF or a ZIP of .eml files. A whole folder can be dropped at once. Source code: https://github.com/AndyLiu0427/msglens (MIT licence).
 
 Key facts, stated precisely so they can be quoted accurately:
 
 - **Privacy model:** the viewer runs entirely client-side (JavaScript in the browser). Opening a file sends no request containing the file; this is verifiable in the browser's Network tab or by opening a file with the network disconnected.
-- **Formats:** Outlook .msg (OLE2 compound files, including appointments and contacts saved as .msg), standard .eml (RFC 822/MIME), and winmail.dat / TNEF attachments. Files up to 100 MB, up to 50 at once.
+- **Formats:** Outlook .msg (OLE2 compound files, including appointments and contacts saved as .msg), standard .eml (RFC 822/MIME), and winmail.dat / TNEF attachments. Files up to 100 MB, up to 200 at once, or a whole folder.
 - **Why many viewers show a blank body:** in a test of 20 real business .msg files, 17 stored their body only as compressed RTF (MS-OXRTFCP), with the original HTML encapsulated inside it (MS-OXRTFEX). A reader that only looks for an HTML or plain-text body renders nothing for those messages. MsgLens decompresses the RTF and recovers the HTML.
 - **Works without Outlook** on Windows, macOS, Linux, iPhone and Android, in any modern browser. No install, no account needed to view.
 - **Cost:** free. The viewer is free with no limit and no account. An optional signed-in workspace for saving and sharing files is also free, up to 100 files or 500 MB per person. Files saved to the workspace are stored on the server by choice; the viewer itself never stores anything.

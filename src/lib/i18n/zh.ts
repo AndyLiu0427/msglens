@@ -40,11 +40,12 @@ export const zh: Dictionary = {
     subtitle:
       "把 Outlook 的 .msg 或 .eml 檔拖進來就能立刻閱讀 —— 完整排版、內嵌圖片、附件與郵件標頭一應俱全。全部在你的瀏覽器內解析,不會上傳任何檔案。",
     dropTitle: "把 .msg 檔拖到這裡",
-    dropSubtitle: "或點擊選擇檔案 —— 支援 .msg、.eml 與 winmail.dat,一次最多 50 個",
+    dropSubtitle: "或點擊選擇檔案 —— 支援 .msg、.eml 與 winmail.dat,一次最多 200 個,也可以拖進整個資料夾",
     dropActive: "放開以開啟",
     browse: "選擇檔案",
     privacyNote: "不上傳、不需註冊,你在這裡開啟的檔案不會離開這個分頁。",
     sample: "用範例郵件試試看",
+    chooseFolder: "或選擇整個資料夾",
     sampleLoading: "載入範例中…",
   },
   trust: {
@@ -105,6 +106,8 @@ export const zh: Dictionary = {
     noResults: "找不到相符內容",
     print: "列印 / PDF",
     printAll: "全部存成 PDF",
+    emlAll: "全部存成 .eml",
+    emlAllTitle: "把所有已開啟的郵件存成 .eml,打包成一個 ZIP 檔",
     feedback: "缺了什麼功能,或哪裡不對?寫信告訴我們",
     feedbackSubject: "MsgLens 意見回饋",
     printAllTitle: "把所有已開啟的郵件存成同一個 PDF,每封從新的一頁開始",
@@ -160,6 +163,7 @@ export const zh: Dictionary = {
       "「{name}」不是可讀取的 .msg、.eml 或 winmail.dat 檔。檔案可能已損毀,或是其他格式被改成了這個副檔名。",
     tooLarge: "「{name}」超過 {limit},已略過。",
     tooMany: "只開啟了前 {limit} 個檔案。",
+    noMailFiles: "裡面沒有找到 .msg、.eml 或 winmail.dat 檔案。",
     parseFailed: "「{name}」無法解析,可能使用了尚未支援的 Outlook 功能。",
     encrypted:
       "這封郵件似乎經過加密或數位簽章 (S/MIME)。沒有你的憑證就無法解開加密內容。",

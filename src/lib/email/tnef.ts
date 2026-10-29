@@ -226,9 +226,13 @@ interface TnefAttachment {
 let idCounter = 0;
 const nextId = () => `t${Date.now().toString(36)}${(idCounter++).toString(36)}`;
 
-export function isTnef(buffer: ArrayBuffer): boolean {
+export function isTnef(buffer: ArrayBuffer | Uint8Array): boolean {
   if (buffer.byteLength < 6) return false;
-  return new DataView(buffer).getUint32(0, true) === TNEF_SIGNATURE;
+  const view =
+    buffer instanceof Uint8Array
+      ? new DataView(buffer.buffer, buffer.byteOffset, buffer.byteLength)
+      : new DataView(buffer);
+  return view.getUint32(0, true) === TNEF_SIGNATURE;
 }
 
 export async function parseTnef(

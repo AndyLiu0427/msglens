@@ -143,7 +143,7 @@ export const enContent = {
         </p>
         <h2>What about multiple files?</h2>
         <p>
-          You can drop up to 50 files at once. They appear in a list you can filter and
+          You can drop up to 200 files, or a whole folder, at once. They appear in a list you can filter and
           step through with <code>J</code> and <code>K</code>, which is considerably faster
           than opening an exported mail archive one file at a time.
         </p>
@@ -645,9 +645,10 @@ export const enContent = {
 
         <h2>Converting several messages</h2>
         <p>
-          Drop up to 50 files at once, then choose <strong>Save all as PDF</strong> above the
-          message list. Every open message goes into one PDF, each starting on a new page,
-          with its own formatting kept. For hundreds of files, work in batches of 50.
+          Drop up to 200 files, or a whole folder, at once, then choose{" "}
+          <strong>Save all as PDF</strong> above the message list. Every open message goes into
+          one PDF, each starting on a new page, with its own formatting kept. For more than 200
+          files, work in batches.
         </p>
         <p>
           If you need a separate PDF per message instead, step through them with{" "}

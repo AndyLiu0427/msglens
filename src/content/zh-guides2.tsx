@@ -52,7 +52,10 @@ export const zhGuides2 = {
           </li>
           <li>點兩下下載的檔案。</li>
         </ol>
-        <p>一次最多可拖入 50 個檔案,再從清單逐一匯出。</p>
+        <p>
+          要一次轉很多封,可以拖入最多 200 個檔案或整個資料夾,再按郵件清單上方的
+          <strong>全部存成 .eml</strong>。每封都會存成 .eml,檔名沿用原始檔案,打包成一個 ZIP。
+        </p>
 
         <h2>轉出的檔案包含什麼</h2>
         <p>
@@ -439,7 +442,8 @@ export const zhGuides2 = {
           </li>
           <li>
             <strong>附件只有一個 winmail.dat。</strong>寄件人用了 Outlook 的 RTF 格式,真正的附件
-            都包在裡面。{L("/open-winmail-dat", "打開 winmail.dat")} 就能取出。
+            都包在裡面。在檢視器裡按 winmail.dat 旁邊的<strong>開啟</strong>,就會直接打開並列出裡面的附件。
+            詳見{L("/open-winmail-dat", "如何開啟 winmail.dat")}。
           </li>
           <li>
             <strong>其實不是 .eml。</strong>檔名可能被改過。檢視器會依檔案內容判斷格式,就算是存成

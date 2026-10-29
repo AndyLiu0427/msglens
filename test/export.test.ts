@@ -167,3 +167,33 @@ describe("safeFileName", () => {
     expect(safeFileName("Report. ", "message", "eml")).toBe("Report.eml");
   });
 });
+
+describe("downloadAllAsEml", () => {
+  it("zips every message as .eml, named after its source file, without collisions", async () => {
+    const { vi } = await import("vitest");
+    const { downloadAllAsEml } = await import("@/lib/email/export");
+    let zipped: Blob | null = null;
+    const create = vi.fn((b: Blob) => {
+      zipped = b;
+      return "blob:x";
+    });
+    vi.stubGlobal("URL", Object.assign(URL, { createObjectURL: create, revokeObjectURL: () => {} }));
+
+    await downloadAllAsEml(
+      [
+        message({ id: "1", sourceFileName: "report.msg", subject: "One" }),
+        message({ id: "2", sourceFileName: "report.msg", subject: "Two" }),
+        message({ id: "3", sourceFileName: "notes.eml", subject: "Three" }),
+      ],
+      "3 messages",
+    );
+
+    expect(create).toHaveBeenCalledOnce();
+    const { default: JSZip } = await import("jszip");
+    const zip = await JSZip.loadAsync(await zipped!.arrayBuffer());
+    expect(Object.keys(zip.files).sort()).toEqual(["notes.eml", "report (1).eml", "report.eml"]);
+    const second = await zip.file("report (1).eml")!.async("arraybuffer");
+    expect((await parseEml(second, "report (1).eml")).subject).toBe("Two");
+    vi.unstubAllGlobals();
+  });
+});

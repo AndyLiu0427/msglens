@@ -145,20 +145,38 @@ export async function requirePlan(ctx: Ctx, user: User, feature: string): Promis
 }
 
 /** Guard for saving a file, which the free tier allows a few of. */
+export const workspaceFull = () =>
+  new HttpError(
+    403,
+    `The workspace holds ${WORKSPACE_CAP.files} files or 500 MB per person. Delete some files to save more.`,
+    "workspace_full",
+  );
+
+async function usage(ctx: Ctx, userId: string): Promise<{ n: number; bytes: number }> {
+  const row = await ctx.env.DB.prepare(
+    `SELECT count(*) AS n, coalesce(sum(size_bytes), 0) AS bytes FROM files WHERE uploaded_by = ?`,
+  )
+    .bind(userId)
+    .first<{ n: number; bytes: number }>();
+  return { n: row?.n ?? 0, bytes: row?.bytes ?? 0 };
+}
+
+/**
+ * Re-check after the row is in. The check before upload is not atomic with the
+ * insert, so parallel saves could each pass it. Counting again afterwards sees
+ * the others' rows too; any save that left the user over the cap is undone by
+ * the caller. Parallel saves near the cap may all be refused: safe, not exact.
+ */
+export async function overWorkspaceCap(ctx: Ctx, userId: string): Promise<boolean> {
+  if (BILLING_ENABLED) return false;
+  const { n, bytes } = await usage(ctx, userId);
+  return n > WORKSPACE_CAP.files || bytes > WORKSPACE_CAP.bytes;
+}
+
 export async function requireUploadAllowance(ctx: Ctx, user: User, incomingBytes = 0): Promise<void> {
   if (!BILLING_ENABLED) {
-    const row = await ctx.env.DB.prepare(
-      `SELECT count(*) AS n, coalesce(sum(size_bytes), 0) AS bytes FROM files WHERE uploaded_by = ?`,
-    )
-      .bind(user.id)
-      .first<{ n: number; bytes: number }>();
-    if ((row?.n ?? 0) >= WORKSPACE_CAP.files || (row?.bytes ?? 0) + incomingBytes > WORKSPACE_CAP.bytes) {
-      throw new HttpError(
-        403,
-        `The workspace holds ${WORKSPACE_CAP.files} files or 500 MB per person. Delete some files to save more.`,
-        "workspace_full",
-      );
-    }
+    const { n, bytes } = await usage(ctx, user.id);
+    if (n >= WORKSPACE_CAP.files || bytes + incomingBytes > WORKSPACE_CAP.bytes) throw workspaceFull();
     return;
   }
   const entitlement = await readEntitlement(ctx, user.id);

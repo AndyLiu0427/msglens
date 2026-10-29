@@ -129,7 +129,7 @@ export const enGuides = {
 
         <h2>Opening many files at once</h2>
         <p>
-          Select them all and drag them in together — up to 50 at a time. They appear in a
+          Select them all and drag them in together — up to 200 at a time, or drop the whole folder. They appear in a
           list you can filter, and <code>J</code> and <code>K</code> step between them. That
           is considerably faster than converting an exported archive one file at a time.
         </p>
@@ -426,6 +426,11 @@ export const enGuides = {
             Read the message, and download the attachments individually or as a ZIP.
           </li>
         </ol>
+        <p>
+          If you saved the whole email as a <code>.eml</code> or <code>.msg</code>, you can
+          skip step 1: open that file instead and press <strong>Open</strong> next to{" "}
+          <code>winmail.dat</code> in its attachment list. It opens in place.
+        </p>
         <p>
           Parsing runs in your browser. Nothing is uploaded, which matters more here than
           usual: a winmail.dat almost always turns up in a thread that was never meant to

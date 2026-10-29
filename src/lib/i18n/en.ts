@@ -38,11 +38,12 @@ export const en = {
     subtitle:
       "Drop an Outlook .msg or .eml file and read it instantly — full formatting, inline images, attachments and headers. Everything is parsed inside your browser, so nothing is ever uploaded.",
     dropTitle: "Drop .msg files here",
-    dropSubtitle: "or click to browse — .msg, .eml and winmail.dat, up to 50 files at once",
+    dropSubtitle: "or click to browse — .msg, .eml and winmail.dat, up to 200 files or a whole folder at once",
     dropActive: "Release to open",
     browse: "Choose files",
     privacyNote: "No upload. No account. Nothing you open here leaves this tab.",
     sample: "Try it with a sample message",
+    chooseFolder: "or choose a folder",
     sampleLoading: "Loading sample…",
   },
   trust: {
@@ -105,6 +106,8 @@ export const en = {
     noResults: "No matches",
     print: "Print / PDF",
     printAll: "Save all as PDF",
+    emlAll: "All as .eml",
+    emlAllTitle: "Save every open message as .eml, together in one ZIP file",
     feedback: "Missing something, or something not right? Tell us",
     feedbackSubject: "MsgLens feedback",
     printAllTitle: "Save every open message into one PDF, each on its own page",
@@ -161,6 +164,7 @@ export const en = {
       '"{name}" is not a readable .msg, .eml or winmail.dat file. It may be corrupted, or it may be a different format that was renamed.',
     tooLarge: '"{name}" is larger than {limit} and was skipped.',
     tooMany: "Only the first {limit} files were opened.",
+    noMailFiles: "No .msg, .eml or winmail.dat files were found there.",
     parseFailed:
       '"{name}" could not be parsed. It may use an unsupported Outlook feature.',
     encrypted:
