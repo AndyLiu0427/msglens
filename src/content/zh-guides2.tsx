@@ -348,7 +348,7 @@ export const zhGuides2 = {
     ),
   },
   openEml: {
-    title: ".eml 檔怎麼開?各種裝置的開啟方法",
+    title: "eml 檔案怎麼開?Windows、Mac、手機的開啟方法",
     description:
       "在 Windows、Mac、iPhone 與 Android 開啟 .eml 郵件檔,有沒有 Outlook 都可以。以及 .eml 用錯程式開啟、顯示一堆程式碼或亂碼時怎麼處理。",
     faq: [

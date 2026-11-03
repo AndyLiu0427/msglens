@@ -516,7 +516,7 @@ export const zhContent = {
   },
 
   toPdf: {
-    title: "如何把 .msg 檔轉成 PDF",
+    title: "msg 轉 PDF 怎麼做?不用 Outlook、檔案不上傳",
     description:
       "在瀏覽器裡把 Outlook 的 .msg 檔轉成乾淨、可分享的 PDF —— 不需要 Outlook、不上傳、沒有浮水印。",
     steps: [

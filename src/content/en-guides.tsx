@@ -371,7 +371,7 @@ export const enGuides = {
     ),
   },
   winmail: {
-    title: "How to open a winmail.dat file",
+    title: "winmail.dat: what it is and how to open it free",
     description:
       "Open winmail.dat in your browser and get the trapped attachments back. What the file is, why you got one, and how the sender stops it recurring.",
     intro:

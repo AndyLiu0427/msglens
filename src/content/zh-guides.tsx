@@ -325,7 +325,7 @@ export const zhGuides = {
     ),
   },
   winmail: {
-    title: "如何開啟 winmail.dat 檔案",
+    title: "winmail.dat 怎麼開?收到 .dat 附件打不開的解法",
     description:
       "在瀏覽器裡開啟 winmail.dat,把被困住的附件取回來。說明這個檔案到底是什麼、你為什麼會收到,以及寄件者要怎麼做才不會再發生。",
     intro:

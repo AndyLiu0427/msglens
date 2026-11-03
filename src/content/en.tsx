@@ -14,7 +14,7 @@ const L = (path: string, children: React.ReactNode) => (
  */
 export const enContent = {
   howTo: {
-    title: "How to open a .msg file without Outlook",
+    title: "How to open a .msg file without Outlook: 5 ways",
     description:
       "Five ways to open Outlook .msg files on Windows, macOS, Linux, iPhone and Android — including a browser method that needs no software at all.",
     intro:
@@ -152,7 +152,7 @@ export const enContent = {
   },
 
   whatIs: {
-    title: "What is a .msg file?",
+    title: "What is a .msg file, and how do you open one?",
     description:
       "How Outlook's .msg format works: the OLE2 container, MAPI property streams, where the body is stored, and why other applications cannot read it.",
     body: (
@@ -560,7 +560,7 @@ export const enContent = {
   },
 
   toPdf: {
-    title: "How to convert a .msg file to PDF",
+    title: "MSG to PDF: convert a .msg file free, without Outlook",
     description:
       "Turn an Outlook .msg file into a clean, shareable PDF from your browser — no Outlook, no upload, no watermark.",
     steps: [

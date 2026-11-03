@@ -14,7 +14,7 @@ const L = (path: string, children: React.ReactNode) => (
  */
 export const enGuides2 = {
   toEml: {
-    title: "How to convert a .msg file to .eml",
+    title: "MSG to EML: convert a .msg file free, without Outlook",
     description:
       "Convert Outlook .msg to standard .eml in your browser — no upload, no software. What is preserved, what is lost, and when to keep the original.",
     intro:
