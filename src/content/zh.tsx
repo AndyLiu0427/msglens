@@ -305,11 +305,15 @@ export const zhContent = {
   msgVsEml: {
     title: "eml 和 msg 差異比較:Outlook 郵件該存哪一種?",
     description:
-      ".eml 與 .msg 差在哪?一張表看懂:.msg 保留 Exchange 寄件人、旗標、約會等 Outlook 專屬資料,.eml 任何郵件軟體都能開。附存檔建議。",
+      ".eml 與 .msg 差在哪?一張表看懂,並說明 Outlook 出現「另存為 EML」和「另存為 MSG」時該選哪一個。.msg 保留 Outlook 專屬資料,.eml 任何郵件軟體都能開。",
     faq: [
       {
         q: "Outlook 郵件該存成 .eml 還是 .msg?",
         a: "郵件要在 Outlook 以外開啟(Mac、手機、Gmail、Thunderbird 或歸檔系統)就存 .eml。要當作證據,或是約會、聯絡人、工作項目,就保留 .msg,因為它保留了 .eml 會丟掉的 Outlook 專屬資料。不確定時先留 .msg:之後隨時能轉成 .eml,反過來則會有資料補不回來。",
+      },
+      {
+        q: "Outlook 的「另存為 EML」和「另存為 MSG」是什麼?",
+        a: "這是新版 Outlook for Windows 的另存選單:在郵件上按右鍵,選「另存為」。「另存為 EML」會存成標準的 .eml,任何郵件軟體都能開。「另存為 MSG」會存成 Outlook 的 .msg,保留旗標、類別與 Exchange 寄件人等 Outlook 專屬資料。要分享或歸檔就選 EML;要再用 Outlook 開,或要當作證據,就選 MSG。",
       },
       {
         q: "長期保存郵件,用 .eml 還是 .msg 比較好?",
@@ -355,12 +359,15 @@ export const zhContent = {
           </li>
         </ul>
 
-        <h2>Outlook 會給你哪一種格式</h2>
+        <h2>另存為 EML 或 MSG:各版 Outlook 給你哪一種</h2>
         <p>
-          很多時候你沒得選。Windows 傳統版 Outlook 不論用「檔案 → 另存新檔」或直接把郵件拖到
+          新版 Outlook for Windows 可以自己選:在郵件上按右鍵選「另存為」,會看到「另存為
+          EML」和「另存為 MSG」。照上面的簡短結論挑一個就好。
+        </p>
+        <p>
+          其他版本不會問你。Windows 傳統版 Outlook 不論用「檔案 → 另存新檔」或直接把郵件拖到
           桌面,存出的都是 <code>.msg</code>,沒有 <code>.eml</code> 選項。Mac 版 Outlook
-          把郵件拖出來會得到 <code>.eml</code>,新版 Outlook for Windows 與 Outlook 網頁版
-          下載郵件時也是存成 <code>.eml</code>。
+          把郵件拖出來會得到 <code>.eml</code>,Outlook 網頁版下載郵件時也是存成 <code>.eml</code>。
         </p>
 
         <h2>一覽表</h2>
