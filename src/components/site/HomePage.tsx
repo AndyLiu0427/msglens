@@ -36,6 +36,7 @@ export function HomePage({ locale }: { locale: Locale }) {
     { path: "/msg-to-eml", label: t.nav.toEml },
     { path: "/open-winmail-dat", label: t.nav.winmail },
     { path: "/open-eml-file", label: t.nav.openEml },
+    { path: "/extract-msg-attachments", label: t.nav.attachments },
   ];
 
   return (

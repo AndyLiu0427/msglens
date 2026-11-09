@@ -18,6 +18,7 @@ export const zh: Dictionary = {
     wontOpen: ".msg 打不開",
     winmail: "開啟 winmail.dat",
     openEml: "開啟 .eml 檔",
+    attachments: "取出 .msg 附件",
     whatIs: ".msg 檔是什麼?",
     noHtmlBody: "為什麼 .msg 裡沒有 HTML",
     msgVsEml: ".msg 與 .eml 的差別",

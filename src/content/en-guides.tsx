@@ -217,7 +217,9 @@ export const enGuides = {
           Every attachment inside the message can be downloaded individually, or all at once
           as a ZIP. On iPhone they land in Files; on Android in Downloads. Inline images —
           logos and signature graphics — are shown in the message body rather than listed
-          separately, so the attachment list stays limited to what was really attached.
+          separately, so the attachment list stays limited to what was really attached. See{" "}
+          {L("/extract-msg-attachments", "how to extract .msg attachments")} for attachments that
+          seem to be missing.
         </p>
 
         <h2>What does not work on a phone</h2>

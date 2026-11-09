@@ -24,6 +24,7 @@ export function Footer({ locale }: { locale: Locale }) {
         { href: p("/msg-file-wont-open"), label: t.nav.wontOpen },
         { href: p("/open-winmail-dat"), label: t.nav.winmail },
         { href: p("/open-eml-file"), label: t.nav.openEml },
+        { href: p("/extract-msg-attachments"), label: t.nav.attachments },
         { href: p("/what-is-a-msg-file"), label: t.nav.whatIs },
         { href: p("/outlook-msg-no-html-body"), label: t.nav.noHtmlBody },
         { href: p("/msg-vs-eml"), label: t.nav.msgVsEml },

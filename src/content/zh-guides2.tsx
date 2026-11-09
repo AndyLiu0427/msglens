@@ -460,4 +460,109 @@ export const zhGuides2 = {
       </>
     ),
   },
+  attachments: {
+    title: "msg 附件怎麼取出?一次下載全部附件的方法",
+    description:
+      "不用 Outlook 取出 .msg 檔裡的附件:可以單獨下載,也可以打包成 ZIP,連藏在 winmail.dat 或轉寄郵件裡的附件也能取出。免費,檔案不上傳。",
+    faq: [
+      {
+        q: "怎麼一次存下 .msg 檔裡的全部附件?",
+        a: "在 msglens.app 的檢視器開啟 .msg,按「全部下載」,就會得到一個包含所有附件的 ZIP。如果有兩個附件同名,第二個會存成「檔名 (1)」。",
+      },
+      {
+        q: "沒有 Outlook 可以取出 .msg 的附件嗎?",
+        a: "可以。.msg 檔把每個附件都存在檔案裡,任何能讀 .msg 的工具都能取出。MsgLens 檢視器在瀏覽器裡處理,檔案不會上傳。",
+      },
+      {
+        q: "為什麼打開 .msg 後少了附件?",
+        a: "常見原因有四個:圖片是內嵌圖片,直接顯示在內文裡;附件其實是 OneDrive 或 SharePoint 的連結,檔案本來就不在郵件裡;附件被包在 winmail.dat 裡;或附件在另一封以 .msg 形式附加的轉寄郵件裡。",
+      },
+      {
+        q: "很多個 .msg 檔要怎麼取出附件?",
+        a: "檢視器一次可以開 200 個檔案,也可以直接拖進整個資料夾,再逐封存下附件。檔案很多時,可以用免費的命令列工具,把每個檔案的附件都存進同一個資料夾:npx msglens-cli attachments *.msg -o attachments。",
+      },
+      {
+        q: "取出 .msg 的附件安全嗎?",
+        a: "取出檔案不會執行它。取出後就跟一般郵件附件一樣:只開啟信任的寄件人寄來的檔案,執行檔和含巨集的 Office 檔案要先掃毒再開。",
+      },
+    ],
+    body: (
+      <>
+        <p>
+          <code>.msg</code> 檔把附件存在檔案裡,不需要 Outlook 也能取出。用{" "}
+          {L("/", "MsgLens 檢視器")}開啟檔案後,可以逐一下載附件,或按
+          <strong>「全部下載」</strong>取得一個 ZIP。檔案在你的瀏覽器裡讀取,不會上傳。
+        </p>
+
+        <h2>一次存下全部附件</h2>
+        <ol>
+          <li>
+            打開 {L("/", "msglens.app")},把 <code>.msg</code> 拖進頁面;用手機的話,點一下選擇檔案。
+          </li>
+          <li>
+            在<strong>「附件」</strong>區按<strong>「全部下載」</strong>,會得到一個以郵件主旨命名的 ZIP。
+          </li>
+          <li>只要其中一個檔案,就按它旁邊的下載按鈕。圖片也可以先預覽。</li>
+        </ol>
+        <p>
+          附件會保留原本的檔名。如果郵件裡有同名的檔案,例如三個 <code>image001.png</code>,ZIP
+          會全部保留,依序命名為 <code>image001.png</code>、<code>image001 (1).png</code>
+          等等。
+        </p>
+
+        <h2>附件可能藏在哪裡</h2>
+        <p>有時附件清單比你預期的少。檔案通常還在,只是在下面這些地方。</p>
+        <ul>
+          <li>
+            <strong>內嵌圖片。</strong>標誌和貼上的截圖也是附件,但它們顯示在內文裡,所以清單不會重複列出。
+            「全部下載」的 ZIP 會包含它們。
+          </li>
+          <li>
+            <strong>轉寄的郵件。</strong>對方用「以附件轉寄」時,原始郵件會以 <code>.msg</code>{" "}
+            的形式夾在 <code>.msg</code> 裡。按它旁邊的<strong>「開啟」</strong>就能閱讀,並取出它自己的附件。
+          </li>
+          <li>
+            <strong>winmail.dat。</strong>寄件人用 Outlook 的 RTF 格式寄信時,所有真正的附件可能被包進一個{" "}
+            <code>winmail.dat</code>。按它旁邊的<strong>「開啟」</strong>,原本的檔案就會出現。詳見
+            {L("/open-winmail-dat", "winmail.dat 怎麼開")}。
+          </li>
+          <li>
+            <strong>雲端附件。</strong>OneDrive 或 SharePoint 附件只是一個連結,檔案本來就不在郵件裡,任何工具都取不出來。
+            請點內文裡的連結開啟,沒有權限的話再請寄件人開放。
+          </li>
+          <li>
+            <strong>數位簽章,不是檔案。</strong>有數位簽章的郵件會顯示一個 <code>smime.p7s</code>{" "}
+            附件,那是寄件人的簽章,不是文件。
+          </li>
+        </ul>
+
+        <h2>一次處理很多個 .msg 檔</h2>
+        <p>
+          檢視器一次可以開 200 個檔案,也可以直接拖進整個資料夾:子資料夾也會一起讀,不是郵件的檔案會自動略過。
+          接著再逐封存下附件。
+        </p>
+        <p>
+          檔案有好幾百個,或是要經常處理的話,可以用免費的命令列工具。它在你的電腦上用 Node.js
+          執行,把每個檔案的附件都存進同一個資料夾,而且不會覆蓋已經存在的檔案。
+        </p>
+        <pre>
+          <code>npx msglens-cli attachments *.msg -o attachments</code>
+        </pre>
+
+        <h2>如果你有 Outlook</h2>
+        <p>
+          在 Windows 傳統版 Outlook 開啟 <code>.msg</code>,選<strong>「檔案」</strong>、
+          <strong>「儲存附件」</strong>。也可以在附件上按右鍵,選<strong>「儲存所有附件」</strong>。
+          這個方法一次只能處理一封郵件。
+        </p>
+
+        <h2>開啟取出的檔案</h2>
+        <p>
+          取出的就是一般檔案:PDF 用任何 PDF 閱讀器開,試算表用 Excel 或 Numbers 開。附加的{" "}
+          <code>.msg</code> 或 <code>.eml</code> 可以再用檢視器開啟。附件打不開時,問題通常出在開啟那種檔案的軟體,
+          而不是取出的過程。另見{L("/msg-file-wont-open", ".msg 檔打不開怎麼辦")}。
+        </p>
+      </>
+    ),
+  },
 } as const;

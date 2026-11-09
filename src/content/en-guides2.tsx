@@ -497,4 +497,130 @@ export const enGuides2 = {
       </>
     ),
   },
+  attachments: {
+    title: "How to extract attachments from a .msg file, all at once",
+    description:
+      "Get every attachment out of an Outlook .msg file without Outlook: one by one or as a ZIP, including files hidden in winmail.dat or in a forwarded message. Free, nothing uploaded.",
+    faq: [
+      {
+        q: "How do I save all attachments from a .msg file at once?",
+        a: "Open the .msg in the MsgLens viewer at msglens.app and choose Download all. You get one ZIP with every attachment. If two attachments have the same name, the second one is saved as name (1).",
+      },
+      {
+        q: "Can I extract .msg attachments without Outlook?",
+        a: "Yes. A .msg file stores each attachment inside the file, so any .msg reader can take them out. The MsgLens viewer does it in the browser, and the file is not uploaded.",
+      },
+      {
+        q: "Why is an attachment missing when I open the .msg?",
+        a: "There are four usual reasons. The image is inline and shows in the body. The attachment was a OneDrive or SharePoint link, so the file was never in the message. The attachments are inside a winmail.dat. Or they are inside a forwarded message that is attached as its own .msg.",
+      },
+      {
+        q: "How do I extract attachments from many .msg files?",
+        a: "In the viewer, drop up to 200 files or a whole folder, then save each message's attachments. For a large batch, the free command-line tool saves the attachments of every file into one folder: npx msglens-cli attachments *.msg -o attachments.",
+      },
+      {
+        q: "Is it safe to extract attachments from a .msg file?",
+        a: "Extracting a file does not run it. Treat what you extract like any email attachment: only open files from a sender you trust, and scan executables and Office files with macros before you open them.",
+      },
+    ],
+    body: (
+      <>
+        <p>
+          A <code>.msg</code> file keeps its attachments inside the file. You do not need
+          Outlook to get them out. Open the file in the{" "}
+          {L("/", "MsgLens viewer")}, then download each attachment, or choose{" "}
+          <strong>Download all</strong> to get one ZIP. The file is read in your browser and is
+          not uploaded.
+        </p>
+
+        <h2>Save every attachment in one step</h2>
+        <ol>
+          <li>
+            Open {L("/", "msglens.app")} and drop the <code>.msg</code> on the page, or tap to
+            choose it on a phone.
+          </li>
+          <li>
+            Under <strong>Attachments</strong>, choose <strong>Download all</strong>. You get a
+            ZIP named after the subject of the message.
+          </li>
+          <li>
+            To save only one file, use the download button next to it. Images also have a
+            preview.
+          </li>
+        </ol>
+        <p>
+          Attachment names are kept. When a message holds two files with the same name, such
+          as three copies of <code>image001.png</code>, the ZIP keeps all of them as{" "}
+          <code>image001.png</code>, <code>image001 (1).png</code> and so on.
+        </p>
+
+        <h2>Where the attachments can hide</h2>
+        <p>
+          Sometimes the list shows fewer files than you expect. The file is usually still there,
+          in one of these places.
+        </p>
+        <ul>
+          <li>
+            <strong>Inline images.</strong> Logos and pasted screenshots are attachments too,
+            but they show in the body, so the list does not repeat them. Download all includes
+            them in the ZIP.
+          </li>
+          <li>
+            <strong>A forwarded message.</strong> When someone forwards an email as an
+            attachment, the original arrives as a <code>.msg</code> inside the{" "}
+            <code>.msg</code>. Choose <strong>Open</strong> next to it to read it and get its
+            own attachments.
+          </li>
+          <li>
+            <strong>winmail.dat.</strong> If the sender used Outlook in Rich Text format, all
+            the real attachments can be packed into one <code>winmail.dat</code>. Choose{" "}
+            <strong>Open</strong> next to it and the original files appear. See{" "}
+            {L("/open-winmail-dat", "how to open winmail.dat")}.
+          </li>
+          <li>
+            <strong>Cloud attachments.</strong> A OneDrive or SharePoint attachment is only a
+            link. The file was never in the message, so no tool can extract it. Open the link in
+            the body, and ask the sender for access if you need it.
+          </li>
+          <li>
+            <strong>A signature, not a file.</strong> A digitally signed message shows{" "}
+            <code>smime.p7s</code> as an attachment. It is the sender&apos;s signature, not a
+            document.
+          </li>
+        </ul>
+
+        <h2>Many .msg files at once</h2>
+        <p>
+          The viewer opens up to 200 files at a time. You can also drop a whole folder: it reads
+          the subfolders too and skips files that are not mail. Then save the attachments of
+          each message.
+        </p>
+        <p>
+          For hundreds of files, or a task you repeat, use the free command-line tool. It runs
+          on your computer with Node.js and saves the attachments of every file into one folder.
+          It never overwrites a file that is already there.
+        </p>
+        <pre>
+          <code>npx msglens-cli attachments *.msg -o attachments</code>
+        </pre>
+
+        <h2>If you have Outlook</h2>
+        <p>
+          In classic Outlook for Windows, open the <code>.msg</code>, then choose{" "}
+          <strong>File</strong>, <strong>Save Attachments</strong>. You can also right-click an
+          attachment and choose <strong>Save All Attachments</strong>. This works one message
+          at a time.
+        </p>
+
+        <h2>Opening what you extracted</h2>
+        <p>
+          The extracted files are ordinary files: a PDF opens in any PDF reader, a spreadsheet in
+          Excel or Numbers. An attached <code>.msg</code> or <code>.eml</code> opens in the
+          viewer again. If an attachment will not open, the problem is usually the app for that
+          file type, not the extraction. See also{" "}
+          {L("/msg-file-wont-open", "why a .msg file will not open")}.
+        </p>
+      </>
+    ),
+  },
 } as const;

@@ -110,6 +110,7 @@ export const ROUTES = [
   "/open-winmail-dat",
   "/msg-to-eml",
   "/open-eml-file",
+  "/extract-msg-attachments",
   "/what-is-a-msg-file",
   "/outlook-msg-no-html-body",
   "/msg-vs-eml",
