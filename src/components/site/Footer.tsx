@@ -99,16 +99,20 @@ export function Footer({ locale }: { locale: Locale }) {
                 {col.title}
               </h3>
               <ul className="mt-3.5 space-y-2.5">
-                {col.links.map((link) => (
-                  <li key={link.href + link.label}>
-                    <Link
-                      href={link.href}
-                      className="text-[13.5px] text-ink-muted transition-colors hover:text-ink"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
+                {col.links.map((link) => {
+                  // The workspace gets a full page load: see PRIVATE_PATHS in Page.tsx.
+                  const A = link.href === p("/workspace") ? "a" : Link;
+                  return (
+                    <li key={link.href + link.label}>
+                      <A
+                        href={link.href}
+                        className="text-[13.5px] text-ink-muted transition-colors hover:text-ink"
+                      >
+                        {link.label}
+                      </A>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}

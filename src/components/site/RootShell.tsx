@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import { Inter } from "next/font/google";
 import { ThemeScript } from "./ThemeScript";
-import { AdSenseScript } from "@/components/ads/AdSenseScript";
 import { getDictionary } from "@/lib/i18n";
 import type { Locale } from "@/lib/site";
 import "@/app/globals.css";
@@ -36,8 +35,6 @@ export function RootShell({
           The rule it trips is a Pages Router rule. */}
       <head>
         <ThemeScript />
-        {/* AdSense verification requires this inside <head>. */}
-        <AdSenseScript />
       </head>
       <body className={`${inter.variable} antialiased`}>{children}</body>
     </html>

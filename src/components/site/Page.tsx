@@ -6,6 +6,14 @@ import { IconChevronRight } from "@/components/ui/icons";
 import { getDictionary } from "@/lib/i18n";
 import { localizedPath, SITE, type Locale } from "@/lib/site";
 import { WelcomeNotice } from "@/components/workspace/WelcomeNotice";
+import { AdSenseScript } from "@/components/ads/AdSenseScript";
+
+/**
+ * Pages that show a person's own files or messages. No ads there, Auto ads
+ * included, so the AdSense script is not loaded at all. Links into them are
+ * plain <a> tags: a client-side move would keep an anchor ad from the page before.
+ */
+const PRIVATE_PATHS = new Set(["/workspace", "/invite", "/open"]);
 
 interface PageProps {
   locale: Locale;
@@ -20,6 +28,8 @@ interface PageProps {
 export function Page({ locale, path, children, schemas, wide }: PageProps) {
   return (
     <div className="flex min-h-dvh flex-col">
+      {/* React hoists an async script into <head>, where AdSense verification looks. */}
+      {!PRIVATE_PATHS.has(path) && <AdSenseScript />}
       <Header locale={locale} path={path} />
       <main className={`mx-auto w-full flex-1 px-4 py-8 sm:px-6 ${wide ? "max-w-6xl" : "max-w-3xl"}`}>
         <WelcomeNotice locale={locale} />

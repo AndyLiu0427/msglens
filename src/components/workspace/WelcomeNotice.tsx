@@ -40,9 +40,10 @@ export function WelcomeNotice({ locale }: { locale: Locale }) {
           <Link href={localizedPath("/", locale)} className="text-accent hover:underline">
             {t.welcomeOpenFile}
           </Link>
-          <Link href={localizedPath("/workspace", locale)} className="text-accent hover:underline">
+          {/* A plain link on purpose: see PRIVATE_PATHS in Page.tsx. */}
+          <a href={localizedPath("/workspace", locale)} className="text-accent hover:underline">
             {t.welcomeWorkspace}
-          </Link>
+          </a>
         </p>
       </div>
       <button

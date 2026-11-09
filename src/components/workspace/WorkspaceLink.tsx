@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { IconFolder, IconGoogle } from "@/components/ui/icons";
 import { api, signIn, type WorkspaceUser } from "@/lib/workspace/api";
 import { localizedPath, type Locale } from "@/lib/site";
@@ -65,7 +64,9 @@ export function WorkspaceLink({ locale, t }: { locale: Locale; t: Dictionary }) 
   const initial = (user.name || user.email).trim().charAt(0).toUpperCase();
 
   return (
-    <Link
+    // A full page load: the workspace has no ads, and a client-side move would keep
+    // an anchor ad from the page before.
+    <a
       href={localizedPath("/workspace", locale)}
       title={`${t.workspace.title} — ${user.email}`}
       className="ml-1 flex items-center gap-2 rounded-lg py-1.5 pr-2 pl-1.5 text-[13.5px] text-ink-muted transition-colors hover:bg-surface-sunken hover:text-ink"
@@ -90,6 +91,6 @@ export function WorkspaceLink({ locale, t }: { locale: Locale; t: Dictionary }) 
       )}
       <span className="hidden sm:inline">{t.workspace.nav}</span>
       <IconFolder className="size-4 sm:hidden" />
-    </Link>
+    </a>
   );
 }
