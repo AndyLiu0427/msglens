@@ -5,7 +5,7 @@ export const en = {
     dir: "ltr",
   },
   nav: {
-    viewer: "Viewer",
+    viewer: "Online .msg viewer",
     guides: "Guides",
     howTo: "How to open .msg files",
     onMac: "Open .msg on a Mac",
@@ -35,9 +35,9 @@ export const en = {
   },
   hero: {
     badge: "Files never leave your device",
-    title: "Open .msg files without Outlook",
+    title: "Free online .msg file viewer",
     subtitle:
-      "Drop an Outlook .msg or .eml file and read it instantly — full formatting, inline images, attachments and headers. Everything is parsed inside your browser, so nothing is ever uploaded.",
+      "Open .msg files without Outlook. Drop an Outlook .msg or .eml file and read it instantly — full formatting, inline images, attachments and headers. Everything is parsed inside your browser, so nothing is ever uploaded.",
     dropTitle: "Drop .msg files here",
     dropSubtitle: "or click to browse — .msg, .eml and winmail.dat, up to 200 files or a whole folder at once",
     dropActive: "Release to open",
@@ -442,7 +442,7 @@ export const en = {
     byline: "By Andy Liu, who builds MsgLens",
     title: "Open a .msg file right now",
     body: "No sign-up, no upload, no software to install.",
-    button: "Open the viewer",
+    button: "Open the free .msg viewer",
     faqHeading: "Common questions",
   },
 } as const;

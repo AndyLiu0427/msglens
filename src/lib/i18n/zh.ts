@@ -7,7 +7,7 @@ export const zh: Dictionary = {
     dir: "ltr",
   },
   nav: {
-    viewer: "檢視器",
+    viewer: "msg 線上檢視器",
     guides: "教學",
     howTo: "如何開啟 .msg 檔",
     onMac: "Mac 開啟 .msg",
@@ -434,7 +434,7 @@ export const zh: Dictionary = {
     byline: "作者:Andy Liu(MsgLens 開發者)",
     title: "現在就開啟一個 .msg 檔",
     body: "不需註冊、不需上傳、不需安裝任何軟體。",
-    button: "開啟檢視器",
+    button: "開啟免費 .msg 線上檢視器",
     faqHeading: "常見問題",
   },
 };
