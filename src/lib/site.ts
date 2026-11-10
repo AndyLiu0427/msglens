@@ -79,9 +79,14 @@ export const SITE = {
   },
 } as const;
 
-export const LOCALES = ["en", "zh"] as const;
+export const LOCALES = ["en", "zh", "ja"] as const;
 export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = "en";
+
+/** Per-locale tags: hreflang and inLanguage, Open Graph, and date formatting. */
+export const HREFLANG: Record<Locale, string> = { en: "en", zh: "zh-Hant", ja: "ja" };
+export const OG_LOCALE: Record<Locale, string> = { en: "en_US", zh: "zh_TW", ja: "ja_JP" };
+export const DATE_LOCALE: Record<Locale, string> = { en: "en-GB", zh: "zh-TW", ja: "ja-JP" };
 
 /**
  * Map a route path (without locale prefix) to its absolute URL for a locale.

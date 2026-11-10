@@ -41,18 +41,22 @@ export const metadata: Metadata = {
 const localeScript = `
 (function () {
   try {
-    if (location.pathname.split("/")[1] === "zh") {
+    var first = location.pathname.split("/")[1];
+    if (first === "zh") {
       document.documentElement.classList.add("is-zh");
       document.documentElement.lang = "zh-Hant";
+    } else if (first === "ja") {
+      document.documentElement.classList.add("is-ja");
+      document.documentElement.lang = "ja";
     }
   } catch (e) {}
 })();
 `;
 
 const localeCss = `
-  .zh-only { display: none; }
-  .is-zh .en-only { display: none; }
-  .is-zh .zh-only { display: revert; }
+  .zh-only, .ja-only { display: none; }
+  .is-zh .en-only, .is-ja .en-only { display: none; }
+  .is-zh .zh-only, .is-ja .ja-only { display: revert; }
 `;
 
 export default function GlobalNotFound() {
@@ -82,6 +86,7 @@ export default function GlobalNotFound() {
           <h1 className="mt-3 max-w-lg text-[28px] leading-tight font-semibold tracking-tight text-ink sm:text-[34px]">
             <span className="en-only">This page does not exist</span>
             <span className="zh-only">找不到這個頁面</span>
+            <span className="ja-only">このページは見つかりません</span>
           </h1>
 
           <p className="mt-4 max-w-md text-[15px] leading-relaxed text-ink-muted">
@@ -91,6 +96,9 @@ export default function GlobalNotFound() {
             </span>
             <span className="zh-only">
               連結可能已失效,或是網址打錯了。檢視器本身還在。
+            </span>
+            <span className="ja-only">
+              リンクが古いか、アドレスが間違っている可能性があります。ビューアはこちらから使えます。
             </span>
           </p>
 
@@ -106,6 +114,13 @@ export default function GlobalNotFound() {
             className="mt-8 inline-flex h-11 items-center gap-2 rounded-xl bg-accent px-6 text-[14.5px] font-medium text-accent-on transition-colors hover:bg-accent-hover zh-only"
           >
             開啟 .msg 檢視器
+            <IconChevronRight className="size-4" />
+          </Link>
+          <Link
+            href="/ja/"
+            className="mt-8 inline-flex h-11 items-center gap-2 rounded-xl bg-accent px-6 text-[14.5px] font-medium text-accent-on transition-colors hover:bg-accent-hover ja-only"
+          >
+            .msg ビューアを開く
             <IconChevronRight className="size-4" />
           </Link>
 
@@ -130,6 +145,17 @@ export default function GlobalNotFound() {
               </Link>
               <Link href="/zh/faq/" className="text-ink-muted hover:text-ink">
                 常見問題
+              </Link>
+            </span>
+            <span className="ja-only contents">
+              <Link href="/ja/how-to-open-msg-files/" className="text-ink-muted hover:text-ink">
+                .msg ファイルの開き方
+              </Link>
+              <Link href="/ja/what-is-a-msg-file/" className="text-ink-muted hover:text-ink">
+                .msg ファイルとは？
+              </Link>
+              <Link href="/ja/faq/" className="text-ink-muted hover:text-ink">
+                よくある質問
               </Link>
             </span>
           </nav>

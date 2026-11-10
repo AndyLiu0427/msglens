@@ -4,6 +4,7 @@ import { aboutSchema, breadcrumbSchema, contactSchema } from "@/lib/metadata";
 import { localizedPath, SITE, type Locale } from "@/lib/site";
 import Link from "next/link";
 import { BILLING_ENABLED } from "@/lib/billing";
+import { AboutJa, ContactJa } from "./AboutJa";
 
 /**
  * About and Contact.
@@ -39,7 +40,7 @@ export function AboutPage({ locale }: { locale: Locale }) {
       <h1 className="mb-5 text-[32px] leading-tight font-semibold tracking-tight text-ink">
         {t.nav.about}
       </h1>
-      <Prose>{locale === "zh" ? <AboutZh /> : <AboutEn />}</Prose>
+      <Prose>{{ en: <AboutEn />, zh: <AboutZh />, ja: <AboutJa /> }[locale]}</Prose>
     </Page>
   );
 }
@@ -62,7 +63,7 @@ export function ContactPage({ locale }: { locale: Locale }) {
       <h1 className="mb-5 text-[32px] leading-tight font-semibold tracking-tight text-ink">
         {t.nav.contact}
       </h1>
-      <Prose>{locale === "zh" ? <ContactZh /> : <ContactEn />}</Prose>
+      <Prose>{{ en: <ContactEn />, zh: <ContactZh />, ja: <ContactJa /> }[locale]}</Prose>
     </Page>
   );
 }

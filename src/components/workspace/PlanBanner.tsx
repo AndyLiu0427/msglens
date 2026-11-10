@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { FREE_FILE_LIMIT } from "@/lib/billing";
 import { format, type Dictionary } from "@/lib/i18n";
-import type { Locale } from "@/lib/site";
+import { DATE_LOCALE, type Locale } from "@/lib/site";
 import { api, type Entitlement } from "@/lib/workspace/api";
 
 /**
@@ -52,7 +52,7 @@ export function PlanBanner({ t, locale }: { t: Dictionary; locale: Locale }) {
 
     const date = entitlement.expiresAt
       ? new Date(entitlement.expiresAt * 1000).toLocaleDateString(
-          locale === "zh" ? "zh-TW" : "en-GB",
+          DATE_LOCALE[locale],
           { year: "numeric", month: "short", day: "numeric" },
         )
       : null;

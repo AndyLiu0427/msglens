@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { LOCALES, localizedPath, localizedUrl, ROUTES } from "@/lib/site";
+import { HREFLANG, LOCALES, localizedPath, localizedUrl, ROUTES } from "@/lib/site";
 import contentDates from "@/lib/content-dates.json";
 
 /**
@@ -32,7 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: route === "/" ? 1 : 0.7,
       alternates: {
         languages: Object.fromEntries(
-          LOCALES.map((l) => [l === "zh" ? "zh-Hant" : "en", localizedUrl(route, l)]),
+          LOCALES.map((l) => [HREFLANG[l], localizedUrl(route, l)]),
         ),
       },
     })),

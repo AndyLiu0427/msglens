@@ -1,8 +1,9 @@
 import type { Locale } from "../site";
 import { en, type Dictionary } from "./en";
 import { zh } from "./zh";
+import { ja } from "./ja";
 
-const DICTIONARIES: Record<Locale, Dictionary> = { en, zh };
+const DICTIONARIES: Record<Locale, Dictionary> = { en, zh, ja };
 
 export function getDictionary(locale: Locale): Dictionary {
   return DICTIONARIES[locale] ?? en;

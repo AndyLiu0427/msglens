@@ -4,6 +4,7 @@ import { getDictionary } from "@/lib/i18n";
 import { faqSchema } from "@/lib/metadata";
 import { SITE, type Locale } from "@/lib/site";
 import { BILLING_ENABLED } from "@/lib/billing";
+import { PRIVACY_UPDATED_JA, PrivacyJa, TERMS_UPDATED_JA, TermsJa } from "./LegalJa";
 
 // One date per document: a change to one must not re-date the other.
 const PRIVACY_UPDATED = "6 October 2026";
@@ -37,20 +38,20 @@ export function FaqPage({ locale }: { locale: Locale }) {
 
 export function PrivacyPage({ locale }: { locale: Locale }) {
   const t = getDictionary(locale);
-  const isZh = locale === "zh";
+  const pick = <T,>(en: T, zh: T, ja: T) => ({ en, zh, ja })[locale];
 
   return (
     <Page locale={locale} path="/privacy">
       <Breadcrumb locale={locale} title={t.nav.privacy} />
       <h1 className="text-[30px] leading-tight font-semibold tracking-tight text-ink sm:text-[36px]">
-        {isZh ? "隱私權政策" : "Privacy Policy"}
+        {pick("Privacy Policy", "隱私權政策", "プライバシーポリシー")}
       </h1>
       <p className="mt-3 text-[13px] text-ink-subtle">
-        {isZh ? `最後更新:${PRIVACY_UPDATED_ZH}` : `Last updated: ${PRIVACY_UPDATED}`}
+        {pick(`Last updated: ${PRIVACY_UPDATED}`, `最後更新:${PRIVACY_UPDATED_ZH}`, `最終更新日：${PRIVACY_UPDATED_JA}`)}
       </p>
 
       <div className="mt-8">
-        <Prose>{isZh ? <PrivacyZh /> : <PrivacyEn />}</Prose>
+        <Prose>{pick(<PrivacyEn />, <PrivacyZh />, <PrivacyJa />)}</Prose>
       </div>
     </Page>
   );
@@ -58,20 +59,20 @@ export function PrivacyPage({ locale }: { locale: Locale }) {
 
 export function TermsPage({ locale }: { locale: Locale }) {
   const t = getDictionary(locale);
-  const isZh = locale === "zh";
+  const pick = <T,>(en: T, zh: T, ja: T) => ({ en, zh, ja })[locale];
 
   return (
     <Page locale={locale} path="/terms">
       <Breadcrumb locale={locale} title={t.nav.terms} />
       <h1 className="text-[30px] leading-tight font-semibold tracking-tight text-ink sm:text-[36px]">
-        {isZh ? "使用條款" : "Terms of Use"}
+        {pick("Terms of Use", "使用條款", "利用規約")}
       </h1>
       <p className="mt-3 text-[13px] text-ink-subtle">
-        {isZh ? `最後更新:${TERMS_UPDATED_ZH}` : `Last updated: ${TERMS_UPDATED}`}
+        {pick(`Last updated: ${TERMS_UPDATED}`, `最後更新:${TERMS_UPDATED_ZH}`, `最終更新日：${TERMS_UPDATED_JA}`)}
       </p>
 
       <div className="mt-8">
-        <Prose>{isZh ? <TermsZh /> : <TermsEn />}</Prose>
+        <Prose>{pick(<TermsEn />, <TermsZh />, <TermsJa />)}</Prose>
       </div>
     </Page>
   );

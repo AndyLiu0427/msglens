@@ -43,7 +43,7 @@ export function Header({ locale, path }: HeaderProps) {
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-lg px-2.5 py-1.5 text-[13.5px] text-ink-muted transition-colors hover:bg-surface-sunken hover:text-ink"
+              className="rounded-lg px-2.5 py-1.5 text-[13.5px] whitespace-nowrap text-ink-muted transition-colors hover:bg-surface-sunken hover:text-ink"
             >
               {link.label}
             </Link>

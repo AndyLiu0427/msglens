@@ -6,7 +6,7 @@ import { IconChevronRight } from "@/components/ui/icons";
 import contentDates from "@/lib/content-dates.json";
 import { format, getDictionary } from "@/lib/i18n";
 import { articleSchema, breadcrumbSchema, faqSchema, howToSchema } from "@/lib/metadata";
-import { localizedPath, SITE, type Locale } from "@/lib/site";
+import { DATE_LOCALE, localizedPath, SITE, type Locale } from "@/lib/site";
 
 interface ArticlePageProps {
   locale: Locale;
@@ -64,7 +64,7 @@ export function ArticlePage({
             {" · "}
             <time dateTime={modified}>
               {format(t.cta.updated, {
-                date: new Date(modified).toLocaleDateString(locale === "zh" ? "zh-TW" : "en-GB", {
+                date: new Date(modified).toLocaleDateString(DATE_LOCALE[locale], {
                   year: "numeric",
                   month: "short",
                   day: "numeric",

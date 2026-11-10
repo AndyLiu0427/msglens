@@ -78,9 +78,9 @@ function functionsIn(file: string): Array<{ name: string; line: number }> {
  * dating them together reported an English page as updated when only its
  * Chinese twin had changed.
  */
-function sourcesFor(route: string, locale: "en" | "zh"): Source[] {
+function sourcesFor(route: string, locale: "en" | "zh" | "ja"): Source[] {
   const slug = route === "/" ? "" : route.replace(/^\//, "");
-  const pages = [join(locale === "en" ? "src/app/(en)" : "src/app/(zh)/zh", slug, "page.tsx")].filter((p) =>
+  const pages = [join(locale === "en" ? "src/app/(en)" : `src/app/(${locale})/${locale}`, slug, "page.tsx")].filter((p) =>
     existsSync(join(ROOT, p)),
   );
 
@@ -217,13 +217,13 @@ if (isShallow()) {
 } else {
   // Keyed by the page's own path, as localizedPath() builds it: "/msg-vs-eml", "/zh/msg-vs-eml".
   for (const route of routes) {
-    for (const locale of ["en", "zh"] as const) {
+    for (const locale of ["en", "zh", "ja"] as const) {
       const when = lastCommit(sourcesFor(route, locale));
-      const path = locale === "en" ? route : route === "/" ? "/zh" : `/zh${route}`;
+      const path = locale === "en" ? route : route === "/" ? `/${locale}` : `/${locale}${route}`;
       if (when) dates[path] = when;
     }
   }
-  console.log(`content-dates: dated ${Object.keys(dates).length}/${routes.length * 2} pages`);
+  console.log(`content-dates: dated ${Object.keys(dates).length}/${routes.length * 3} pages`);
   writeFileSync(OUT, JSON.stringify(dates, null, 2) + "\n");
 }
 }

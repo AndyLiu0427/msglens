@@ -26,7 +26,7 @@ interface ViewerProps {
   children?: React.ReactNode;
 }
 
-const INTL_LOCALE: Record<Locale, string> = { en: "en-US", zh: "zh-TW" };
+const INTL_LOCALE: Record<Locale, string> = { en: "en-US", zh: "zh-TW", ja: "ja-JP" };
 
 export function Viewer({ t, locale, intro, children }: ViewerProps) {
   const {

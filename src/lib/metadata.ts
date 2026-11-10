@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DEFAULT_LOCALE, LOCALES, localizedUrl, SITE, type Locale } from "./site";
+import { DEFAULT_LOCALE, HREFLANG, LOCALES, localizedUrl, OG_LOCALE, SITE, type Locale } from "./site";
 
 interface PageMetaInput {
   locale: Locale;
@@ -29,7 +29,7 @@ export function pageMetadata({
 
   const languages: Record<string, string> = {};
   for (const l of LOCALES) {
-    languages[l === "zh" ? "zh-Hant" : "en"] = localizedUrl(path, l);
+    languages[HREFLANG[l]] = localizedUrl(path, l);
   }
   languages["x-default"] = localizedUrl(path, DEFAULT_LOCALE);
 
@@ -43,7 +43,7 @@ export function pageMetadata({
       siteName: SITE.name,
       title: fullTitle,
       description,
-      locale: locale === "zh" ? "zh_TW" : "en_US",
+      locale: OG_LOCALE[locale],
     },
     twitter: {
       card: "summary_large_image",
@@ -109,7 +109,7 @@ export function websiteSchema(locale: Locale) {
     "@type": "WebSite",
     name: SITE.name,
     url: localizedUrl("/", locale),
-    inLanguage: locale === "zh" ? "zh-Hant" : "en",
+    inLanguage: HREFLANG[locale],
     publisher: { "@type": "Organization", name: SITE.operator },
   };
 }
@@ -149,7 +149,7 @@ export function aboutSchema(locale: Locale, description: string) {
     name: SITE.name,
     url: localizedUrl("/about", locale),
     description,
-    inLanguage: locale === "zh" ? "zh-Hant" : "en",
+    inLanguage: HREFLANG[locale],
     mainEntity: {
       "@type": "Person",
       name: "Andy Liu",
@@ -176,7 +176,7 @@ export function contactSchema(locale: Locale, description: string) {
     name: SITE.name,
     url: localizedUrl("/contact", locale),
     description,
-    inLanguage: locale === "zh" ? "zh-Hant" : "en",
+    inLanguage: HREFLANG[locale],
     mainEntity: {
       "@type": "Organization",
       name: SITE.operator,
@@ -186,7 +186,7 @@ export function contactSchema(locale: Locale, description: string) {
         "@type": "ContactPoint",
         contactType: "customer support",
         email: `mailto:${SITE.contactEmail}`,
-        availableLanguage: ["en", "zh-Hant"],
+        availableLanguage: Object.values(HREFLANG),
       },
     },
   };
@@ -208,7 +208,7 @@ export function articleSchema(
     description: input.description,
     url,
     mainEntityOfPage: url,
-    inLanguage: locale === "zh" ? "zh-Hant" : "en",
+    inLanguage: HREFLANG[locale],
     ...(input.dateModified ? { dateModified: input.dateModified } : {}),
     author: { "@type": "Person", name: "Andy Liu", url: localizedUrl("/about", locale) },
     publisher: { "@type": "Organization", name: SITE.operator, url: localizedUrl("/", locale) },

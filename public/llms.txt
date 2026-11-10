@@ -39,5 +39,6 @@ Key facts, stated precisely so they can be quoted accurately:
 ## Optional
 
 - [Traditional Chinese (繁體中文) version](https://msglens.app/zh/)
+- [Japanese (日本語) version](https://msglens.app/ja/): the same viewer and guides in Japanese, for example [.msg ファイルの開き方](https://msglens.app/ja/how-to-open-msg-files/) and [EML と MSG の違い](https://msglens.app/ja/msg-vs-eml/).
 - [Privacy policy](https://msglens.app/privacy/)
 - [Terms](https://msglens.app/terms/)
