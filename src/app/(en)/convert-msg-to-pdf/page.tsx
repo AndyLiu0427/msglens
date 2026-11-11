@@ -15,6 +15,7 @@ export const metadata = pageMetadata({
 export default function Page() {
   return (
     <ArticlePage
+      tool
       locale="en"
       path={PATH}
       title={doc.title}
