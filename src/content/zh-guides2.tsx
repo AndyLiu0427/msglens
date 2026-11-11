@@ -447,7 +447,7 @@ export const zhGuides2 = {
           </li>
           <li>
             <strong>其實不是 .eml。</strong>檔名可能被改過。檢視器會依檔案內容判斷格式,就算是存成
-            錯誤副檔名的 <code>.msg</code> 也能開。
+            錯誤副檔名的 <code>.msg</code> 也能開。其他開法見{L("/how-to-open-msg-files", ".msg 檔案如何開啟")}。
           </li>
         </ul>
 

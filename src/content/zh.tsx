@@ -34,6 +34,28 @@ export const zhContent = {
         text: "在檢視器中開啟後選擇「匯出 → 另存為 .eml」。轉出的檔案可以直接被 Apple Mail、Thunderbird、Windows 郵件等大多數郵件軟體開啟。",
       },
     ],
+    faq: [
+      {
+        q: "msg 檔案要用什麼程式開啟?",
+        a: "Outlook 可以直接開。沒有 Outlook 的話,用瀏覽器裡的 .msg 檢視器(例如 MsgLens)就能看到內文、排版和附件,不用安裝任何軟體。",
+      },
+      {
+        q: "沒有 Outlook 可以開 .msg 檔嗎?",
+        a: "可以。把 .msg 拖進 msglens.app 的檢視器就能開,檔案在你的電腦上解析,不會上傳。也可以轉成 .eml,再用 Apple Mail、Thunderbird 等郵件軟體開。",
+      },
+      {
+        q: ".msg 點兩下打不開怎麼辦?",
+        a: "通常是電腦沒有裝 Outlook,系統不知道要用什麼程式開。.msg 是 Outlook 的專有格式,其他郵件軟體大多不支援。改用瀏覽器檢視器開就好,檔案本身多半沒有壞。",
+      },
+      {
+        q: "手機(iPhone、Android)怎麼開 .msg 檔?",
+        a: "在 Safari 或 Chrome 打開 msglens.app,點選擇檔案,再挑 .msg。檔案在手機上解析,不會上傳,也不用裝 App。",
+      },
+      {
+        q: "開 .msg 檔要付費嗎?",
+        a: "不用。MsgLens 的檢視器免費,也不需要註冊。一次可以開 200 個檔案,並存成 PDF 或 .eml。",
+      },
+    ],
     body: (
       <>
         <h2>為什麼 .msg 打不開</h2>
@@ -121,6 +143,10 @@ export const zhContent = {
           如果檔案打得開但畫面不對 —— 內文空白、圖片破圖、中文亂碼 ——
           {L("/msg-file-wont-open", "疑難排解教學")}會逐一對應症狀。
         </p>
+        <p>
+          想知道 .msg 裡面存了什麼,請看{L("/what-is-a-msg-file", ".msg 是什麼檔案")};
+          收到的如果是 .eml,請看{L("/open-eml-file", ".eml 檔怎麼開")}。
+        </p>
         <h2>一次很多個檔案怎麼辦?</h2>
         <p>
           一次最多可以拖入 200 個檔案,也可以拖進整個資料夾。它們會排成一份可篩選的清單,用 <code>J</code> 與{" "}
@@ -134,6 +160,24 @@ export const zhContent = {
     title: "msg 是什麼檔案?Outlook .msg 格式與開啟方式",
     description:
       ".msg 是 Outlook 把單封郵件、約會或聯絡人存成檔案的格式。說明它的結構、為什麼其他程式打不開,以及不裝 Outlook 怎麼開啟。",
+    faq: [
+      {
+        q: "msg 是什麼檔案?",
+        a: ".msg 是 Microsoft Outlook 把單一項目存成檔案的格式。裡面可以是郵件,也可以是約會、聯絡人、工作或會議邀請,包含寄件者、收件者、內文和附件。",
+      },
+      {
+        q: ".msg 和 .eml 有什麼不同?",
+        a: ".eml 是網際網路標準格式,幾乎所有郵件軟體都能開。.msg 是 Outlook 的專有格式,保留較多 Outlook 資訊,例如旗標和類別,但其他軟體大多打不開。",
+      },
+      {
+        q: "為什麼電腦打不開 .msg 檔?",
+        a: ".msg 是微軟的二進位格式,只有 Outlook 原生支援。電腦沒裝 Outlook 時,系統找不到能開它的程式。用瀏覽器裡的 .msg 檢視器就能開,不用安裝軟體。",
+      },
+      {
+        q: "打開 .msg 檔安全嗎?",
+        a: "檢視器只會顯示內容,不會執行附件。附件的風險和一般郵件一樣:不認識的寄件者寄來的執行檔或巨集文件,不要打開。",
+      },
+    ],
     body: (
       <>
         <p>
@@ -297,6 +341,7 @@ export const zhContent = {
         <p>
           標準的替代方案是純文字的 <code>.eml</code>。可以{" "}
           {L("/msg-vs-eml", "比較兩種格式")},看看轉檔會得到什麼、失去什麼。
+          收到的如果是 .eml,請看{L("/open-eml-file", ".eml 檔怎麼開")}。
         </p>
       </>
     ),
@@ -358,6 +403,10 @@ export const zhContent = {
             已經丟掉的資訊。
           </li>
         </ul>
+        <p>
+          不熟 .msg 的話,可以先看{L("/what-is-a-msg-file", ".msg 是什麼檔案")}。沒有 Outlook
+          也能開 .msg,做法見{L("/how-to-open-msg-files", ".msg 檔案如何開啟")}。
+        </p>
 
         <h2>另存為 EML 或 MSG:各版 Outlook 給你哪一種</h2>
         <p>
