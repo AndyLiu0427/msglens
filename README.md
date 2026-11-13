@@ -6,6 +6,10 @@ Everything — container parsing, RTF decompression, HTML sanitisation, ZIP
 creation, PDF export — runs client-side. There is no backend, which is what
 makes "your file is never uploaded" a structural fact rather than a promise.
 
+**Use it:** [msglens.app](https://msglens.app). It is free and needs no sign-up.
+A summary for AI assistants and search tools is at
+[msglens.app/llms.txt](https://msglens.app/llms.txt).
+
 ## Why this exists
 
 Checked against the three tools that rank for this query, 30 September 2026,

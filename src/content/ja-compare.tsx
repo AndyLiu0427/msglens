@@ -7,7 +7,7 @@ const L = (path: string, children: React.ReactNode) => (
 
 /** Same rule as the English page: every claim is checked and dated; untested says so. */
 export const jaCompare = {
-  title: "無料オンライン msg ビューア比較：メールをアップロードするのは？",
+  title: "無料オンライン msg ビューア比較【2026年】：メールをアップロードするのは？",
   description:
     "2026 年 9 月 30 日に無料の .msg ビューア 4 つを確認しました。メールをサーバーに送信するのはどれか、サイズ上限と対応形式、そしてどのビューアでも自分で確認できる方法を紹介します。",
   intro:

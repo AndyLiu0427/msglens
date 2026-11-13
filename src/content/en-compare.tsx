@@ -10,7 +10,7 @@ const L = (path: string, children: React.ReactNode) => (
  * be re-checked by the reader. What was not tested says so.
  */
 export const enCompare = {
-  title: "Free .msg viewers compared: which upload your email?",
+  title: "Free .msg viewers compared (2026): which upload your email?",
   description:
     "Four free .msg viewers checked on 30 September 2026: which send your email to a server, their size limits and formats, and how to check any viewer yourself.",
   intro:

@@ -7,7 +7,7 @@ const L = (path: string, children: React.ReactNode) => (
 
 /** Same rule as the English page: every claim is checked and dated; untested says so. */
 export const zhCompare = {
-  title: "免費線上 .msg 檢視器比較:哪些會上傳你的郵件?",
+  title: "2026 免費線上 .msg 檢視器比較:哪些會上傳你的郵件?",
   description:
     "2026 年 9 月 30 日實測四個免費 .msg 檢視器:哪些會把郵件送到伺服器、檔案大小上限與支援格式,以及如何自己檢查任何一個檢視器。",
   intro:
