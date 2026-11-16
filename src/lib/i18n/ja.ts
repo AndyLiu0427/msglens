@@ -444,5 +444,6 @@ export const ja: Dictionary = {
     body: "登録不要、アップロード不要、ソフトのインストールも不要です。",
     button: "無料の .msg ビューアを開く",
     faqHeading: "よくある質問",
+    related: "関連ガイド",
   },
 };

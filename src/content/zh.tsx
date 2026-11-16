@@ -416,7 +416,12 @@ export const zhContent = {
         <p>
           其他版本不會問你。Windows 傳統版 Outlook 不論用「檔案 → 另存新檔」或直接把郵件拖到
           桌面,存出的都是 <code>.msg</code>,沒有 <code>.eml</code> 選項。Mac 版 Outlook
-          把郵件拖出來會得到 <code>.eml</code>,Outlook 網頁版下載郵件時也是存成 <code>.eml</code>。
+          把郵件拖出來會得到 <code>.eml</code>。
+        </p>
+        <p>
+          Outlook 網頁版(Outlook.com 與 Microsoft 365)在「下載」底下也有兩個選項:「下載為
+          EML」和「下載為 MSG」。挑法跟另存為一樣:要在 Outlook 以外開啟、分享或歸檔就選
+          EML,要留一份完整的 Outlook 副本(例如當證據)才選 MSG。EML 檔通常小很多。
         </p>
 
         <h2>一覽表</h2>

@@ -348,6 +348,10 @@ export const enContent = {
         a: "It is the Save as menu in the new Outlook for Windows: right-click a message and choose Save as. Save as EML writes a standard .eml file that any mail app opens. Save as MSG writes an Outlook .msg file that keeps Outlook-only data such as flags, categories and Exchange senders. Choose EML to share or archive. Choose MSG to reopen the message in Outlook or to keep it as evidence.",
       },
       {
+        q: "Should I download an Outlook email as EML or MSG?",
+        a: "In Outlook on the web, choose Download as EML if the file will be opened outside Outlook, shared, or archived. Choose Download as MSG only if you want an exact Outlook copy, for example as evidence. The EML file is usually several times smaller.",
+      },
+      {
         q: "Is .eml or .msg better for archiving?",
         a: "For long-term archiving, .eml. It is a documented plain-text standard that any mail client, archive or search tool can read. Keep the .msg as well when the message may be needed as evidence, since it holds Exchange sender details, flags and categories that .eml has no place for.",
       },
@@ -371,12 +375,18 @@ export const enContent = {
     body: (
       <>
         <p>
-          Both formats store a single email message in a single file. The difference is that{" "}
-          <code>.eml</code> is a published internet standard and <code>.msg</code> is a
-          Microsoft implementation detail that escaped into the wild.
+          <strong>EML vs MSG in one sentence:</strong> <code>.eml</code> is the standard,
+          plain-text email file that every mail app opens, and <code>.msg</code> is
+          Outlook&apos;s own binary file that keeps Outlook-only data. Both hold one email in one
+          file. Choose .eml to share or archive a message. Keep .msg to reopen it in Outlook or to
+          keep it as evidence.
         </p>
 
-        <h2>Short answer: which should you save as?</h2>
+        <h2 id="which-is-better">EML or MSG: which is better?</h2>
+        <p>
+          Neither is better in every case. .eml is better for portability, and .msg is better for
+          a complete Outlook record:
+        </p>
         <ul>
           <li>
             <strong>Save as .eml</strong> if the message has to open somewhere other than
@@ -393,19 +403,38 @@ export const enContent = {
           </li>
         </ul>
 
-        <h2>Save as EML or Save as MSG: what each Outlook offers</h2>
+        <h2 id="save-as">Save as EML or Save as MSG in Outlook</h2>
         <p>
-          The new Outlook for Windows lets you choose. Right-click a message and choose Save as:
-          it offers Save as EML and Save as MSG. Use the short answer above to pick one.
+          The new Outlook for Windows asks you to choose. Right-click a message and choose Save
+          as. It offers Save as EML and Save as MSG.
         </p>
+        <ul>
+          <li>
+            <strong>Save as EML</strong> to send the file to someone, open it on a Mac or phone,
+            or put it in an archive.
+          </li>
+          <li>
+            <strong>Save as MSG</strong> to open the file again in Outlook later, or to keep it
+            as a legal or compliance record.
+          </li>
+        </ul>
+
+        <h2 id="download-as">Download as EML or Download as MSG in Outlook on the web</h2>
         <p>
-          The other versions do not ask. Classic Outlook for Windows saves <code>.msg</code>,
-          whether you use File, Save As or drag a message to the desktop, and has no{" "}
-          <code>.eml</code> option. Outlook for Mac produces <code>.eml</code> when you drag a
-          message out, and Outlook on the web downloads messages as <code>.eml</code>.
+          Outlook on the web (Outlook.com and Microsoft 365) shows the same choice under{" "}
+          <strong>Download</strong>: Download as EML or Download as MSG. The rule is the same as
+          for Save as. Download as EML if the file goes anywhere other than Outlook. Download as
+          MSG if you want an exact Outlook copy. The .eml file is usually much smaller.
         </p>
 
-        <h2>At a glance</h2>
+        <h2 id="other-outlook">Classic Outlook and Outlook for Mac</h2>
+        <p>
+          These versions do not ask. Classic Outlook for Windows saves <code>.msg</code>, whether
+          you use File, Save As or drag a message to the desktop, and has no <code>.eml</code>{" "}
+          option. Outlook for Mac produces <code>.eml</code> when you drag a message out.
+        </p>
+
+        <h2 id="differences">Differences between EML and MSG at a glance</h2>
         <table>
           <thead>
             <tr>

@@ -9,6 +9,68 @@ import { format, getDictionary } from "@/lib/i18n";
 import { articleSchema, breadcrumbSchema, faqSchema, howToSchema } from "@/lib/metadata";
 import { DATE_LOCALE, localizedPath, SITE, type Locale } from "@/lib/site";
 
+type NavKey = keyof ReturnType<typeof getDictionary>["nav"];
+
+/** Guides that answer the next question a reader of each page has. Same in every locale. */
+const RELATED: Record<string, ReadonlyArray<[string, NavKey]>> = {
+  "/how-to-open-msg-files": [
+    ["/msg-file-wont-open", "wontOpen"],
+    ["/what-is-a-msg-file", "whatIs"],
+    ["/convert-msg-to-pdf", "toPdf"],
+    ["/open-eml-file", "openEml"],
+  ],
+  "/msg-file-wont-open": [
+    ["/how-to-open-msg-files", "howTo"],
+    ["/outlook-msg-no-html-body", "noHtmlBody"],
+    ["/open-winmail-dat", "winmail"],
+  ],
+  "/what-is-a-msg-file": [
+    ["/how-to-open-msg-files", "howTo"],
+    ["/msg-vs-eml", "msgVsEml"],
+    ["/msg-file-wont-open", "wontOpen"],
+  ],
+  "/msg-vs-eml": [
+    ["/msg-to-eml", "toEml"],
+    ["/open-eml-file", "openEml"],
+    ["/what-is-a-msg-file", "whatIs"],
+  ],
+  "/open-eml-file": [
+    ["/msg-vs-eml", "msgVsEml"],
+    ["/how-to-open-msg-files", "howTo"],
+    ["/open-winmail-dat", "winmail"],
+  ],
+  "/open-winmail-dat": [
+    ["/extract-msg-attachments", "attachments"],
+    ["/msg-file-wont-open", "wontOpen"],
+    ["/how-to-open-msg-files", "howTo"],
+  ],
+  "/outlook-msg-no-html-body": [
+    ["/msg-file-wont-open", "wontOpen"],
+    ["/convert-msg-to-pdf", "toPdf"],
+    ["/msg-viewer-comparison", "compare"],
+  ],
+  "/convert-msg-to-pdf": [
+    ["/msg-to-eml", "toEml"],
+    ["/extract-msg-attachments", "attachments"],
+    ["/how-to-open-msg-files", "howTo"],
+  ],
+  "/msg-to-eml": [
+    ["/msg-vs-eml", "msgVsEml"],
+    ["/convert-msg-to-pdf", "toPdf"],
+    ["/open-eml-file", "openEml"],
+  ],
+  "/extract-msg-attachments": [
+    ["/convert-msg-to-pdf", "toPdf"],
+    ["/open-winmail-dat", "winmail"],
+    ["/msg-file-wont-open", "wontOpen"],
+  ],
+  "/msg-viewer-comparison": [
+    ["/how-to-open-msg-files", "howTo"],
+    ["/outlook-msg-no-html-body", "noHtmlBody"],
+    ["/msg-file-wont-open", "wontOpen"],
+  ],
+};
+
 interface ArticlePageProps {
   locale: Locale;
   path: string;
@@ -36,6 +98,7 @@ export function ArticlePage({
   children,
 }: ArticlePageProps) {
   const t = getDictionary(locale);
+  const related = RELATED[path];
   const modified = (contentDates as Record<string, string | undefined>)[localizedPath(path, locale)];
 
   const schemas: Array<Record<string, unknown>> = [
@@ -100,6 +163,18 @@ export function ArticlePage({
                   <p>{item.a}</p>
                 </Fragment>
               ))}
+            </>
+          )}
+          {related && (
+            <>
+              <h2>{t.cta.related}</h2>
+              <ul>
+                {related.map(([href, key]) => (
+                  <li key={href}>
+                    <Link href={localizedPath(href, locale)}>{t.nav[key]}</Link>
+                  </li>
+                ))}
+              </ul>
             </>
           )}
         </Prose>

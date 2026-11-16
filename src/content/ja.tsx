@@ -362,8 +362,13 @@ export const jaContent = {
         <p>
           ほかのバージョンでは選べません。従来の Outlook for Windows は、「ファイル」→「名前を付けて保存」でも、メールをデスクトップにドラッグしても{" "}
           <code>.msg</code> で保存し、<code>.eml</code> の選択肢はありません。Outlook
-          for Mac はメールをドラッグして取り出すと <code>.eml</code> になり、Web 版の Outlook
-          はメールを <code>.eml</code> としてダウンロードします。
+          for Mac はメールをドラッグして取り出すと <code>.eml</code> になります。
+        </p>
+        <p>
+          Web 版の Outlook（Outlook.com と Microsoft 365）も「ダウンロード」の下に「EML
+          としてダウンロード」と「MSG としてダウンロード」があります。選び方は同じです。Outlook
+          以外で開く、共有する、保管するなら EML、Outlook の完全なコピーを残したい（証拠として保存するなど）なら
+          MSG を選びます。EML のほうがファイルはずっと小さくなります。
         </p>
 
         <h2>比較表</h2>

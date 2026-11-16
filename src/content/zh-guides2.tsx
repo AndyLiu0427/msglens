@@ -353,6 +353,10 @@ export const zhGuides2 = {
       "在 Windows、Mac、iPhone 與 Android 開啟 .eml 郵件檔,有沒有 Outlook 都可以。以及 .eml 用錯程式開啟、顯示一堆程式碼或亂碼時怎麼處理。",
     faq: [
       {
+        q: "eml 是什麼檔案?",
+        a: ".eml 是一封郵件存成的檔案,用網際網路郵件的標準格式寫成:純文字,內文與附件以 MIME 編碼。Outlook 網頁版、Mac 版 Outlook、Apple Mail、Thunderbird 存下的郵件都是 .eml。它跟 Outlook 專用的 .msg 不同,幾乎所有郵件軟體都能開。",
+      },
+      {
         q: "什麼程式可以開 .eml 檔?",
         a: "一般的郵件軟體都可以:Outlook、Apple Mail、Thunderbird 都能開 .eml。電腦上沒有郵件軟體的話,用瀏覽器裡的檢視器(例如 MsgLens)就能直接開,不必安裝任何東西。",
       },

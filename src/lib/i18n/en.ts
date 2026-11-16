@@ -444,6 +444,7 @@ export const en = {
     body: "No sign-up, no upload, no software to install.",
     button: "Open the free .msg viewer",
     faqHeading: "Common questions",
+    related: "Related guides",
   },
 } as const;
 

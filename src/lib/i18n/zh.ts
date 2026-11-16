@@ -436,5 +436,6 @@ export const zh: Dictionary = {
     body: "不需註冊、不需上傳、不需安裝任何軟體。",
     button: "開啟免費 .msg 線上檢視器",
     faqHeading: "常見問題",
+    related: "相關教學",
   },
 };
