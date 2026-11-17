@@ -135,14 +135,16 @@ function AboutEn() {
         and it is not affiliated with, endorsed by or sponsored by Microsoft in any way.
         Microsoft, Outlook and Exchange are trademarks of Microsoft Corporation.
       </p>
-      <p>
-        Payments are handled by <strong>Paddle</strong>, who are the merchant of record and
-        the seller on your receipt. Receipts and refund notices come from{" "}
-        <strong>{SITE.operator}</strong>; a card statement shows{" "}
-        <strong>{SITE.statementDescriptor}</strong>, which is the same name with the space
-        and the lower case removed — card networks allow ten characters. Worth knowing before
-        an unfamiliar line on a statement sends anyone to their bank.
-      </p>
+      {BILLING_ENABLED && (
+        <p>
+          Payments are handled by <strong>Paddle</strong>, who are the merchant of record and
+          the seller on your receipt. Receipts and refund notices come from{" "}
+          <strong>{SITE.operator}</strong>; a card statement shows{" "}
+          <strong>{SITE.statementDescriptor}</strong>, which is the same name with the space
+          and the lower case removed — card networks allow ten characters. Worth knowing before
+          an unfamiliar line on a statement sends anyone to their bank.
+        </p>
+      )}
       <p>
         One person reads the mail, writes the guides and fixes the bugs. That is worth knowing
         both ways: a reply takes a few days rather than an hour, and there is nobody to hide
@@ -222,12 +224,14 @@ function AboutZh() {
         名義獨立建置與維護。這不是一家公司,也與微軟沒有任何從屬、背書或贊助關係。
         Microsoft、Outlook 與 Exchange 是 Microsoft Corporation 的商標。
       </p>
-      <p>
-        付款由 <strong>Paddle</strong> 處理,他們是 merchant of record,也是你收據上的
-        賣方。收據與退款通知的署名是 <strong>{SITE.operator}</strong>;信用卡帳單上則顯示
-        <strong>{SITE.statementDescriptor}</strong> —— 同一個名字,只是拿掉了空格和小寫,
-        因為卡片系統只允許十個字元。先講清楚,免得帳單上出現不認得的名字讓人直接打給銀行。
-      </p>
+      {BILLING_ENABLED && (
+        <p>
+          付款由 <strong>Paddle</strong> 處理,他們是 merchant of record,也是你收據上的
+          賣方。收據與退款通知的署名是 <strong>{SITE.operator}</strong>;信用卡帳單上則顯示
+          <strong>{SITE.statementDescriptor}</strong> —— 同一個名字,只是拿掉了空格和小寫,
+          因為卡片系統只允許十個字元。先講清楚,免得帳單上出現不認得的名字讓人直接打給銀行。
+        </p>
+      )}
       <p>
         信件、指南與錯誤修正都是同一個人在做。這件事兩面都值得知道:回覆通常要幾天而不是
         幾小時,但如果這裡有任何地方寫錯了,也沒有人可以躲。

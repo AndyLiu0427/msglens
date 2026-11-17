@@ -56,11 +56,13 @@ export function AboutJa() {
         {SITE.name} は、<strong>Andy Liu</strong> が <strong>{SITE.operator}</strong>{" "}
         の名義で個人として開発、運営しています。会社ではなく、Microsoft とはいかなる提携関係もなく、Microsoft による承認や後援も受けていません。Microsoft、Outlook および Exchange は Microsoft Corporation の商標です。
       </p>
-      <p>
-        お支払いは <strong>Paddle</strong> が取り扱います。Paddle は merchant of record（販売代理店）であり、領収書に記載される販売者です。領収書と返金通知は <strong>{SITE.operator}</strong>{" "}
-        の名義で届きます。カードの利用明細には <strong>{SITE.statementDescriptor}</strong>{" "}
-        と表示されます。これは同じ名前からスペースを除き、すべて大文字にしたもので、カードネットワークでは 10 文字までしか使えないためです。明細に見慣れない名前があっても、銀行に問い合わせる前にこの点をご確認ください。
-      </p>
+      {BILLING_ENABLED && (
+        <p>
+          お支払いは <strong>Paddle</strong> が取り扱います。Paddle は merchant of record（販売代理店）であり、領収書に記載される販売者です。領収書と返金通知は <strong>{SITE.operator}</strong>{" "}
+          の名義で届きます。カードの利用明細には <strong>{SITE.statementDescriptor}</strong>{" "}
+          と表示されます。これは同じ名前からスペースを除き、すべて大文字にしたもので、カードネットワークでは 10 文字までしか使えないためです。明細に見慣れない名前があっても、銀行に問い合わせる前にこの点をご確認ください。
+        </p>
+      )}
       <p>
         メールを読むのも、ガイドを書くのも、不具合を直すのも 1 人です。これには 2 つの面があります。返信には 1 時間ではなく数日かかりますが、ここに誤りがあれば、責任を他の誰かに押し付けることはできません。
       </p>
