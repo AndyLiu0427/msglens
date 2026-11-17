@@ -128,3 +128,14 @@ export const ROUTES = [
   "/privacy",
   "/terms",
 ] as const;
+
+/**
+ * The blog is written separately per language, not translated: each locale
+ * has its own posts, so a post has no hreflang alternate. Japanese has none yet.
+ */
+export const BLOG_LOCALES = ["en", "zh"] as const satisfies readonly Locale[];
+export type BlogLocale = (typeof BLOG_LOCALES)[number];
+
+export function isBlogLocale(locale: Locale): locale is BlogLocale {
+  return (BLOG_LOCALES as readonly Locale[]).includes(locale);
+}

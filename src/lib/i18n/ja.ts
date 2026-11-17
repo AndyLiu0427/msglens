@@ -25,6 +25,7 @@ export const ja: Dictionary = {
     compare: ".msg オンラインビューアの比較",
     toPdf: ".msg を PDF に変換",
     faq: "よくある質問",
+    blog: "ブログ",
     about: "MsgLens について",
     contact: "お問い合わせ",
     workspace: "ワークスペース",

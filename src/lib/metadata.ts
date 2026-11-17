@@ -9,6 +9,8 @@ interface PageMetaInput {
   description: string;
   /** Omit the site-name suffix (used for the home page). */
   bareTitle?: boolean;
+  /** Locales this path exists in, when not all of them (the blog). */
+  locales?: readonly Locale[];
 }
 
 /**
@@ -23,15 +25,16 @@ export function pageMetadata({
   title,
   description,
   bareTitle,
+  locales = LOCALES,
 }: PageMetaInput): Metadata {
   const url = localizedUrl(path, locale);
   const fullTitle = bareTitle ? title : `${title} — ${SITE.name}`;
 
   const languages: Record<string, string> = {};
-  for (const l of LOCALES) {
+  for (const l of locales) {
     languages[HREFLANG[l]] = localizedUrl(path, l);
   }
-  languages["x-default"] = localizedUrl(path, DEFAULT_LOCALE);
+  if (locales.includes(DEFAULT_LOCALE)) languages["x-default"] = localizedUrl(path, DEFAULT_LOCALE);
 
   return {
     title: fullTitle,
@@ -198,7 +201,13 @@ export function contactSchema(locale: Locale, description: string) {
  */
 export function articleSchema(
   locale: Locale,
-  input: { title: string; description: string; path: string; dateModified?: string },
+  input: {
+    title: string;
+    description: string;
+    path: string;
+    dateModified?: string;
+    datePublished?: string;
+  },
 ) {
   const url = localizedUrl(input.path, locale);
   return {
@@ -209,6 +218,7 @@ export function articleSchema(
     url,
     mainEntityOfPage: url,
     inLanguage: HREFLANG[locale],
+    ...(input.datePublished ? { datePublished: input.datePublished } : {}),
     ...(input.dateModified ? { dateModified: input.dateModified } : {}),
     author: { "@type": "Person", name: "Andy Liu", url: localizedUrl("/about", locale) },
     publisher: { "@type": "Organization", name: SITE.operator, url: localizedUrl("/", locale) },

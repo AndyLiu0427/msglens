@@ -25,6 +25,7 @@ export const zh: Dictionary = {
     compare: "線上 .msg 檢視器比較",
     toPdf: ".msg 轉 PDF",
     faq: "常見問題",
+    blog: "部落格",
     about: "關於我們",
     contact: "聯絡我們",
     workspace: "工作區",

@@ -23,6 +23,7 @@ export const en = {
     compare: "Online .msg viewers compared",
     toPdf: "Convert .msg to PDF",
     faq: "FAQ",
+    blog: "Blog",
     about: "About",
     contact: "Contact",
     workspace: "Workspace",

@@ -4,16 +4,17 @@ import { WorkspaceLink } from "@/components/workspace/WorkspaceLink";
 import { LanguageSwitch } from "./LanguageSwitch";
 import { IconMail } from "@/components/ui/icons";
 import { getDictionary } from "@/lib/i18n";
-import { localizedPath, SITE, type Locale } from "@/lib/site";
+import { isBlogLocale, localizedPath, SITE, type Locale } from "@/lib/site";
 import { BILLING_ENABLED } from "@/lib/billing";
 
 interface HeaderProps {
   locale: Locale;
   /** Route path without the locale prefix, e.g. "/faq". Drives the switcher. */
   path: string;
+  locales?: readonly Locale[];
 }
 
-export function Header({ locale, path }: HeaderProps) {
+export function Header({ locale, path, locales }: HeaderProps) {
   const t = getDictionary(locale);
   const home = localizedPath("/", locale);
 
@@ -22,6 +23,7 @@ export function Header({ locale, path }: HeaderProps) {
     { href: localizedPath("/what-is-a-msg-file", locale), label: t.nav.whatIs },
     { href: localizedPath("/msg-vs-eml", locale), label: t.nav.msgVsEml },
     { href: localizedPath("/faq", locale), label: t.nav.faq },
+    ...(isBlogLocale(locale) ? [{ href: localizedPath("/blog", locale), label: t.nav.blog }] : []),
     ...(BILLING_ENABLED ? [{ href: localizedPath("/pricing", locale), label: t.nav.pricing }] : []),
   ];
 
@@ -51,7 +53,7 @@ export function Header({ locale, path }: HeaderProps) {
         </nav>
 
         <div className="ml-auto flex items-center gap-1">
-          <LanguageSwitch locale={locale} path={path} label={t.nav.language} />
+          <LanguageSwitch locale={locale} path={path} label={t.nav.language} locales={locales} />
           <ThemeToggle label={t.nav.theme} />
           <WorkspaceLink locale={locale} t={t} />
         </div>

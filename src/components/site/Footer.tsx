@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { IconCode, IconKeyboard, IconMail, IconShield, IconSparkle } from "@/components/ui/icons";
 import { getDictionary } from "@/lib/i18n";
-import { localizedPath, SITE, type Locale } from "@/lib/site";
+import { isBlogLocale, localizedPath, SITE, type Locale } from "@/lib/site";
 import { BILLING_ENABLED } from "@/lib/billing";
 
 export function Footer({ locale }: { locale: Locale }) {
@@ -29,6 +29,7 @@ export function Footer({ locale }: { locale: Locale }) {
         { href: p("/outlook-msg-no-html-body"), label: t.nav.noHtmlBody },
         { href: p("/msg-vs-eml"), label: t.nav.msgVsEml },
         { href: p("/msg-viewer-comparison"), label: t.nav.compare },
+        ...(isBlogLocale(locale) ? [{ href: p("/blog"), label: t.nav.blog }] : []),
         { href: p("/faq"), label: t.nav.faq },
         { href: p("/workspace"), label: t.nav.workspace },
         ...(BILLING_ENABLED ? [{ href: p("/pricing"), label: t.nav.pricing }] : []),

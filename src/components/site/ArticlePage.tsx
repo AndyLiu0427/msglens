@@ -7,7 +7,7 @@ import { Viewer } from "@/components/viewer/Viewer";
 import contentDates from "@/lib/content-dates.json";
 import { format, getDictionary } from "@/lib/i18n";
 import { articleSchema, breadcrumbSchema, faqSchema, howToSchema } from "@/lib/metadata";
-import { DATE_LOCALE, localizedPath, SITE, type Locale } from "@/lib/site";
+import { BLOG_LOCALES, DATE_LOCALE, localizedPath, SITE, type Locale } from "@/lib/site";
 
 type NavKey = keyof ReturnType<typeof getDictionary>["nav"];
 
@@ -83,6 +83,8 @@ interface ArticlePageProps {
   faq?: ReadonlyArray<{ q: string; a: string }>;
   /** Puts the working viewer above the article, for pages whose query is a task (convert, extract). */
   tool?: boolean;
+  /** Blog posts: the publish date (YYYY-MM-DD), used in place of the git date. Only in this locale. */
+  published?: string;
   children: React.ReactNode;
 }
 
@@ -95,18 +97,23 @@ export function ArticlePage({
   steps,
   faq,
   tool,
+  published,
   children,
 }: ArticlePageProps) {
   const t = getDictionary(locale);
   const related = RELATED[path];
-  const modified = (contentDates as Record<string, string | undefined>)[localizedPath(path, locale)];
+  const modified =
+    published ?? (contentDates as Record<string, string | undefined>)[localizedPath(path, locale)];
+  // A blog post exists in one language only, so the switcher points at the other blogs.
+  const switchProps = published ? { path: "/blog", locales: BLOG_LOCALES } : { path };
 
   const schemas: Array<Record<string, unknown>> = [
     breadcrumbSchema(locale, [
       { name: t.nav.viewer, path: "/" },
+      ...(published ? [{ name: t.nav.blog, path: "/blog" }] : []),
       { name: title, path },
     ]),
-    articleSchema(locale, { title, description, path, dateModified: modified }),
+    articleSchema(locale, { title, description, path, dateModified: modified, datePublished: published }),
   ];
   if (steps) {
     schemas.push(howToSchema({ name: title, description, steps }));
@@ -191,7 +198,7 @@ export function ArticlePage({
     // Its children cross the server/client boundary, so each slot is one wrapper element.
     // No "open the viewer" card: the viewer is already at the top of the page.
     return (
-      <Page locale={locale} path={path} schemas={schemas} wide>
+      <Page locale={locale} {...switchProps} schemas={schemas} wide>
         <Viewer t={t} locale={locale} intro={<div className="mx-auto mb-8 max-w-3xl">{header}</div>}>
           <article className="mx-auto mt-10 max-w-3xl">
             {body}
@@ -203,7 +210,7 @@ export function ArticlePage({
   }
 
   return (
-    <Page locale={locale} path={path} schemas={schemas}>
+    <Page locale={locale} {...switchProps} schemas={schemas}>
       <article>
         {header}
         {body}

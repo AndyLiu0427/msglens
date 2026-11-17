@@ -23,14 +23,16 @@ interface PageProps {
   /** Structured data emitted into the document head. */
   schemas?: Array<Record<string, unknown>>;
   wide?: boolean;
+  /** Locales the language switcher offers, when the page is not in all of them. */
+  locales?: readonly Locale[];
 }
 
-export function Page({ locale, path, children, schemas, wide }: PageProps) {
+export function Page({ locale, path, children, schemas, wide, locales }: PageProps) {
   return (
     <div className="flex min-h-dvh flex-col">
       {/* React hoists an async script into <head>, where AdSense verification looks. */}
       {!PRIVATE_PATHS.has(path) && <AdSenseScript />}
-      <Header locale={locale} path={path} />
+      <Header locale={locale} path={path} locales={locales} />
       <main className={`mx-auto w-full flex-1 px-4 py-8 sm:px-6 ${wide ? "max-w-6xl" : "max-w-3xl"}`}>
         <WelcomeNotice locale={locale} />
         {children}

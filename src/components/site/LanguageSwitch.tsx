@@ -14,15 +14,17 @@ export function LanguageSwitch({
   locale,
   path,
   label,
+  locales = LOCALES,
 }: {
   locale: Locale;
   path: string;
   label: string;
+  locales?: readonly Locale[];
 }) {
   return (
     <span className="inline-flex items-center">
       <IconGlobe className="mr-0.5 size-[17px] text-ink-muted" aria-hidden />
-      {LOCALES.filter((l) => l !== locale).map((other) => (
+      {locales.filter((l) => l !== locale).map((other) => (
         <Link
           key={other}
           href={localizedPath(path, other)}

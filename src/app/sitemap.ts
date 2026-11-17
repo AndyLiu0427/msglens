@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
-import { HREFLANG, LOCALES, localizedPath, localizedUrl, ROUTES } from "@/lib/site";
+import { BLOG_LOCALES, HREFLANG, LOCALES, localizedPath, localizedUrl, ROUTES } from "@/lib/site";
+import { blogPaths } from "@/content/blog";
 import contentDates from "@/lib/content-dates.json";
 
 /**
@@ -22,6 +23,26 @@ export const dynamic = "force-static";
 const dates = contentDates as Record<string, string | undefined>;
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const blog = blogPaths().map(({ locale, path, date }) => ({
+    url: localizedUrl(path, locale),
+    ...(date ? { lastModified: new Date(date) } : {}),
+    changeFrequency: path === "/blog" ? ("weekly" as const) : ("monthly" as const),
+    priority: 0.6,
+    // Posts are written per language; only the blog index has a counterpart.
+    ...(path === "/blog"
+      ? {
+          alternates: {
+            languages: Object.fromEntries(
+              BLOG_LOCALES.map((l) => [HREFLANG[l], localizedUrl("/blog", l)]),
+            ),
+          },
+        }
+      : {}),
+  }));
+  return [...pages(), ...blog];
+}
+
+function pages(): MetadataRoute.Sitemap {
   return LOCALES.flatMap((locale) =>
     ROUTES.map((route) => ({
       url: localizedUrl(route, locale),

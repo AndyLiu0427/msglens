@@ -10,12 +10,16 @@
  */
 
 import { LOCALES, localizedUrl, ROUTES, SITE } from "../src/lib/site";
+import { blogPaths } from "../src/content/blog";
 
 const KEY = "4ee1837c39be0a6b53add17fb4b687dc";
 
 // ponytail: sends every route each time. ~30 URLs is well inside IndexNow's
 // limits; send only changed routes (from content-dates.json) if the site grows.
-const urlList = LOCALES.flatMap((locale) => ROUTES.map((route) => localizedUrl(route, locale)));
+const urlList = [
+  ...LOCALES.flatMap((locale) => ROUTES.map((route) => localizedUrl(route, locale))),
+  ...blogPaths().map(({ locale, path }) => localizedUrl(path, locale)),
+];
 
 const res = await fetch("https://api.indexnow.org/indexnow", {
   method: "POST",
