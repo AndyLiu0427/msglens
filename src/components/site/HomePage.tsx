@@ -100,6 +100,40 @@ export function HomePage({ locale }: { locale: Locale }) {
             className="mt-14"
           />
 
+          {locale === "en" && (
+            <section className="mx-auto mt-16 max-w-3xl">
+              <h2 className="text-[26px] font-semibold tracking-tight text-ink">
+                What is a .msg file viewer?
+              </h2>
+              <div className="mt-4 space-y-4 text-[15px] leading-relaxed text-ink-muted">
+                <p>
+                  A .msg file viewer shows the contents of an Outlook email file without
+                  Outlook. MsgLens is a .msg file viewer that runs in your web browser. Drop a
+                  file on this page and you see the sender, the recipients, the date, the
+                  formatted body and every attachment, as Outlook would show them.
+                </p>
+                <p>
+                  It opens three kinds of email file. A .msg file is what classic Outlook for
+                  Windows saves when you drag a message to a folder or use Save As. An .eml
+                  file is the standard format that Outlook on the web, Apple Mail, Thunderbird
+                  and Gmail download. A winmail.dat file is an Outlook message that another
+                  mail system could not unpack, and the viewer takes the real attachments back
+                  out of it.
+                </p>
+                <p>
+                  You do not need Outlook, because the viewer reads the file structure itself.
+                  It works on a Mac, a Chromebook, Linux, a phone, or a work computer where you
+                  cannot install software.
+                </p>
+                <p>
+                  Your files are not uploaded. The viewer parses each file with JavaScript on
+                  your own device, so the email never goes to a server. To check, load this
+                  page, turn off your network, and then open a file. It still opens.
+                </p>
+              </div>
+            </section>
+          )}
+
           <section className="mt-16">
             <h2 className="text-center text-[26px] font-semibold tracking-tight text-ink">
               {t.faq.title}

@@ -339,7 +339,8 @@ export const enGuides = {
             <strong>Check it is really a .msg.</strong> Every genuine one starts with the same
             eight signature bytes. This viewer detects the real format from those bytes
             rather than the extension, so a mislabelled <code>.eml</code> renamed to{" "}
-            <code>.msg</code> still opens.
+            <code>.msg</code> still opens. To tell the two apart, see{" "}
+            {L("/msg-vs-eml", ".msg vs .eml")}.
           </li>
           <li>
             <strong>Check whether it was edited.</strong> Opening a <code>.msg</code> in a

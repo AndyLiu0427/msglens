@@ -434,7 +434,7 @@ export const enContent = {
           option. Outlook for Mac produces <code>.eml</code> when you drag a message out.
         </p>
 
-        <h2 id="differences">Differences between EML and MSG at a glance</h2>
+        <h2 id="differences">EML vs MSG file format: key differences</h2>
         <table>
           <thead>
             <tr>

@@ -616,7 +616,8 @@ export const enGuides2 = {
         <p>
           The extracted files are ordinary files: a PDF opens in any PDF reader, a spreadsheet in
           Excel or Numbers. An attached <code>.msg</code> or <code>.eml</code> opens in the
-          viewer again. If an attachment will not open, the problem is usually the app for that
+          viewer again. If you want to keep it, see{" "}
+          {L("/msg-vs-eml", "which format to save as")}. If an attachment will not open, the problem is usually the app for that
           file type, not the extraction. See also{" "}
           {L("/msg-file-wont-open", "why a .msg file will not open")}.
         </p>

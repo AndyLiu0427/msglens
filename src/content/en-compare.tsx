@@ -105,6 +105,7 @@ export const enCompare = {
       <ul>
         <li>{L("/how-to-open-msg-files", "How to open a .msg file without Outlook")}</li>
         <li>{L("/outlook-msg-no-html-body", "Why most Outlook messages have no HTML body")}</li>
+        <li>{L("/msg-vs-eml", "EML vs MSG: which format to save as")}</li>
         <li>{L("/about", "How MsgLens reads files in the browser, and how to verify it")}</li>
       </ul>
     </>

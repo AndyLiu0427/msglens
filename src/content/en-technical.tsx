@@ -70,6 +70,11 @@ export const enTechnical = {
           The correct fallback order is HTML, then RTF de-encapsulated back to HTML, then
           plain text. Skipping the middle step is what costs you 85% of your fidelity.
         </p>
+        <p>
+          A standard <code>.eml</code> has no RTF stream: its body is a MIME{" "}
+          <code>text/html</code> or <code>text/plain</code> part. That is one of the main{" "}
+          {L("/msg-vs-eml", "EML vs MSG differences")}.
+        </p>
 
         <h2>What &ldquo;compressed RTF&rdquo; actually means</h2>
         <p>

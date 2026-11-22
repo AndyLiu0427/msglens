@@ -33,6 +33,12 @@ const RELATED: Record<string, ReadonlyArray<[string, NavKey]>> = {
     ["/msg-to-eml", "toEml"],
     ["/open-eml-file", "openEml"],
     ["/what-is-a-msg-file", "whatIs"],
+    ["/how-to-open-msg-files", "howTo"],
+    ["/msg-file-wont-open", "wontOpen"],
+    ["/convert-msg-to-pdf", "toPdf"],
+    ["/extract-msg-attachments", "attachments"],
+    ["/outlook-msg-no-html-body", "noHtmlBody"],
+    ["/msg-viewer-comparison", "compare"],
   ],
   "/open-eml-file": [
     ["/msg-vs-eml", "msgVsEml"],
