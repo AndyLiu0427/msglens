@@ -159,7 +159,7 @@ export const zhContent = {
   whatIs: {
     title: "msg 是什麼檔案?Outlook .msg 格式與開啟方式",
     description:
-      ".msg 是 Outlook 把單封郵件、約會或聯絡人存成檔案的格式。說明它的結構、為什麼其他程式打不開,以及不裝 Outlook 怎麼開啟。",
+      "msg 是什麼檔案?為什麼電腦點兩下打不開、打開安全嗎、跟 .eml 差在哪,這裡一次講清楚。想直接看內容,也能在瀏覽器免安裝開啟,檔案不上傳。",
     faq: [
       {
         q: "msg 是什麼檔案?",
@@ -350,7 +350,7 @@ export const zhContent = {
   msgVsEml: {
     title: "eml 和 msg 差異比較:Outlook 郵件該存哪一種?",
     description:
-      ".eml 與 .msg 差在哪?一張表看懂,並說明 Outlook 出現「另存為 EML」和「另存為 MSG」時該選哪一個。.msg 保留 Outlook 專屬資料,.eml 任何郵件軟體都能開。",
+      "eml 和 msg 差異對照表:哪一種 Gmail、Mac 打得開,哪一種留得住 Outlook 專屬資料。再依分享、存證、長期保存三種情況告訴你該存哪一種,以及怎麼把 .msg 轉成 .eml。",
     faq: [
       {
         q: "Outlook 郵件該存成 .eml 還是 .msg?",
