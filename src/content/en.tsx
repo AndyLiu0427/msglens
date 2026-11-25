@@ -164,6 +164,25 @@ export const enContent = {
           a <code>.msg</code> file.
         </p>
 
+        <h2 id="how-to-open">How to open a .msg file</h2>
+        <p>
+          If you have Outlook, double-click the file on Windows, or on a Mac drag it into a
+          mail folder in Outlook. Without Outlook, use a free viewer in your browser to{" "}
+          {L("/how-to-open-msg-files", "open a .msg file without Outlook")}: you install
+          nothing and the file is not uploaded. If it still will not open, a mail system
+          most often stripped or damaged it on the way, and{" "}
+          {L("/msg-file-wont-open", "what to do when a .msg file will not open")} covers each
+          case.
+        </p>
+        <p>
+          <Link
+            href={localizedPath("/", "en")}
+            className="inline-flex h-11 items-center rounded-xl bg-accent px-6 text-[14.5px] font-medium text-accent-on! no-underline! transition-colors hover:bg-accent-hover hover:text-accent-on!"
+          >
+            Open your .msg file free
+          </Link>
+        </p>
+
         <h2>The container: Compound File Binary Format</h2>
         <p>
           Internally, a <code>.msg</code> file is an{" "}
