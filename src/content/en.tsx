@@ -354,7 +354,7 @@ export const enContent = {
   },
 
   msgVsEml: {
-    title: "EML vs MSG: the differences, and which to save as",
+    title: "EML vs MSG: differences, which to save, and how to convert",
     description:
       "EML vs MSG in one table, and which to pick when Outlook offers Save as EML or Save as MSG. .msg keeps Outlook-only data; .eml opens in any mail app.",
     faq: [
@@ -390,6 +390,18 @@ export const enContent = {
         q: "How do I convert .msg to .eml without Outlook?",
         a: "Open the .msg in the MsgLens viewer at msglens.app and choose Export, then Save as .eml. The conversion runs in your browser; the file is not uploaded.",
       },
+      {
+        q: "Can I convert many .msg files to .eml at once?",
+        a: "Yes. Drop up to 200 .msg files or a whole folder on the viewer, then choose All as .eml. Every message is saved as .eml, together in one ZIP file.",
+      },
+      {
+        q: "Does the converted .eml keep the original date and sender?",
+        a: "Yes. The .eml gets From, To, Cc, Subject and the send date stored in the .msg. The Received lines that trace the delivery path are not copied, so keep the .msg if you need them as evidence.",
+      },
+      {
+        q: "Can I convert .eml back to .msg?",
+        a: "Not with MsgLens, and you rarely need to. Outlook opens .eml files directly: double-click the file and Outlook shows the message.",
+      },
     ],
     body: (
       <>
@@ -399,6 +411,14 @@ export const enContent = {
           Outlook&apos;s own binary file that keeps Outlook-only data. Both hold one email in one
           file. Choose .eml to share or archive a message. Keep .msg to reopen it in Outlook or to
           keep it as evidence.
+        </p>
+        <p>
+          <Link
+            href={localizedPath("/msg-to-eml", "en")}
+            className="inline-flex h-11 items-center rounded-xl bg-accent px-6 text-[14.5px] font-medium text-accent-on! no-underline! transition-colors hover:bg-accent-hover hover:text-accent-on!"
+          >
+            Convert .msg to .eml
+          </Link>
         </p>
 
         <h2 id="which-is-better">EML or MSG: which is better?</h2>
